@@ -1,0 +1,27 @@
+.logo-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  transition: all 1.2s ease-in-out;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.logo-overlay.move {
+  top: 32px;
+  left: 32px;
+  transform: scale(0.85);
+}
+
+.logo-overlay.draw {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(2);
+}
+
+.logo-overlay.static {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
