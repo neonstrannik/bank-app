@@ -13,7 +13,7 @@ export default function Hero() {
           <Link href="/register">
             <button className="btn-primary">Открыть счёт</button>
           </Link>
-          <button className="btn-secondary">Узнать больше</button>
+          <button className="btn-primary">Узнать больше</button>
         </div>
         <div className="hero-features">
           <div className="feature">

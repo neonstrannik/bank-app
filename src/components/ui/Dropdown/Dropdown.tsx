@@ -1,0 +1,84 @@
+"use client";
+import React, { useState, useRef } from "react";
+import Link from "next/link";
+import "./Dropdown.css";
+
+interface DropdownProps {
+  activeSection?: string;
+}
+
+export default function Dropdown({ activeSection }: DropdownProps) {
+  const [open, setOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setOpen(false);
+    }, 300); // 300ms задержка
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      className="dropdown"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button className="dropdown-button">Услуги</button>
+
+      {open && (
+        <div 
+          className="dropdown-menu-container"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <ul className="dropdown-menu">
+            <li>
+              <a
+                href="#cards"
+                className={activeSection === "cards" ? "active" : ""}
+              >
+                Карты
+              </a>
+            </li>
+            <li>
+              <a
+                href="#credit"
+                className={activeSection === "credit" ? "active" : ""}
+              >
+                Кредит
+              </a>
+            </li>
+            <li>
+              <Link href="/credit-calculator">
+                Калькулятор кредита
+              </Link>
+            </li>
+            <li>
+              <a
+                href="#investments"
+                className={activeSection === "investments" ? "active" : ""}
+              >
+                Инвестиции
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}

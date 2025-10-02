@@ -22,24 +22,6 @@
   margin-bottom: 50px;
 }
 
-.btn-secondary {
-  background-color: transparent;
-  border: 1px solid #0077ff;
-  color: #0077ff;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background-color: #0077ff;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.4);
-}
-
 .hero-features {
   display: flex;
   flex-wrap: wrap;

@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import AnimatedLogoOverlay from "@/components/AnimatedLogoOverlay";
-import Hero from "@/components/Hero";
-import Dropdown from "@/components/Dropdown";
+import AnimatedLogoOverlay from "@/components/ui/AnimatedLogo/AnimatedLogoOverlay";
+import Hero from "@/components/Hero/Hero";
+import Dropdown from "@/components/ui/Dropdown/Dropdown";
+import Link from "next/link";
 
 export default function Home() {
   const [animationFinished, setAnimationFinished] = useState(false);
@@ -61,7 +62,7 @@ export default function Home() {
               <Dropdown activeSection={activeSection} />
             </li>
           </ul>
-          <button className="btn-primary">Войти</button>
+          <button className="btn-navbar">Войти</button>
         </nav>
 
         <main>
@@ -138,12 +139,9 @@ export default function Home() {
                 ежемесячный платеж и общую сумму переплаты. Просто выберите
                 сумму и срок — и получите мгновенный результат.
               </p>
-              <button
-                className="btn-primary"
-                onClick={() => alert("Здесь может быть калькулятор кредита!")}
-              >
-                Рассчитать кредит
-              </button>
+              <Link href="/credit-calculator">
+                <button className="btn-primary">Рассчитать кредит</button>
+              </Link>
             </div>
           </section>
           <section id="cards" className="offers container">

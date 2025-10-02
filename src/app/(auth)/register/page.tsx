@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/app/(auth)/context/AuthContext";
 import styles from "./register.module.css";
 
 export default function RegisterPage() {

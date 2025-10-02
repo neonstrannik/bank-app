@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/app/(auth)/context/AuthContext";
 import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 
@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [isAuthenticated, router]);
 
@@ -23,7 +23,7 @@ export default function DashboardPage() {
     <div className={styles.container}>
       <div className={styles.content}>
         <h1 className={styles.title}>Добро пожаловать, {user?.firstName}!</h1>
-        
+
         <div className={styles.cards}>
           <div className={styles.card}>
             <h3>Баланс</h3>

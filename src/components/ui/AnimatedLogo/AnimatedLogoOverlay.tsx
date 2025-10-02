@@ -1,18 +1,22 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import AnimatedLogo from './AnimatedLogo';
-import './AnimatedLogoOverlay.css';
+import React, { useEffect, useState } from "react";
+import AnimatedLogo from "./AnimatedLogo";
+import "./AnimatedLogoOverlay.css";
 
-export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void }) {
-  const [phase, setPhase] = useState<'draw' | 'move'>('draw');
+export default function AnimatedLogoOverlay({
+  onFinish,
+}: {
+  onFinish: () => void;
+}) {
+  const [phase, setPhase] = useState<"draw" | "move">("draw");
 
   useEffect(() => {
     const drawTimer = setTimeout(() => {
-      setPhase('move');
+      setPhase("move");
     }, 3250);
 
     const moveTimer = setTimeout(() => {
-      onFinish(); 
+      onFinish();
     }, 5000);
 
     return () => {
