@@ -21,7 +21,7 @@ export default function Dropdown({ activeSection }: DropdownProps) {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpen(false);
-    }, 300); // 300ms задержка
+    }, 300);
   };
 
   React.useEffect(() => {
@@ -41,19 +41,14 @@ export default function Dropdown({ activeSection }: DropdownProps) {
       <button className="dropdown-button">Услуги</button>
 
       {open && (
-        <div 
+        <div
           className="dropdown-menu-container"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           <ul className="dropdown-menu">
             <li>
-              <a
-                href="#cards"
-                className={activeSection === "cards" ? "active" : ""}
-              >
-                Карты
-              </a>
+              <Link href="/cards">💳 Карты</Link>
             </li>
             <li>
               <a
@@ -64,9 +59,7 @@ export default function Dropdown({ activeSection }: DropdownProps) {
               </a>
             </li>
             <li>
-              <Link href="/credit-calculator">
-                Калькулятор кредита
-              </Link>
+              <Link href="/credit-calculator">Калькулятор кредита</Link>
             </li>
             <li>
               <a

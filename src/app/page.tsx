@@ -51,12 +51,12 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a
-                href="#cashback"
+              <Link
+                href="/cashback"
                 className={activeSection === "cashback" ? "active" : ""}
               >
-                Кэшбек
-              </a>
+                Кэшбэк
+              </Link>
             </li>
             <li>
               <Dropdown activeSection={activeSection} />
@@ -102,25 +102,6 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="cashback" className="offers container">
-            <h2 className="text-center">Кэшбэк</h2>
-            <div className="card offer-card">
-              <h3>Как работает кэшбэк</h3>
-              <p>
-                Каждая ваша покупка возвращает часть средств обратно — в виде
-                бонусов или реальных денег. Выбирайте категории месяца и
-                максимизируйте выгоду.
-              </p>
-              <p>
-                Мы сотрудничаем с более чем 500 партнерами, включая магазины,
-                рестораны и сервисы. Ваши покупки — ваш доход.
-              </p>
-              <p>
-                Потратьте кэшбэк на новые покупки, оплату услуг или переводы.
-              </p>
-            </div>
-          </section>
-
           <section id="credit" className="offers container">
             <h2 className="text-center">Кредит</h2>
             <div className="card offer-card">
@@ -132,7 +113,7 @@ export default function Home() {
               </p>
               <p>
                 Срок кредита — от 6 до 60 месяцев. Ставка начинается от 9.9%
-                годовых и зависит от суммы и срока займа.
+                годовых и зависит от сумма и срока займа.
               </p>
               <p>
                 Удобный и понятный онлайн-калькулятор поможет вам рассчитать
@@ -144,6 +125,7 @@ export default function Home() {
               </Link>
             </div>
           </section>
+
           <section id="cards" className="offers container">
             <h2 className="text-center">Карты</h2>
             <div className="card offer-card enhanced-card">
@@ -177,6 +159,7 @@ export default function Home() {
               </div>
             </div>
           </section>
+
           <section id="investments" className="offers container">
             <h2 className="text-center">Инвестиции</h2>
             <div className="card offer-card">
