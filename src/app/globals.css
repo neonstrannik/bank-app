@@ -28,6 +28,11 @@ h6 {
   margin-bottom: 12px;
 }
 
+section {
+  padding: 40px 20px;
+  scroll-margin-top: 100px; /* чтобы якорь не прятался под navbar */
+}
+
 h1 {
   font-size: 3.5rem;
   background: linear-gradient(135deg, #4da8ff 0%, #0073e6 100%);
@@ -232,9 +237,30 @@ a:hover {
   font-size: 1.2rem;
   font-weight: 500;
 }
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  position: relative; /* Необходимо для абсолютного позиционирования ::before */
+}
 
-.nav-links li a:hover::after,
-.nav-links li a.active::after {
+.nav-links li a::before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #00ccff;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::before {
   width: 100%;
 }
 
@@ -292,29 +318,50 @@ a:hover {
   left: 100%;
 }
 
-/* ===== FOOTER ===== */
-footer {
+/* ===== FOOTER (Compact Style) ===== */
+.footer {
   background: linear-gradient(135deg, #16171c 0%, #1f2126 100%);
-  color: #8b8d91;
-  padding: 40px 20px;
-  text-align: center;
+  color: #aeb4b9;
   border-top: 1px solid rgba(77, 168, 255, 0.1);
+  padding: 20px 0;
+  font-size: 0.95rem;
 }
 
-/* ===== PAGE CONTENT VISIBILITY ===== */
-.page-content {
-  transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 24px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.page-content.hidden {
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateY(8px);
-  pointer-events: none;
+.footer-left p {
+  margin: 2px 0;
+  line-height: 1.3;
 }
 
-.page-content.visible {
-  opacity: 1;
-  filter: blur(0);
-  transform: translateY(0);
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-right a {
+  color: #4da8ff;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: #00ccff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #8b8d91;
+  opacity: 0.8;
 }
