@@ -155,32 +155,6 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <section id="reviews" className="offers container">
-            <h2>Отзывы наших клиентов</h2>
-            <div className="offer-cards">
-              <div className="card offer-card">
-                <h3>Марина, 28 лет</h3>
-                <p>
-                  Очень удобное приложение, переводы между картами моментальные!
-                  Пользуюсь уже год — ни одного сбоя.
-                </p>
-              </div>
-              <div className="card offer-card">
-                <h3>Игорь, 35 лет</h3>
-                <p>
-                  Кэшбэк реально начисляют, поддержка отвечает быстро. Открыл
-                  счёт за 5 минут без визита в офис.
-                </p>
-              </div>
-              <div className="card offer-card">
-                <h3>Светлана, 42 года</h3>
-                <p>
-                  Кредитная карта с льготным периодом спасает. Всё прозрачно,
-                  без мелкого шрифта и скрытых комиссий.
-                </p>
-              </div>
-            </div>
-          </section>
         </main>
       </div>
       <footer className="footer">
