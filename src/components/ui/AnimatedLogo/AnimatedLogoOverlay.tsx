@@ -5,12 +5,12 @@ import "./AnimatedLogoOverlay.css";
 
 export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void }) {
   const [phase, setPhase] = useState<"draw" | "move" | "static">("draw");
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const hasSeenAnimation =
-      typeof window !== "undefined"
-        ? sessionStorage.getItem("hasSeenLogoAnimation")
-        : null;
+    setIsClient(true);
+
+    const hasSeenAnimation = sessionStorage.getItem("hasSeenLogoAnimation");
 
     if (hasSeenAnimation) {
       setPhase("static");
@@ -18,10 +18,7 @@ export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void
       return;
     }
 
-    const drawTimer = setTimeout(() => {
-      setPhase("move");
-    }, 3250);
-
+    const drawTimer = setTimeout(() => setPhase("move"), 3250);
     const moveTimer = setTimeout(() => {
       setPhase("static");
       onFinish();
@@ -33,6 +30,9 @@ export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void
       clearTimeout(moveTimer);
     };
   }, [onFinish]);
+
+  // ⛔️ Пока не знаем, что показывать — ничего не рендерим
+  if (!isClient) return null;
 
   return (
     <div className={`logo-overlay ${phase}`}>

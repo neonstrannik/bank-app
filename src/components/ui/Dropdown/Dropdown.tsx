@@ -48,7 +48,7 @@ export default function Dropdown({ activeSection }: DropdownProps) {
         >
           <ul className="dropdown-menu">
             <li>
-              <Link href="/cards">💳 Карты</Link>
+              <Link href="/cards">Карты</Link>
             </li>
             <li>
               <a

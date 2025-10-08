@@ -76,7 +76,7 @@ export default function CardsPage() {
               <p className={styles.description}>{card.description}</p>
               <ul>
                 {card.benefits.map((b, idx) => (
-                  <li key={idx}>✓ {b}</li>
+                  <li key={idx}> {b}</li>
                 ))}
               </ul>
             </div>

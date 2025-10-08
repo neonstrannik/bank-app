@@ -18,13 +18,13 @@
 .logo-overlay.move {
   top: -22px;
   left: 12px;
-  transform: scale(0.55);
+  transform: scale(0.65);
 }
 
 .logo-overlay.static {
   top: -22px;
   left: 12px;
-  transform: scale(0.55);
+  transform: scale(0.65);
   opacity: 1;
   transition: none;
   pointer-events: auto;
