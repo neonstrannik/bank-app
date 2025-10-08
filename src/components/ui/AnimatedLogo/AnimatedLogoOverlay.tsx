@@ -1,28 +1,31 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import AnimatedLogo from "./AnimatedLogo";
-import "./AnimatedLogoOverlay.css";
+import React, { useEffect, useState } from 'react';
+import AnimatedLogo from './AnimatedLogo';
+import './AnimatedLogoOverlay.css';
 
 export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void }) {
-  const [phase, setPhase] = useState<"draw" | "move" | "static">("draw");
-  const [isClient, setIsClient] = useState(false);
+  const [phase, setPhase] = useState<'draw' | 'move' | 'static'>('draw');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-
-    const hasSeenAnimation = sessionStorage.getItem("hasSeenLogoAnimation");
+    setMounted(true);
+    
+    const hasSeenAnimation = sessionStorage?.getItem('hasSeenLogoAnimation');
 
     if (hasSeenAnimation) {
-      setPhase("static");
+      setPhase('static');
       onFinish();
       return;
     }
 
-    const drawTimer = setTimeout(() => setPhase("move"), 3250);
+    const drawTimer = setTimeout(() => {
+      setPhase('move');
+    }, 3250);
+
     const moveTimer = setTimeout(() => {
-      setPhase("static");
+      setPhase('static');
       onFinish();
-      sessionStorage.setItem("hasSeenLogoAnimation", "true");
+      sessionStorage.setItem('hasSeenLogoAnimation', 'true');
     }, 5000);
 
     return () => {
@@ -31,12 +34,9 @@ export default function AnimatedLogoOverlay({ onFinish }: { onFinish: () => void
     };
   }, [onFinish]);
 
-  // ⛔️ Пока не знаем, что показывать — ничего не рендерим
-  if (!isClient) return null;
-
   return (
     <div className={`logo-overlay ${phase}`}>
-      <AnimatedLogo animationPhase={phase === "static" ? "move" : phase} />
+      <AnimatedLogo animationPhase={phase === 'static' ? 'move' : phase} />
     </div>
   );
 }

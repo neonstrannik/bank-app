@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./cards.module.css";
+
 
 export default function CardsPage() {
   const [activeCard, setActiveCard] = useState<string | null>(null);
@@ -52,6 +54,9 @@ export default function CardsPage() {
 
   return (
     <div className={styles.container}>
+      <Link href="/" className={styles.backLink}>
+            ← Назад
+          </Link>
       <h1 className={styles.title}>Выберите свою карту</h1>
       <div className={styles.cardsGrid}>
         {bankCards.map((card, i) => (

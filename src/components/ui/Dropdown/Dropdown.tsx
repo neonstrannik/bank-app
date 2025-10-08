@@ -51,23 +51,10 @@ export default function Dropdown({ activeSection }: DropdownProps) {
               <Link href="/cards">Карты</Link>
             </li>
             <li>
-              <a
-                href="#credit"
-                className={activeSection === "credit" ? "active" : ""}
-              >
-                Кредит
-              </a>
-            </li>
-            <li>
               <Link href="/credit-calculator">Калькулятор кредита</Link>
             </li>
             <li>
-              <a
-                href="#investments"
-                className={activeSection === "investments" ? "active" : ""}
-              >
-                Инвестиции
-              </a>
+              <Link href="/investments">Инвестиции</Link>
             </li>
           </ul>
         </div>

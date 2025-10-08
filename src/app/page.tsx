@@ -5,12 +5,20 @@ import Dropdown from "@/components/ui/Dropdown/Dropdown";
 import Link from "next/link";
 
 export default function Home() {
-  const [animationFinished, setAnimationFinished] = useState(
-    typeof window !== "undefined" &&
-      sessionStorage.getItem("hasSeenLogoAnimation") === "true"
-  );
+  const [animationFinished, setAnimationFinished] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  // ✅ Проверяем sessionStorage только на клиенте
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hasSeen = sessionStorage.getItem("hasSeenLogoAnimation") === "true";
+      if (hasSeen) {
+        setAnimationFinished(true);
+      }
+    }
+  }, []);
+
+  // Отслеживание активной секции
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const options = { root: null, rootMargin: "0px", threshold: 0.6 };
@@ -94,7 +102,6 @@ export default function Home() {
         <main>
           <Hero />
 
-          {/* Далее твои секции */}
           <section id="offers" className="offers container">
             <h2 className="text-center">Наши предложения</h2>
             <div className="offer-cards">
@@ -157,6 +164,7 @@ export default function Home() {
           </section>
         </main>
       </div>
+
       <footer className="footer">
         <div className="footer-inner container">
           <div className="footer-left">
