@@ -5,12 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./cards.module.css";
 
-
 export default function CardsPage() {
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    phone: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
 
   const bankCards = [
-        {
+    {
       id: "neo",
       name: "Neo Card",
       type: "Дебетовая карта",
@@ -36,7 +41,6 @@ export default function CardsPage() {
       ],
       description: "Идеальна для повседневных покупок и путешествий",
     },
-
     {
       id: "cosmic",
       name: "Cosmic Card",
@@ -52,12 +56,21 @@ export default function CardsPage() {
     },
   ];
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.address && formData.phone) {
+      setSubmitted(true);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Link href="/" className={styles.backLink}>
-            ← Назад
-          </Link>
+        ← Назад
+      </Link>
+
       <h1 className={styles.title}>Выберите свою карту</h1>
+
       <div className={styles.cardsGrid}>
         {bankCards.map((card, i) => (
           <div
@@ -65,7 +78,9 @@ export default function CardsPage() {
             className={`${styles.card} ${
               activeCard === card.id ? styles.active : ""
             }`}
-            onClick={() => setActiveCard(activeCard === card.id ? null : card.id)}
+            onClick={() =>
+              setActiveCard(activeCard === card.id ? null : card.id)
+            }
             style={{ animationDelay: `${i * 0.2}s` }}
           >
             <Image
@@ -81,13 +96,53 @@ export default function CardsPage() {
               <p className={styles.description}>{card.description}</p>
               <ul>
                 {card.benefits.map((b, idx) => (
-                  <li key={idx}> {b}</li>
+                  <li key={idx}>{b}</li>
                 ))}
               </ul>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Блок формы — появляется после выбора карты */}
+      {activeCard && !submitted && (
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <h2>Оформление {bankCards.find(c => c.id === activeCard)?.name}</h2>
+          <input
+            type="text"
+            placeholder="Ваше ФИО"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Адрес доставки"
+            value={formData.address}
+            onChange={(e) =>
+              setFormData({ ...formData, address: e.target.value })
+            }
+            required
+          />
+          <input
+            type="tel"
+            placeholder="Телефон"
+            value={formData.phone}
+            onChange={(e) =>
+              setFormData({ ...formData, phone: e.target.value })
+            }
+            required
+          />
+          <button type="submit">Оформить карту</button>
+        </form>
+      )}
+
+      {submitted && (
+        <div className={styles.success}>
+          ✅ Заявка на {bankCards.find(c => c.id === activeCard)?.name} успешно оформлена!<br />
+          Мы свяжемся с вами для уточнения деталей доставки.
+        </div>
+      )}
     </div>
   );
 }

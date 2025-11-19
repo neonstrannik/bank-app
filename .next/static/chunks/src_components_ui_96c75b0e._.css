@@ -1,0 +1,280 @@
+/* [project]/src/components/ui/AnimatedLogo/AnimatedLogo.css [app-client] (css) */
+.animated-logo .line {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80px;
+  animation: 1.2s ease-out forwards draw-line;
+}
+
+.animated-logo .line.right, .animated-logo .line.left {
+  animation-delay: 1.9s;
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cap-left {
+  opacity: 0;
+  animation: 1s ease-out 1s forwards slide-in-left;
+  transform: translateX(-30px);
+}
+
+.cap-right {
+  opacity: 0;
+  animation: 1s ease-out 1s forwards slide-in-right;
+  transform: translateX(30px);
+}
+
+@keyframes slide-in-left {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animated-logo circle {
+  animation: 1.2s ease-out .2s forwards slide-in;
+  transform: translateX(120px);
+}
+
+@keyframes slide-in {
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+/* [project]/src/components/ui/AnimatedLogo/AnimatedLogoOverlay.css [app-client] (css) */
+.logo-overlay {
+  z-index: 9999;
+  pointer-events: none;
+  width: 120px;
+  height: 120px;
+  transition: all 1.2s ease-in-out;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo-overlay.draw {
+  opacity: 1;
+  transform: translate(-50%, -50%)scale(2);
+}
+
+.logo-overlay.move {
+  top: -22px;
+  left: 12px;
+  transform: scale(.65);
+}
+
+.logo-overlay.static {
+  opacity: 1;
+  pointer-events: auto;
+  transition: none;
+  top: -22px;
+  left: 12px;
+  transform: scale(.65);
+}
+
+.page-content {
+  opacity: 1;
+  filter: none;
+  transition: opacity .6s, filter .6s, transform .6s;
+  transform: none;
+}
+
+.page-content.hidden {
+  opacity: 0;
+  filter: blur(30px);
+  transform: translateY(12px);
+}
+
+.page-content.visible {
+  opacity: 1;
+  filter: blur();
+  transform: translateY(0);
+}
+
+
+/* [project]/src/components/ui/Dropdown/Dropdown.css [app-client] (css) */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-button {
+  color: #fff;
+  cursor: pointer;
+  box-shadow: none;
+  background: none;
+  border: none;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color .3s;
+  display: flex;
+  position: relative;
+}
+
+.dropdown-button:after {
+  content: "▼";
+  margin-left: 4px;
+  font-size: .8rem;
+  transition: transform .3s;
+}
+
+.dropdown:hover .dropdown-button:after {
+  transform: rotate(180deg);
+}
+
+.dropdown-button:hover {
+  color: #0cf;
+}
+
+.dropdown-button:before {
+  content: "";
+  background-color: #0cf;
+  width: 0%;
+  height: 2px;
+  transition: width .3s;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+}
+
+.dropdown-button:hover:before {
+  width: 100%;
+}
+
+.dropdown-menu-container {
+  z-index: 1000;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-menu {
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transform-origin: top;
+  background: linear-gradient(135deg, #2c3e50 0%, #1a2431 100%);
+  border: 1px solid #1f2a38;
+  border-radius: 8px;
+  min-width: 200px;
+  padding: 8px 0;
+  animation: .25s cubic-bezier(.4, 0, .2, 1) slideDown;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 8px 24px #00000080;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px)scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0)scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-10px)scale(.95);
+  }
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu li a {
+  color: #ecf0f1;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all .2s;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.dropdown-menu:not(.closing) li a {
+  animation: .2s ease-out backwards fadeInItem;
+}
+
+.dropdown-menu:not(.closing) li:first-child a {
+  animation-delay: 50ms;
+}
+
+.dropdown-menu:not(.closing) li:nth-child(2) a {
+  animation-delay: .1s;
+}
+
+.dropdown-menu:not(.closing) li:nth-child(3) a {
+  animation-delay: .15s;
+}
+
+.dropdown-menu:not(.closing) li:nth-child(4) a {
+  animation-delay: .2s;
+}
+
+@keyframes fadeInItem {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.dropdown-menu li a:hover, .dropdown-menu li a.active {
+  color: #fff;
+  background: linear-gradient(135deg, #07f 0%, #005ed1 100%);
+  font-weight: 600;
+  transform: translateX(5px);
+}
+
+.dropdown-button.active {
+  color: #0cf;
+}
+
+.dropdown-button.active:before {
+  width: 100%;
+}
+
+.dropdown-menu-container {
+  transition: opacity .2s;
+}
+
+.dropdown-menu-container.closing {
+  opacity: 0;
+}
+
+
+/*# sourceMappingURL=src_components_ui_96c75b0e._.css.map*/

@@ -7,8 +7,8 @@ import Link from "next/link";
 export default function Home() {
   const [animationFinished, setAnimationFinished] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-
-  // ✅ Проверяем sessionStorage только на клиенте
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [activeAboutTab, setActiveAboutTab] = useState("mission");
   useEffect(() => {
     if (typeof window !== "undefined") {
       const hasSeen = sessionStorage.getItem("hasSeenLogoAnimation") === "true";
@@ -18,7 +18,6 @@ export default function Home() {
     }
   }, []);
 
-  // Отслеживание активной секции
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const options = { root: null, rootMargin: "0px", threshold: 0.6 };
@@ -47,7 +46,17 @@ export default function Home() {
           <Link href="/register">
             <button className="btn-primary">Открыть счёт</button>
           </Link>
-          <button className="btn-primary">Узнать больше</button>
+          <button
+            className="btn-primary"
+            onClick={() => {
+              const aboutSection = document.getElementById("about");
+              if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Узнать больше
+          </button>
         </div>
         <div className="hero-features">
           <div className="feature">
@@ -78,7 +87,12 @@ export default function Home() {
           <ul className="nav-links">
             <li>
               <a
-                href="#offers"
+                onClick={() => {
+                  const offerSection = document.getElementById("offers");
+                  if (offerSection) {
+                    offerSection.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 className={activeSection === "offers" ? "active" : ""}
               >
                 Предложения
@@ -96,7 +110,9 @@ export default function Home() {
               <Dropdown activeSection={activeSection} />
             </li>
           </ul>
-          <button className="btn-navbar">Войти</button>
+          <Link href="/register">
+            <button className="btn-navbar">Войти</button>
+          </Link>
         </nav>
 
         <main>
@@ -136,31 +152,74 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="about" className="offers container">
-            <h2>О нас</h2>
-            <div className="offer-cards">
-              <div className="card offer-card">
-                <h3>Миссия</h3>
-                <p>
-                  Мы создаём цифровой банк, который упрощает финансовую жизнь
-                  клиентов и делает современные технологии доступными каждому.
-                </p>
+          <section id="about" className="about container">
+            <button
+              className={`about-toggle ${aboutOpen ? "open" : ""}`}
+              onClick={() => setAboutOpen(!aboutOpen)}
+            >
+              <h2>О нас</h2>
+              <span className="arrow">{aboutOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {aboutOpen && (
+              <div className="about-content fadeIn">
+                <div className="about-tabs">
+                  {[
+                    { id: "mission", label: "Миссия" },
+                    { id: "team", label: "Наша команда" },
+                    { id: "career", label: "Трудоустройство" },
+                    { id: "tech", label: "Технологии" },
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      className={`about-tab ${
+                        activeAboutTab === tab.id ? "active" : ""
+                      }`}
+                      onClick={() => setActiveAboutTab(tab.id)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="about-tab-content">
+                  {activeAboutTab === "mission" && (
+                    <p>
+                      Наша миссия — создавать цифровой банк, который упрощает
+                      финансовую жизнь клиентов и делает технологии доступными
+                      каждому. Мы стремимся быть банком без границ, где всё
+                      решается в одно касание.
+                    </p>
+                  )}
+
+                  {activeAboutTab === "team" && (
+                    <p>
+                      Команда V-Банка — это инженеры, дизайнеры, аналитики и
+                      специалисты по клиентскому сервису, объединённые одной
+                      целью: сделать банковские услуги простыми и понятными для
+                      всех.
+                    </p>
+                  )}
+
+                  {activeAboutTab === "career" && (
+                    <p>
+                      Мы всегда ищем талантливых людей! 💼 Откройте раздел
+                      “Карьера” на нашем сайте и присоединяйтесь к инновационной
+                      команде, которая создаёт будущее финансов.
+                    </p>
+                  )}
+
+                  {activeAboutTab === "tech" && (
+                    <p>
+                      Мы используем новейшие технологии — от искусственного
+                      интеллекта до анализа данных в реальном времени. Наши
+                      системы соответствуют международным стандартам
+                      безопасности.
+                    </p>
+                  )}
+                </div>
               </div>
-              <div className="card offer-card">
-                <h3>Надёжность</h3>
-                <p>
-                  V-Банк работает по международным стандартам безопасности,
-                  гарантируя защиту ваших средств и данных.
-                </p>
-              </div>
-              <div className="card offer-card">
-                <h3>Инновации</h3>
-                <p>
-                  Используем искусственный интеллект для персонализированных
-                  финансовых решений и анализа трат.
-                </p>
-              </div>
-            </div>
+            )}
           </section>
         </main>
       </div>

@@ -1,0 +1,53 @@
+/* [project]/src/components/ui/AnimatedLogo/AnimatedLogoOverlay.css [app-client] (css) */
+.logo-overlay {
+  z-index: 9999;
+  pointer-events: none;
+  width: 120px;
+  height: 120px;
+  transition: all 1.2s ease-in-out;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo-overlay.draw {
+  opacity: 1;
+  transform: translate(-50%, -50%)scale(2);
+}
+
+.logo-overlay.move {
+  top: -22px;
+  left: 12px;
+  transform: scale(.65);
+}
+
+.logo-overlay.static {
+  opacity: 1;
+  pointer-events: auto;
+  transition: none;
+  top: -22px;
+  left: 12px;
+  transform: scale(.65);
+}
+
+.page-content {
+  opacity: 1;
+  filter: none;
+  transition: opacity .6s, filter .6s, transform .6s;
+  transform: none;
+}
+
+.page-content.hidden {
+  opacity: 0;
+  filter: blur(30px);
+  transform: translateY(12px);
+}
+
+.page-content.visible {
+  opacity: 1;
+  filter: blur();
+  transform: translateY(0);
+}
+
+/*# sourceMappingURL=src_components_ui_AnimatedLogo_AnimatedLogoOverlay_css_f9ee138c._.single.css.map*/

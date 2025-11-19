@@ -1,0 +1,286 @@
+/* [project]/src/app/(pages)/cashback/cashback.module.css [app-client] (css) */
+.cashback-module__dYu9EW__container {
+  background: radial-gradient(circle at 20% 20%, #0a1a2f 0%, #07111f 30%, #050a14 100%);
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.cashback-module__dYu9EW__container:before {
+  content: "";
+  filter: blur(80px);
+  z-index: 0;
+  background: radial-gradient(circle at 30% 20%, #008cff1f, #0000 60%), radial-gradient(circle at 80% 80%, #00dcff14, #0000 60%), radial-gradient(circle, #00285a4d, #0000 70%);
+  position: absolute;
+  inset: 0;
+}
+
+.cashback-module__dYu9EW__container:after {
+  content: "";
+  filter: blur(120px);
+  z-index: 0;
+  background: radial-gradient(circle, #0078ff26, #0000 70%);
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  bottom: -20%;
+  left: 40%;
+}
+
+.cashback-module__dYu9EW__content {
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+.cashback-module__dYu9EW__header {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: 1s forwards cashback-module__dYu9EW__fadeInUp;
+  position: relative;
+}
+
+.cashback-module__dYu9EW__backLink {
+  color: #00e0ff;
+  z-index: 3;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .3s;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.cashback-module__dYu9EW__backLink:hover {
+  color: #0fc;
+  text-shadow: 0 0 10px #0fc;
+  transform: translateY(-50%)translateX(-5px);
+}
+
+.cashback-module__dYu9EW__title {
+  text-align: center;
+  background: linear-gradient(135deg, #0cf, #00ffb7);
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px #00ffff4d;
+  -webkit-background-clip: text;
+  margin-bottom: 20px;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.cashback-module__dYu9EW__subtitle {
+  color: #cce6f7;
+  text-align: center;
+  opacity: .9;
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.cashback-module__dYu9EW__statsBanner {
+  backdrop-filter: blur(25px);
+  background: #14192099;
+  border: 1px solid #ffffff0d;
+  border-radius: 25px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 60px 0;
+  padding: 40px;
+  display: grid;
+  box-shadow: 0 15px 40px #0000004d;
+}
+
+.cashback-module__dYu9EW__stat {
+  text-align: center;
+}
+
+.cashback-module__dYu9EW__statNumber {
+  color: #0cf;
+  text-shadow: 0 0 20px #0ff6;
+  margin-bottom: 8px;
+  font-size: 2.8rem;
+  font-weight: 900;
+}
+
+.cashback-module__dYu9EW__statLabel {
+  color: #a8c6d9;
+  font-size: 1rem;
+}
+
+.cashback-module__dYu9EW__categoriesGrid {
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  display: flex;
+}
+
+.cashback-module__dYu9EW__categoryCard {
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+  opacity: 0;
+  background: #14192099;
+  border: 1px solid #ffffff0d;
+  border-radius: 30px;
+  width: 320px;
+  padding: 30px;
+  transition: all .5s;
+  animation: .8s forwards cashback-module__dYu9EW__fadeInUp;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px #0000004d;
+}
+
+.cashback-module__dYu9EW__categoryCard:hover {
+  border-color: #0fc6;
+  transform: scale(1.05)translateY(-10px);
+  box-shadow: 0 30px 60px #00ffcc26;
+}
+
+.cashback-module__dYu9EW__categoryHeader {
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.cashback-module__dYu9EW__categoryIcon {
+  background: radial-gradient(circle, #00c8ff33, #00ffc81a);
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  transition: transform .3s;
+  display: flex;
+}
+
+.cashback-module__dYu9EW__categoryCard:hover .cashback-module__dYu9EW__categoryIcon {
+  transform: rotate(5deg)scale(1.1);
+}
+
+.cashback-module__dYu9EW__categoryTitle {
+  color: #0cf;
+  margin-bottom: 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.cashback-module__dYu9EW__cashbackAmount {
+  color: #0f8;
+  text-shadow: 0 0 10px #0f86;
+  font-weight: 600;
+}
+
+.cashback-module__dYu9EW__categoryDescription {
+  color: #cce6f7;
+  margin: 15px 0;
+  line-height: 1.5;
+}
+
+.cashback-module__dYu9EW__conditions {
+  color: #fc0;
+  background: #ffffff0d;
+  border-left: 3px solid #fc0;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: .9rem;
+}
+
+.cashback-module__dYu9EW__activateButton {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00a2ff, #0fc);
+  border: none;
+  border-radius: 15px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 20px #0fc3;
+}
+
+.cashback-module__dYu9EW__activateButton:before {
+  content: "";
+  background: linear-gradient(90deg, #0000, #fff3, #0000);
+  width: 100%;
+  height: 100%;
+  transition: left .5s;
+  position: absolute;
+  top: 0;
+  left: -100%;
+}
+
+.cashback-module__dYu9EW__activateButton:hover:before {
+  left: 100%;
+}
+
+.cashback-module__dYu9EW__activateButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px #00ffff4d;
+}
+
+.cashback-module__dYu9EW__disclaimer {
+  text-align: center;
+  color: #cce6f7;
+  backdrop-filter: blur(20px);
+  background: #141920b3;
+  border: 1px solid #ffffff0d;
+  border-radius: 25px;
+  margin-top: 40px;
+  padding: 30px;
+  box-shadow: 0 10px 30px #00ffff0d;
+}
+
+.cashback-module__dYu9EW__disclaimer h3 {
+  color: #0fc;
+  margin-bottom: 10px;
+}
+
+@keyframes cashback-module__dYu9EW__fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width <= 900px) {
+  .cashback-module__dYu9EW__statsBanner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cashback-module__dYu9EW__categoriesGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cashback-module__dYu9EW__categoryCard {
+    width: 90%;
+  }
+
+  .cashback-module__dYu9EW__title {
+    font-size: 2.3rem;
+  }
+}
+
+
+/*# sourceMappingURL=src_app_%28pages%29_cashback_cashback_module_fe07cf9d.css.map*/
