@@ -1,9 +1,11 @@
 {
   "/(auth)/register/page": "app/(auth)/register/page.js",
   "/(pages)/cards/page": "app/(pages)/cards/page.js",
+  "/(pages)/cashback/page": "app/(pages)/cashback/page.js",
   "/(pages)/credit-calculator/page": "app/(pages)/credit-calculator/page.js",
   "/(pages)/dashboard/page": "app/(pages)/dashboard/page.js",
   "/(pages)/investments/page": "app/(pages)/investments/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/auth/register/route": "app/api/auth/register/route.js",
   "/page": "app/page.js"
 }

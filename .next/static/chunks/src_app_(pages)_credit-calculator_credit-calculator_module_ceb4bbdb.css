@@ -33,21 +33,25 @@
 }
 
 .credit-calculator-module__NvF5_q__backLink {
-  color: #0cf;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: 600;
+  cursor: pointer;
+  z-index: 10;
+  color: #0fc;
+  border-radius: 15px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 700;
   text-decoration: none;
   transition: all .3s;
   position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  top: 20px;
+  left: 20px;
+  overflow: hidden;
 }
 
 .credit-calculator-module__NvF5_q__backLink:hover {
-  background: #00ccff1f;
-  transform: translateY(-50%)translateX(-4px);
+  color: #0fc;
+  text-shadow: 0 0 10px #0fc;
+  transform: translateY(-10%)translateX(-5px);
 }
 
 .credit-calculator-module__NvF5_q__title {
@@ -344,6 +348,115 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.credit-calculator-module__NvF5_q__applicationForm {
+  backdrop-filter: blur(20px);
+  background: #0f1828f2;
+  border: 1px solid #0cf3;
+  border-radius: 20px;
+  margin-top: 20px;
+  padding: 30px;
+  animation: .6s credit-calculator-module__NvF5_q__fadeIn;
+  box-shadow: 0 10px 30px #00ccff26;
+}
+
+.credit-calculator-module__NvF5_q__applicationForm h4 {
+  color: #0cf;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.credit-calculator-module__NvF5_q__formInput {
+  color: #ecf0f1;
+  background: #141e2dcc;
+  border: 1px solid #00ccff4d;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  transition: all .3s;
+}
+
+.credit-calculator-module__NvF5_q__formInput:focus {
+  background: #141e2de6;
+  border-color: #0cf;
+  box-shadow: 0 0 8px #0cf6;
+}
+
+.credit-calculator-module__NvF5_q__formInput::placeholder {
+  color: #7f9eb2;
+}
+
+.credit-calculator-module__NvF5_q__applicationButtons {
+  gap: 15px;
+  margin-top: 10px;
+  display: flex;
+}
+
+.credit-calculator-module__NvF5_q__submitApplicationButton {
+  color: #001824;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00ffb7 0%, #0c8 100%);
+  border: none;
+  border-radius: 10px;
+  flex: 1;
+  padding: 14px 24px;
+  font-weight: 700;
+  transition: all .3s;
+}
+
+.credit-calculator-module__NvF5_q__submitApplicationButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px #0f86;
+}
+
+.credit-calculator-module__NvF5_q__submitApplicationButton:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.credit-calculator-module__NvF5_q__cancelButton {
+  color: #ff4757;
+  cursor: pointer;
+  background: #ff47571a;
+  border: 1px solid #ff47574d;
+  border-radius: 10px;
+  flex: 1;
+  padding: 14px 24px;
+  font-weight: 700;
+  transition: all .3s;
+}
+
+.credit-calculator-module__NvF5_q__cancelButton:hover {
+  background: #ff475733;
+  transform: translateY(-2px);
+}
+
+.credit-calculator-module__NvF5_q__successMessage {
+  background: linear-gradient(135deg, #00ff881a 0%, #00cc880d 100%);
+  border: 1px solid #00ff884d;
+  border-radius: 15px;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 25px;
+  animation: .6s credit-calculator-module__NvF5_q__fadeIn;
+  display: flex;
+}
+
+.credit-calculator-module__NvF5_q__successIcon {
+  flex-shrink: 0;
+  font-size: 2rem;
+}
+
+.credit-calculator-module__NvF5_q__successText {
+  color: #00ffa3;
+  font-size: .95rem;
+  line-height: 1.5;
 }
 
 

@@ -39,14 +39,12 @@
   transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
 }
 
-/* 👇 Только при первом запуске, пока идёт анимация */
 .page-content.hidden {
   opacity: 0;
   filter: blur(30px);
   transform: translateY(12px);
 }
 
-/* 👇 После завершения — плавное появление */
 .page-content.visible {
   opacity: 1;
   filter: blur(0);

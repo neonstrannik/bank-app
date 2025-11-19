@@ -38,7 +38,6 @@ export default function RegisterPage() {
         throw new Error(data.error || "Ошибка регистрации");
       }
 
-      // Автоматически логиним пользователя после регистрации
       login(data.user, data.token);
     } catch (err: any) {
       setError(err.message);
@@ -56,6 +55,9 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
+                <Link href="/" className={styles.backLink}>
+            ← Назад
+          </Link>
       <div className={styles.content}>
         <div className={styles.header}>
           <h1 className={styles.title}>Добро пожаловать в V-банк</h1>

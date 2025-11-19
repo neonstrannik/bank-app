@@ -1,7 +1,12 @@
 .container {
   min-height: 100vh;
   padding: 60px 20px;
-  background: radial-gradient(circle at 30% 20%, #0b1724, #060b13 60%, #04070d 100%);
+  background: radial-gradient(
+    circle at 30% 20%,
+    #0b1724,
+    #060b13 60%,
+    #04070d 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,13 +14,15 @@
   overflow: hidden;
 }
 
-/* мягкие сияния на фоне */
 .container::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 80% 10%, rgba(0, 153, 255, 0.25), transparent 70%),
+  background: radial-gradient(
+      circle at 80% 10%,
+      rgba(0, 153, 255, 0.25),
+      transparent 70%
+    ),
     radial-gradient(circle at 10% 80%, rgba(0, 255, 255, 0.1), transparent 70%);
   filter: blur(100px);
   z-index: 0;
@@ -36,22 +43,25 @@
 
 .backLink {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #00ccff;
+  top: 20px;
+  left: 20px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 15px;
   text-decoration: none;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
   transition: all 0.3s ease;
+  z-index: 10;
+  color: #00ffcc;
 }
 
 .backLink:hover {
-  background: rgba(0, 204, 255, 0.12);
-  transform: translateY(-50%) translateX(-4px);
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc;
+  transform: translateY(-10%) translateX(-5px);
 }
-
 .title {
   font-size: 3.2rem;
   font-weight: 700;
@@ -79,7 +89,7 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .backLink {
     position: relative;
     top: auto;
@@ -344,6 +354,130 @@
 }
 
 /* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Стили для формы заявки и сообщения об успехе */
+.applicationForm {
+  background: rgba(15, 24, 40, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(0, 204, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 204, 255, 0.15);
+  margin-top: 20px;
+  animation: fadeIn 0.6s ease;
+}
+
+.applicationForm h4 {
+  color: #00ccff;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.formInput {
+  width: 100%;
+  background: rgba(20, 30, 45, 0.8);
+  border: 1px solid rgba(0, 204, 255, 0.3);
+  border-radius: 10px;
+  color: #ecf0f1;
+  padding: 14px 16px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.formInput:focus {
+  border-color: #00ccff;
+  box-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
+  background: rgba(20, 30, 45, 0.9);
+}
+
+.formInput::placeholder {
+  color: #7f9eb2;
+}
+
+.applicationButtons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.submitApplicationButton {
+  flex: 1;
+  background: linear-gradient(135deg, #00ffb7 0%, #00cc88 100%);
+  color: #001824;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitApplicationButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 255, 136, 0.4);
+}
+
+.submitApplicationButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cancelButton {
+  flex: 1;
+  background: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 71, 87, 0.2);
+  transform: translateY(-2px);
+}
+
+.successMessage {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.1) 0%,
+    rgba(0, 204, 136, 0.05) 100%
+  );
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  animation: fadeIn 0.6s ease;
+}
+
+.successIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.successText {
+  color: #00ffa3;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

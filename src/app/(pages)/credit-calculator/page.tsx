@@ -26,6 +26,13 @@ export default function CreditCalculator() {
   
   const [calculation, setCalculation] = useState<CreditCalculation | null>(null);
   const [loading, setLoading] = useState(false);
+  const [creditApplication, setCreditApplication] = useState({
+    name: "",
+    phone: "",
+    email: ""
+  });
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [applicationSubmitted, setApplicationSubmitted] = useState(false);
 
   const calculateCredit = () => {
     setLoading(true);
@@ -37,7 +44,6 @@ export default function CreditCalculator() {
       const totalAmount = monthlyPayment * term;
       const overpayment = totalAmount - amount;
 
-      // Генерация графика платежей
       const paymentSchedule = [];
       let remaining = amount;
       
@@ -77,9 +83,39 @@ export default function CreditCalculator() {
     }));
   };
 
+  const handleApplicationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCreditApplication(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     calculateCredit();
+  };
+
+  const handleApplicationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Имитация отправки заявки
+    setLoading(true);
+    setTimeout(() => {
+      setApplicationSubmitted(true);
+      setLoading(false);
+      setShowApplicationForm(false);
+      
+      // Сброс формы через 5 секунд
+      setTimeout(() => {
+        setApplicationSubmitted(false);
+        setCreditApplication({
+          name: "",
+          phone: "",
+          email: ""
+        });
+      }, 5000);
+    }, 1000);
   };
 
   const formatCurrency = (amount: number) => {
@@ -279,9 +315,85 @@ export default function CreditCalculator() {
                   </div>
                 </div>
 
-                <button className={styles.applyButton}>
-                  Оформить кредит онлайн
-                </button>
+                {/* Сообщение об успешной отправке */}
+                {applicationSubmitted && (
+                  <div className={styles.successMessage}>
+                    <div className={styles.successIcon}>✅</div>
+                    <div className={styles.successText}>
+                      <strong>Заявка на кредит успешно отправлена!</strong>
+                      <br />
+                      Наш менеджер свяжется с вами в течение 15 минут для уточнения деталей.
+                    </div>
+                  </div>
+                )}
+
+                {/* Форма заявки на кредит */}
+                {showApplicationForm && !applicationSubmitted && (
+                  <div className={styles.applicationForm}>
+                    <h4>Оформление кредита</h4>
+                    <form onSubmit={handleApplicationSubmit}>
+                      <div className={styles.formGroup}>
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Ваше ФИО"
+                          value={creditApplication.name}
+                          onChange={handleApplicationChange}
+                          className={styles.formInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formGroup}>
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="Телефон"
+                          value={creditApplication.phone}
+                          onChange={handleApplicationChange}
+                          className={styles.formInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formGroup}>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          value={creditApplication.email}
+                          onChange={handleApplicationChange}
+                          className={styles.formInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.applicationButtons}>
+                        <button 
+                          type="submit" 
+                          className={styles.submitApplicationButton}
+                          disabled={loading}
+                        >
+                          {loading ? 'Отправляем...' : 'Отправить заявку'}
+                        </button>
+                        <button 
+                          type="button" 
+                          className={styles.cancelButton}
+                          onClick={() => setShowApplicationForm(false)}
+                        >
+                          Отмена
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {/* Кнопка оформления кредита */}
+                {!showApplicationForm && !applicationSubmitted && (
+                  <button 
+                    className={styles.applyButton}
+                    onClick={() => setShowApplicationForm(true)}
+                  >
+                    Оформить кредит онлайн
+                  </button>
+                )}
               </>
             )}
           </div>

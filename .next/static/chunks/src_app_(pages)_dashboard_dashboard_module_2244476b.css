@@ -1,6 +1,5 @@
 /* [project]/src/app/(pages)/dashboard/dashboard.module.css [app-client] (css) */
 .dashboard-module__dxARTG__container {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 50%, #1a2431 100%);
   min-height: 100vh;
   padding: 40px 20px;
 }
@@ -103,6 +102,28 @@
   .dashboard-module__dxARTG__cards {
     grid-template-columns: 1fr;
   }
+}
+
+.dashboard-module__dxARTG__backLink {
+  cursor: pointer;
+  z-index: 10;
+  color: #0fc;
+  border-radius: 15px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  overflow: hidden;
+}
+
+.dashboard-module__dxARTG__backLink:hover {
+  color: #0fc;
+  text-shadow: 0 0 10px #0fc;
+  transform: translateY(-10%)translateX(-5px);
 }
 
 

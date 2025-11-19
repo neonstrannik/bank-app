@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useAuth } from "@/app/(auth)/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import styles from "./dashboard.module.css";
 
 export default function DashboardPage() {
@@ -21,6 +22,10 @@ export default function DashboardPage() {
 
   return (
     <div className={styles.container}>
+      <Link href="/" className={styles.backLink}>
+        ← Назад
+      </Link>
+
       <div className={styles.content}>
         <h1 className={styles.title}>Добро пожаловать, {user?.firstName}!</h1>
 

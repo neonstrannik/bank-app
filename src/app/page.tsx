@@ -9,6 +9,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("");
   const [aboutOpen, setAboutOpen] = useState(false);
   const [activeAboutTab, setActiveAboutTab] = useState("mission");
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const hasSeen = sessionStorage.getItem("hasSeenLogoAnimation") === "true";
@@ -203,9 +204,8 @@ export default function Home() {
 
                   {activeAboutTab === "career" && (
                     <p>
-                      Мы всегда ищем талантливых людей! 💼 Откройте раздел
-                      “Карьера” на нашем сайте и присоединяйтесь к инновационной
-                      команде, которая создаёт будущее финансов.
+                      Мы всегда ищем талантливых людей! Присоединяйтесь к
+                      инновационной команде, которая создаёт будущее финансов.
                     </p>
                   )}
 
@@ -222,38 +222,37 @@ export default function Home() {
             )}
           </section>
         </main>
+        <footer className="footer">
+          <div className="footer-inner container">
+            <div className="footer-left">
+              <p>📞 8-800-900-1234 | ✉️ support@vbank.ru</p>
+              <p>🏢 г. Москва, ул. Инновационная, д. 5</p>
+            </div>
+
+            <div className="footer-right">
+              <a
+                href="https://t.me/vbank"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Telegram
+              </a>
+              <span>•</span>
+              <a
+                href="https://vk.com/vbank"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                VK
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <p>© 2025 V-Банк. Все права защищены.</p>
+          </div>
+        </footer>
       </div>
-
-      <footer className="footer">
-        <div className="footer-inner container">
-          <div className="footer-left">
-            <p>📞 8-800-900-1234 | ✉️ support@vbank.ru</p>
-            <p>🏢 г. Москва, ул. Инновационная, д. 5</p>
-          </div>
-
-          <div className="footer-right">
-            <a
-              href="https://t.me/vbank"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Telegram
-            </a>
-            <span>•</span>
-            <a
-              href="https://vk.com/vbank"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              VK
-            </a>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2025 V-Банк. Все права защищены.</p>
-        </div>
-      </footer>
     </>
   );
 }

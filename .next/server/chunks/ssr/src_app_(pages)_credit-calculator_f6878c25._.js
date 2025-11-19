@@ -5,16 +5,20 @@ module.exports = {
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.v({
+  "applicationButtons": "credit-calculator-module__NvF5_q__applicationButtons",
+  "applicationForm": "credit-calculator-module__NvF5_q__applicationForm",
   "applyButton": "credit-calculator-module__NvF5_q__applyButton",
   "backLink": "credit-calculator-module__NvF5_q__backLink",
   "calculateButton": "credit-calculator-module__NvF5_q__calculateButton",
   "calculatorGrid": "credit-calculator-module__NvF5_q__calculatorGrid",
+  "cancelButton": "credit-calculator-module__NvF5_q__cancelButton",
   "container": "credit-calculator-module__NvF5_q__container",
   "content": "credit-calculator-module__NvF5_q__content",
   "currency": "credit-calculator-module__NvF5_q__currency",
   "fadeIn": "credit-calculator-module__NvF5_q__fadeIn",
   "form": "credit-calculator-module__NvF5_q__form",
   "formGroup": "credit-calculator-module__NvF5_q__formGroup",
+  "formInput": "credit-calculator-module__NvF5_q__formInput",
   "formSection": "credit-calculator-module__NvF5_q__formSection",
   "header": "credit-calculator-module__NvF5_q__header",
   "inputWrapper": "credit-calculator-module__NvF5_q__inputWrapper",
@@ -31,7 +35,11 @@ __turbopack_context__.v({
   "resultsSection": "credit-calculator-module__NvF5_q__resultsSection",
   "scheduleCard": "credit-calculator-module__NvF5_q__scheduleCard",
   "scheduleTable": "credit-calculator-module__NvF5_q__scheduleTable",
+  "submitApplicationButton": "credit-calculator-module__NvF5_q__submitApplicationButton",
   "subtitle": "credit-calculator-module__NvF5_q__subtitle",
+  "successIcon": "credit-calculator-module__NvF5_q__successIcon",
+  "successMessage": "credit-calculator-module__NvF5_q__successMessage",
+  "successText": "credit-calculator-module__NvF5_q__successText",
   "tableBody": "credit-calculator-module__NvF5_q__tableBody",
   "tableHeader": "credit-calculator-module__NvF5_q__tableHeader",
   "tableNote": "credit-calculator-module__NvF5_q__tableNote",
@@ -65,6 +73,13 @@ function CreditCalculator() {
     });
     const [calculation, setCalculation] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [creditApplication, setCreditApplication] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
+        name: "",
+        phone: "",
+        email: ""
+    });
+    const [showApplicationForm, setShowApplicationForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [applicationSubmitted, setApplicationSubmitted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const calculateCredit = ()=>{
         setLoading(true);
         setTimeout(()=>{
@@ -73,7 +88,6 @@ function CreditCalculator() {
             const monthlyPayment = amount * monthlyRate * Math.pow(1 + monthlyRate, term) / (Math.pow(1 + monthlyRate, term) - 1);
             const totalAmount = monthlyPayment * term;
             const overpayment = totalAmount - amount;
-            // Генерация графика платежей
             const paymentSchedule = [];
             let remaining = amount;
             for(let month = 1; month <= term; month++){
@@ -107,9 +121,35 @@ function CreditCalculator() {
                 [name]: parseFloat(value) || 0
             }));
     };
+    const handleApplicationChange = (e)=>{
+        const { name, value } = e.target;
+        setCreditApplication((prev)=>({
+                ...prev,
+                [name]: value
+            }));
+    };
     const handleSubmit = (e)=>{
         e.preventDefault();
         calculateCredit();
+    };
+    const handleApplicationSubmit = (e)=>{
+        e.preventDefault();
+        // Имитация отправки заявки
+        setLoading(true);
+        setTimeout(()=>{
+            setApplicationSubmitted(true);
+            setLoading(false);
+            setShowApplicationForm(false);
+            // Сброс формы через 5 секунд
+            setTimeout(()=>{
+                setApplicationSubmitted(false);
+                setCreditApplication({
+                    name: "",
+                    phone: "",
+                    email: ""
+                });
+            }, 5000);
+        }, 1000);
     };
     const formatCurrency = (amount)=>{
         return new Intl.NumberFormat('ru-RU', {
@@ -132,7 +172,7 @@ function CreditCalculator() {
                             children: "← Назад"
                         }, void 0, false, {
                             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                            lineNumber: 97,
+                            lineNumber: 133,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -140,7 +180,7 @@ function CreditCalculator() {
                             children: "Кредитный калькулятор"
                         }, void 0, false, {
                             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                            lineNumber: 100,
+                            lineNumber: 136,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -148,13 +188,13 @@ function CreditCalculator() {
                             children: "Рассчитайте ежемесячный платеж и переплату по кредиту"
                         }, void 0, false, {
                             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                            lineNumber: 101,
+                            lineNumber: 137,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                    lineNumber: 96,
+                    lineNumber: 132,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -178,13 +218,13 @@ function CreditCalculator() {
                                                         children: "₽"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 111,
+                                                        lineNumber: 147,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 109,
+                                                lineNumber: 145,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -201,7 +241,7 @@ function CreditCalculator() {
                                                         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].rangeInput
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 114,
+                                                        lineNumber: 150,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -214,13 +254,13 @@ function CreditCalculator() {
                                                         max: "5000000"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 124,
+                                                        lineNumber: 160,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 149,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -230,26 +270,26 @@ function CreditCalculator() {
                                                         children: "50 000 ₽"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 135,
+                                                        lineNumber: 171,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "5 000 000 ₽"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 136,
+                                                        lineNumber: 172,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 134,
+                                                lineNumber: 170,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 108,
+                                        lineNumber: 144,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -264,13 +304,13 @@ function CreditCalculator() {
                                                         children: "мес."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 143,
+                                                        lineNumber: 179,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 177,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -286,7 +326,7 @@ function CreditCalculator() {
                                                         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].rangeInput
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 146,
+                                                        lineNumber: 182,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -299,13 +339,13 @@ function CreditCalculator() {
                                                         max: "60"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 155,
+                                                        lineNumber: 191,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 181,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -315,26 +355,26 @@ function CreditCalculator() {
                                                         children: "3 мес."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 166,
+                                                        lineNumber: 202,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "60 мес."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 167,
+                                                        lineNumber: 203,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 165,
+                                                lineNumber: 201,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 176,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -349,13 +389,13 @@ function CreditCalculator() {
                                                         children: "%"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 174,
+                                                        lineNumber: 210,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 172,
+                                                lineNumber: 208,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -372,7 +412,7 @@ function CreditCalculator() {
                                                         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].rangeInput
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 177,
+                                                        lineNumber: 213,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -386,13 +426,13 @@ function CreditCalculator() {
                                                         step: "0.1"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 187,
+                                                        lineNumber: 223,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 176,
+                                                lineNumber: 212,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -402,26 +442,26 @@ function CreditCalculator() {
                                                         children: "5%"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 199,
+                                                        lineNumber: 235,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "25%"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 200,
+                                                        lineNumber: 236,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 198,
+                                                lineNumber: 234,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 207,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -431,18 +471,18 @@ function CreditCalculator() {
                                         children: loading ? 'Рассчитываем...' : 'Рассчитать кредит'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 204,
+                                        lineNumber: 240,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                lineNumber: 107,
+                                lineNumber: 143,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                            lineNumber: 106,
+                            lineNumber: 142,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -456,7 +496,7 @@ function CreditCalculator() {
                                                 children: "Результаты расчета"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 219,
+                                                lineNumber: 255,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -470,7 +510,7 @@ function CreditCalculator() {
                                                                 children: "Ежемесячный платеж"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 223,
+                                                                lineNumber: 259,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -478,13 +518,13 @@ function CreditCalculator() {
                                                                 children: formatCurrency(calculation.monthlyPayment)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 224,
+                                                                lineNumber: 260,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 222,
+                                                        lineNumber: 258,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -495,7 +535,7 @@ function CreditCalculator() {
                                                                 children: "Общая сумма"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 230,
+                                                                lineNumber: 266,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -503,13 +543,13 @@ function CreditCalculator() {
                                                                 children: formatCurrency(calculation.totalAmount)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 231,
+                                                                lineNumber: 267,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 229,
+                                                        lineNumber: 265,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -520,7 +560,7 @@ function CreditCalculator() {
                                                                 children: "Переплата"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 237,
+                                                                lineNumber: 273,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -528,13 +568,13 @@ function CreditCalculator() {
                                                                 children: formatCurrency(calculation.overpayment)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 238,
+                                                                lineNumber: 274,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 236,
+                                                        lineNumber: 272,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -545,7 +585,7 @@ function CreditCalculator() {
                                                                 children: "Эффективная ставка"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 244,
+                                                                lineNumber: 280,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -556,25 +596,25 @@ function CreditCalculator() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 245,
+                                                                lineNumber: 281,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 243,
+                                                        lineNumber: 279,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 221,
+                                                lineNumber: 257,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 218,
+                                        lineNumber: 254,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -584,7 +624,7 @@ function CreditCalculator() {
                                                 children: "График платежей"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 254,
+                                                lineNumber: 290,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -597,41 +637,41 @@ function CreditCalculator() {
                                                                 children: "Месяц"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 257,
+                                                                lineNumber: 293,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: "Платеж"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 258,
+                                                                lineNumber: 294,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: "Основной долг"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 259,
+                                                                lineNumber: 295,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: "Проценты"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 260,
+                                                                lineNumber: 296,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: "Остаток"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 261,
+                                                                lineNumber: 297,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 256,
+                                                        lineNumber: 292,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -643,46 +683,46 @@ function CreditCalculator() {
                                                                         children: payment.month
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                        lineNumber: 266,
+                                                                        lineNumber: 302,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: formatCurrency(payment.payment)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                        lineNumber: 267,
+                                                                        lineNumber: 303,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: formatCurrency(payment.principal)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                        lineNumber: 268,
+                                                                        lineNumber: 304,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: formatCurrency(payment.interest)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                        lineNumber: 269,
+                                                                        lineNumber: 305,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: formatCurrency(payment.remaining)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                        lineNumber: 270,
+                                                                        lineNumber: 306,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, payment.month, true, {
                                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                                lineNumber: 265,
+                                                                lineNumber: 301,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 263,
+                                                        lineNumber: 299,
                                                         columnNumber: 21
                                                     }, this),
                                                     calculation.paymentSchedule.length > 6 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -693,51 +733,205 @@ function CreditCalculator() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                        lineNumber: 275,
+                                                        lineNumber: 311,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                                lineNumber: 255,
+                                                lineNumber: 291,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 253,
+                                        lineNumber: 289,
                                         columnNumber: 17
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    applicationSubmitted && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].successMessage,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].successIcon,
+                                                children: "✅"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                lineNumber: 321,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].successText,
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                        children: "Заявка на кредит успешно отправлена!"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 323,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 324,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Наш менеджер свяжется с вами в течение 15 минут для уточнения деталей."
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                lineNumber: 322,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                        lineNumber: 320,
+                                        columnNumber: 19
+                                    }, this),
+                                    showApplicationForm && !applicationSubmitted && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].applicationForm,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Оформление кредита"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                lineNumber: 333,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                                                onSubmit: handleApplicationSubmit,
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formGroup,
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                            type: "text",
+                                                            name: "name",
+                                                            placeholder: "Ваше ФИО",
+                                                            value: creditApplication.name,
+                                                            onChange: handleApplicationChange,
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formInput,
+                                                            required: true
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                            lineNumber: 336,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 335,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formGroup,
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                            type: "tel",
+                                                            name: "phone",
+                                                            placeholder: "Телефон",
+                                                            value: creditApplication.phone,
+                                                            onChange: handleApplicationChange,
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formInput,
+                                                            required: true
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                            lineNumber: 347,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 346,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formGroup,
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                            type: "email",
+                                                            name: "email",
+                                                            placeholder: "Email",
+                                                            value: creditApplication.email,
+                                                            onChange: handleApplicationChange,
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].formInput,
+                                                            required: true
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                            lineNumber: 358,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 357,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].applicationButtons,
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                type: "submit",
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].submitApplicationButton,
+                                                                disabled: loading,
+                                                                children: loading ? 'Отправляем...' : 'Отправить заявку'
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                                lineNumber: 369,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                type: "button",
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].cancelButton,
+                                                                onClick: ()=>setShowApplicationForm(false),
+                                                                children: "Отмена"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                                lineNumber: 376,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                        lineNumber: 368,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                                lineNumber: 334,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
+                                        lineNumber: 332,
+                                        columnNumber: 19
+                                    }, this),
+                                    !showApplicationForm && !applicationSubmitted && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$credit$2d$calculator$2f$credit$2d$calculator$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].applyButton,
+                                        onClick: ()=>setShowApplicationForm(true),
                                         children: "Оформить кредит онлайн"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                                        lineNumber: 282,
-                                        columnNumber: 17
+                                        lineNumber: 390,
+                                        columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true)
                         }, void 0, false, {
                             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                            lineNumber: 215,
+                            lineNumber: 251,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-                    lineNumber: 104,
+                    lineNumber: 140,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-            lineNumber: 95,
+            lineNumber: 131,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/(pages)/credit-calculator/page.tsx",
-        lineNumber: 94,
+        lineNumber: 130,
         columnNumber: 5
     }, this);
 }

@@ -1,7 +1,6 @@
 .container {
   min-height: 100vh;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 50%, #1a2431 100%);
 }
 
 .content {
@@ -102,4 +101,25 @@
   .cards {
     grid-template-columns: 1fr;
   }
+}
+.backLink {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+  color: #00ffcc;
+}
+
+.backLink:hover {
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc;
+  transform: translateY(-10%) translateX(-5px);
 }
