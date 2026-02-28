@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/(auth)/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { accountsAPI, cardsAPI } from "@/lib/api";
 import styles from "./dashboard.module.css";
 
 interface Transaction {
@@ -16,93 +17,84 @@ interface Transaction {
   time: string;
 }
 
+interface Account {
+  id: string;
+  account_number: string;
+  account_type: string;
+  balance: number;
+  currency: string;
+  status: string;
+}
+
+interface Card {
+  id: string;
+  card_name: string;
+  card_type: string;
+  card_number: string;
+  status: string;
+}
+
 export default function DashboardPage() {
   const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
-  const [balance] = useState(127543);
-  const [cashback] = useState(2150);
-  const [monthlyIncome] = useState(87500);
-  const [monthlyExpenses] = useState(42350);
 
-  const transactions: Transaction[] = [
-    {
-      id: "1",
-      type: "expense",
-      category: "Супермаркет",
-      description: "Оплата покупок",
-      amount: 1250,
-      date: "Сегодня",
-      time: "14:32",
-    },
-    {
-      id: "2",
-      type: "income",
-      category: "Кэшбэк",
-      description: "Начисление кэшбэка",
-      amount: 187,
-      date: "Сегодня",
-      time: "14:30",
-    },
-    {
-      id: "3",
-      type: "income",
-      category: "Перевод",
-      description: "От Ивана Иванова",
-      amount: 5000,
-      date: "Вчера",
-      time: "18:15",
-    },
-    {
-      id: "4",
-      type: "expense",
-      category: "Кафе",
-      description: "Оплата в ресторане",
-      amount: 2450,
-      date: "Вчера",
-      time: "19:45",
-    },
-    {
-      id: "5",
-      type: "expense",
-      category: "Транспорт",
-      description: "Оплата проезда",
-      amount: 85,
-      date: "03.12.2024",
-      time: "08:20",
-    },
-    {
-      id: "6",
-      type: "income",
-      category: "Зарплата",
-      description: "Начисление зарплаты",
-      amount: 75000,
-      date: "01.12.2024",
-      time: "10:00",
-    },
-  ];
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const cards = [
-    {
-      id: "1",
-      number: "4512",
-      type: "Visa",
-      balance: 127543,
-      currency: "RUB",
-    },
-    {
-      id: "2",
-      number: "8921",
-      type: "Mastercard",
-      balance: 45890,
-      currency: "RUB",
-    },
-  ];
+  // Безопасные вычисления с защитой от null/undefined
+  const totalBalance =
+    accounts?.reduce((sum, acc) => sum + (acc?.balance || 0), 0) || 0;
+  const totalCards = cards?.length || 0;
+  const activeAccounts =
+    accounts?.filter((acc) => acc?.status === "active")?.length || 0;
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/");
+      return;
     }
-  }, [isAuthenticated, router]);
+
+    if (user) {
+      loadUserData();
+    }
+  }, [isAuthenticated, user, router]);
+
+  const loadUserData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      console.log("📊 Загрузка данных для пользователя:", user?.id);
+
+      // Загружаем счета и карты параллельно
+      const [accountsRes, cardsRes] = await Promise.all([
+        accountsAPI.getUserAccounts(user!.id),
+        cardsAPI.getUserCards(user!.id),
+      ]);
+
+      console.log("✅ Счета получены:", accountsRes.data);
+      console.log("✅ Карты получены:", cardsRes.data);
+
+      setAccounts(accountsRes.data || []);
+      setCards(cardsRes.data || []);
+
+      // TODO: Загрузить транзакции когда будет готов API
+      // const transactionsRes = await transactionsAPI.getUserTransactions(user!.id);
+      // setTransactions(transactionsRes.data || []);
+    } catch (err: any) {
+      console.error("❌ Ошибка загрузки данных:", err);
+      setError(
+        err.response?.data?.error ||
+          err.message ||
+          "Не удалось загрузить данные",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -115,14 +107,33 @@ export default function DashboardPage() {
       currency: "RUB",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount || 0);
+  };
+
+  const formatCardNumber = (cardNumber: string) => {
+    if (!cardNumber) return "•••• •••• •••• ••••";
+    // Показываем только последние 4 цифры
+    return `•••• ${cardNumber.slice(-4)}`;
   };
 
   if (!isAuthenticated) {
+    return null; // Перенаправление происходит в useEffect
+  }
+
+  if (loading) {
     return (
       <div className={styles.loading}>
         <div className={styles.spinner}></div>
-        <p>Загрузка...</p>
+        <p>Загрузка ваших данных...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.error}>
+        <p>❌ {error}</p>
+        <button onClick={loadUserData}>Повторить попытку</button>
       </div>
     );
   }
@@ -134,12 +145,13 @@ export default function DashboardPage() {
         <div className={styles.headerContent}>
           <div className={styles.userInfo}>
             <div className={styles.avatar}>
-              {user?.firstName?.[0]}
-              {user?.lastName?.[0]}
+              {user?.first_name?.[0]?.toUpperCase()}
+              {user?.last_name?.[0]?.toUpperCase()}
             </div>
             <div>
               <h2 className={styles.greeting}>
-                Добро пожаловать, {user?.firstName}!
+                Добро пожаловать,{" "}
+                {user?.first_name || user?.email || "Пользователь"}!
               </h2>
               <p className={styles.userEmail}>{user?.email}</p>
             </div>
@@ -158,31 +170,25 @@ export default function DashboardPage() {
               <div>
                 <p className={styles.cardLabel}>Общий баланс</p>
                 <h1 className={styles.mainBalance}>
-                  {formatCurrency(balance)}
+                  {formatCurrency(totalBalance)}
                 </h1>
               </div>
               <div className={styles.quickStats}>
                 <div className={styles.statItem}>
-                  <span className={styles.statLabel}>Доход</span>
-                  <span className={styles.statValueIncome}>
-                    +{formatCurrency(monthlyIncome)}
-                  </span>
+                  <span className={styles.statLabel}>Счетов</span>
+                  <span className={styles.statValue}>{accounts.length}</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statLabel}>Расход</span>
-                  <span className={styles.statValueExpense}>
-                    -{formatCurrency(monthlyExpenses)}
-                  </span>
+                  <span className={styles.statLabel}>Активных</span>
+                  <span className={styles.statValue}>{activeAccounts}</span>
                 </div>
               </div>
             </div>
             <div className={styles.cashbackBadge}>
               <span className={styles.cashbackIcon}>💳</span>
               <div>
-                <span className={styles.cashbackLabel}>Кэшбэк за месяц</span>
-                <span className={styles.cashbackAmount}>
-                  +{formatCurrency(cashback)}
-                </span>
+                <span className={styles.cashbackLabel}>Всего карт</span>
+                <span className={styles.cashbackAmount}>{cards.length}</span>
               </div>
             </div>
           </div>
@@ -220,93 +226,107 @@ export default function DashboardPage() {
           {/* Активные карты */}
           <div className={styles.section}>
             <div className={styles.sectionHeader}>
-              <h3 className={styles.sectionTitle}>Активные карты</h3>
+              <h3 className={styles.sectionTitle}>Ваши карты</h3>
               <Link href="/cards" className={styles.sectionLink}>
                 Все карты →
               </Link>
             </div>
             <div className={styles.cardsList}>
-              {cards.map((card) => (
-                <div key={card.id} className={styles.cardItem}>
-                  <div className={styles.cardItemHeader}>
-                    <span className={styles.cardType}>{card.type}</span>
-                    <span className={styles.cardNumber}>
-                      •••• {card.number}
-                    </span>
+              {cards && cards.length > 0 ? (
+                cards.slice(0, 3).map((card) => (
+                  <div key={card.id} className={styles.cardItem}>
+                    <div className={styles.cardItemHeader}>
+                      <span className={styles.cardType}>
+                        {card.card_name || "Карта"}
+                      </span>
+                      <span className={styles.cardNumber}>
+                        {formatCardNumber(card.card_number)}
+                      </span>
+                    </div>
+                    <div className={styles.cardStatus}>
+                      Статус:{" "}
+                      {card.status === "active"
+                        ? "✅ Активна"
+                        : "🔒 Заблокирована"}
+                    </div>
                   </div>
-                  <div className={styles.cardBalance}>
-                    {formatCurrency(card.balance)}
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className={styles.noData}>У вас пока нет карт</p>
+              )}
             </div>
           </div>
 
           {/* Статистика */}
           <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>Статистика за месяц</h3>
+            <h3 className={styles.sectionTitle}>Сводка</h3>
             <div className={styles.statsGrid}>
               <div className={styles.statCard}>
-                <div className={styles.statCardIcon}>📊</div>
+                <div className={styles.statCardIcon}>🏦</div>
                 <div>
-                  <p className={styles.statCardLabel}>Транзакций</p>
-                  <p className={styles.statCardValue}>127</p>
+                  <p className={styles.statCardLabel}>Счетов</p>
+                  <p className={styles.statCardValue}>{accounts.length}</p>
                 </div>
               </div>
               <div className={styles.statCard}>
-                <div className={styles.statCardIcon}>💰</div>
+                <div className={styles.statCardIcon}>💳</div>
                 <div>
-                  <p className={styles.statCardLabel}>Средний чек</p>
-                  <p className={styles.statCardValue}>{formatCurrency(333)}</p>
+                  <p className={styles.statCardLabel}>Карт</p>
+                  <p className={styles.statCardValue}>{cards.length}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* История транзакций */}
+        {/* Счета */}
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h3 className={styles.sectionTitle}>Ваши счета</h3>
+          </div>
+          <div className={styles.accountsList}>
+            {accounts && accounts.length > 0 ? (
+              accounts.map((account) => (
+                <div key={account.id} className={styles.accountItem}>
+                  <div className={styles.accountInfo}>
+                    <span className={styles.accountType}>
+                      {account.account_type === "checking"
+                        ? "💰 Дебетовый"
+                        : "💳 Кредитный"}{" "}
+                      счет
+                    </span>
+                    <span className={styles.accountNumber}>
+                      {account.account_number || "Номер не указан"}
+                    </span>
+                  </div>
+                  <div className={styles.accountBalance}>
+                    {formatCurrency(account.balance || 0)}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className={styles.noData}>У вас пока нет счетов</p>
+            )}
+          </div>
+        </div>
+
+        {/* История транзакций - пока заглушка */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h3 className={styles.sectionTitle}>Последние операции</h3>
             <button className={styles.filterButton}>Все</button>
           </div>
-          <div className={styles.transactionsList}>
-            {transactions.map((transaction) => (
-              <div key={transaction.id} className={styles.transactionItem}>
-                <div className={styles.transactionIcon}>
-                  {transaction.type === "income" ? "➕" : "➖"}
+          {transactions && transactions.length > 0 ? (
+            <div className={styles.transactionsList}>
+              {transactions.map((transaction) => (
+                <div key={transaction.id} className={styles.transactionItem}>
+                  {/* Здесь будет отображение транзакций */}
                 </div>
-                <div className={styles.transactionInfo}>
-                  <div className={styles.transactionMain}>
-                    <span className={styles.transactionCategory}>
-                      {transaction.category}
-                    </span>
-                    <span
-                      className={`${styles.transactionAmount} ${
-                        transaction.type === "income"
-                          ? styles.amountIncome
-                          : styles.amountExpense
-                      }`}
-                    >
-                      {transaction.type === "income" ? "+" : "-"}
-                      {formatCurrency(transaction.amount)}
-                    </span>
-                  </div>
-                  <div className={styles.transactionMeta}>
-                    <span className={styles.transactionDescription}>
-                      {transaction.description}
-                    </span>
-                    <span className={styles.transactionDate}>
-                      {transaction.date}, {transaction.time}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <button className={styles.showMoreButton}>
-            Показать все операции
-          </button>
+              ))}
+            </div>
+          ) : (
+            <p className={styles.noData}>История операций скоро появится</p>
+          )}
         </div>
       </div>
     </div>

@@ -10,39 +10,38 @@ export default function RegisterPage() {
     email: "",
     password: "",
     phone: "",
-    firstName: "",
-    lastName: "",
+    first_name: "", // Изменено с firstName на first_name
+    last_name: "", // Изменено с lastName на last_name
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const { login } = useAuth();
+  const [localError, setLocalError] = useState("");
+  const { register, loading, error } = useAuth(); // Используем register из контекста
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
+    setLocalError("");
 
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Ошибка регистрации");
+      // Валидация телефона
+      const phoneRegex = /^\+?[0-9]{10,15}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        setLocalError("Введите корректный номер телефона (10-15 цифр)");
+        return;
       }
 
-      login(data.user, data.token);
+      console.log("📤 Отправляемые данные:", formData);
+
+      // Вызываем register из контекста
+      await register(formData);
+
+      console.log("✅ Регистрация успешна");
     } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.error("❌ Ошибка регистрации:", err);
+      console.error("Детали ошибки:", {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
+      });
     }
   };
 
@@ -52,6 +51,9 @@ export default function RegisterPage() {
       [e.target.name]: e.target.value,
     });
   };
+
+  // Объединяем локальную ошибку и ошибку из контекста
+  const displayError = localError || error;
 
   return (
     <div className={styles.container}>
@@ -64,27 +66,16 @@ export default function RegisterPage() {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          {error && (
-            <div
-              style={{
-                color: "#ff4757",
-                backgroundColor: "rgba(255, 71, 87, 0.1)",
-                padding: "12px",
-                borderRadius: "8px",
-                marginBottom: "20px",
-                textAlign: "center",
-              }}
-            >
-              {error}
-            </div>
+          {displayError && (
+            <div className={styles.errorMessage}>{displayError}</div>
           )}
 
           <div className={styles.formGroup}>
             <label className={styles.label}>Имя</label>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name" // Изменено с firstName
+              value={formData.first_name}
               onChange={handleChange}
               className={styles.input}
               placeholder="Введите ваше имя"
@@ -97,8 +88,8 @@ export default function RegisterPage() {
             <label className={styles.label}>Фамилия</label>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name" // Изменено с lastName
+              value={formData.last_name}
               onChange={handleChange}
               className={styles.input}
               placeholder="Введите вашу фамилию"
@@ -129,7 +120,7 @@ export default function RegisterPage() {
               value={formData.phone}
               onChange={handleChange}
               className={styles.input}
-              placeholder="+7 (XXX) XXX-XX-XX"
+              placeholder="+79991234567"
               required
               disabled={loading}
             />
