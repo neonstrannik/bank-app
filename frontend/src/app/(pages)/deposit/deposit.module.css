@@ -1,0 +1,305 @@
+.container {
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at 20% 20%,
+    #0a1a2f 0%,
+    #07111f 30%,
+    #050a14 100%
+  );
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(0, 140, 255, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(circle at 80% 80%, rgba(0, 220, 255, 0.08), transparent 60%);
+  filter: blur(80px);
+  z-index: 0;
+}
+
+.backLink {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 10;
+  color: #00ffcc;
+  transition: all 0.3s ease;
+}
+
+.backLink:hover {
+  text-shadow: 0 0 10px #00ffcc;
+  transform: translateY(-10%) translateX(-5px);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #00ccff, #00ffb7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #00ccff;
+  margin-bottom: 20px;
+}
+
+.accountSelector {
+  background: rgba(20, 30, 45, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 30px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.accountsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.accountOption {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: rgba(10, 20, 30, 0.5);
+  border: 2px solid rgba(0, 255, 204, 0.1);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accountOption:hover {
+  background: rgba(20, 35, 50, 0.8);
+  border-color: rgba(0, 255, 204, 0.3);
+  transform: translateY(-2px);
+}
+
+.accountOption.selected {
+  border-color: #00ccff;
+  background: rgba(0, 204, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.2);
+}
+
+.radioInput {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  accent-color: #00ccff;
+}
+
+.accountInfo {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+}
+
+.accountType {
+  font-weight: 600;
+  color: #00ffcc;
+  min-width: 120px;
+}
+
+.accountNumber {
+  color: #b0c7d9;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.accountBalance {
+  margin-left: auto;
+  font-weight: 700;
+  color: #e6faff;
+}
+
+.amountSelector {
+  background: rgba(20, 30, 45, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 30px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.amountGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.amountButton {
+  padding: 20px;
+  background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+  border: 2px solid rgba(0, 204, 255, 0.2);
+  border-radius: 20px;
+  color: #e6faff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.amountButton:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: #00ccff;
+  box-shadow: 0 10px 25px rgba(0, 204, 255, 0.3);
+}
+
+.amountButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.amountButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 204, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.amountButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.amountButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.customAmount {
+  text-align: center;
+  color: #8b9bb5;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.customAmountHint {
+  font-size: 0.9rem;
+}
+
+.successMessage {
+  background: rgba(0, 255, 150, 0.15);
+  border: 1px solid #00ff99;
+  color: #00ff99;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin: 20px 0;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.errorMessage {
+  background: rgba(255, 80, 80, 0.15);
+  border: 1px solid #ff5555;
+  color: #ff9999;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin: 20px 0;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.loading {
+  text-align: center;
+  color: #00ffcc;
+  font-size: 1.2rem;
+  padding: 60px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(20, 30, 45, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.emptyState p {
+  color: #b0c0d0;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.createAccountLink {
+  display: inline-block;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  color: #0b1020;
+  text-decoration: none;
+  border-radius: 15px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.createAccountLink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 255, 204, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .accountInfo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accountBalance {
+    margin-left: 0;
+  }
+
+  .amountGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -177,3 +177,22 @@ func (r *accountRepository) Delete(ctx context.Context, id uuid.UUID) error {
 
 	return nil
 }
+// Deposit увеличивает баланс счета
+func (r *accountRepository) Deposit(ctx context.Context, id uuid.UUID, amount float64) error {
+	query := `
+		UPDATE accounts
+		SET balance = balance + $2, updated_at = NOW()
+		WHERE id = $1 AND status = 'active'
+	`
+
+	cmd, err := r.db.Exec(ctx, query, id, amount)
+	if err != nil {
+		return fmt.Errorf("failed to deposit: %w", err)
+	}
+
+	if cmd.RowsAffected() == 0 {
+		return errors.New("account not found or not active")
+	}
+
+	return nil
+}

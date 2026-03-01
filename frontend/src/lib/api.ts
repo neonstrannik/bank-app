@@ -61,11 +61,15 @@ export const accountsAPI = {
 
   createAccount: (userId: string, type: string) =>
     api.post(`/users/${userId}/accounts`, { account_type: type }),
+  deposit: (accountId: string, amount: number) =>
+    api.post(`/accounts/${accountId}/deposit`, { amount }),
 };
 
 export const cardsAPI = {
   getUserCards: (userId: string) => api.get(`/users/${userId}/cards`),
 
-  createCard: (userId: string, data: any) =>
-    api.post(`/users/${userId}/cards`, data),
+  createCard: (userId: string, data: any) => {
+    console.log("API createCard получает:", data);
+    return api.post(`/users/${userId}/cards`, data);
+  },
 };

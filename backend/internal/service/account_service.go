@@ -126,3 +126,27 @@ func (s *accountService) CloseAccount(ctx context.Context, accountID uuid.UUID) 
 
 	return s.accountRepo.Update(ctx, account)
 }
+// Deposit пополняет счет
+func (s *accountService) Deposit(ctx context.Context, accountID uuid.UUID, amount float64) (*models.Account, error) {
+	// 1. Проверяем, что счет существует
+	account, err := s.accountRepo.GetByID(ctx, accountID)
+	if err != nil {
+		return nil, err
+	}
+	if account == nil {
+		return nil, errors.New("account not found")
+	}
+
+	// 2. Проверяем, что счет активен
+	if account.Status != "active" {
+		return nil, errors.New("account is not active")
+	}
+
+	// 3. Пополняем счет
+	if err := s.accountRepo.Deposit(ctx, accountID, amount); err != nil {
+		return nil, err
+	}
+
+	// 4. Получаем обновленный счет
+	return s.accountRepo.GetByID(ctx, accountID)
+}

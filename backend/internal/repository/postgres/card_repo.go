@@ -4,7 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-
+"log"
+"time"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -73,44 +74,49 @@ func (r *cardRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Car
 	return &card, nil
 }
 
-// GetByUserID retrieves all cards for a user
 func (r *cardRepository) GetByUserID(ctx context.Context, userID uuid.UUID) ([]models.Card, error) {
-	query := `
-		SELECT id, user_id, account_id, card_name, card_type, card_number, 
-		       expiry_date, cvv, status, benefits, image_url, created_at, updated_at
-		FROM cards
-		WHERE user_id = $1
-		ORDER BY created_at DESC
-	`
+    query := `
+        SELECT id, user_id, account_id, card_name, card_type, card_number, 
+               expiry_date, cvv, status, benefits, image_url, created_at, updated_at
+        FROM cards
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+    `
 
-	rows, err := r.db.Query(ctx, query, userID)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get cards by user ID: %w", err)
-	}
-	defer rows.Close()
+    rows, err := r.db.Query(ctx, query, userID)
+    if err != nil {
+        return nil, fmt.Errorf("failed to get cards by user ID: %w", err)
+    }
+    defer rows.Close()
 
-	var cards []models.Card
-	for rows.Next() {
-		var card models.Card
-		var accountID *uuid.UUID
+    var cards []models.Card
+    for rows.Next() {
+        var card models.Card
+        var accountID *uuid.UUID
+        var expiryDate time.Time // Временная переменная для отладки
 
-		err := rows.Scan(
-			&card.ID, &card.UserID, &accountID, &card.CardName, &card.CardType,
-			&card.CardNumber, &card.ExpiryDate, &card.CVV, &card.Status,
-			&card.Benefits, &card.ImageURL, &card.CreatedAt, &card.UpdatedAt,
-		)
-		if err != nil {
-			return nil, fmt.Errorf("failed to scan card: %w", err)
-		}
+        err := rows.Scan(
+            &card.ID, &card.UserID, &accountID, &card.CardName, &card.CardType,
+            &card.CardNumber, &expiryDate, &card.CVV, &card.Status,
+            &card.Benefits, &card.ImageURL, &card.CreatedAt, &card.UpdatedAt,
+        )
+        if err != nil {
+            // Логируем ошибку с деталями
+            log.Printf("❌ Error scanning card row: %v", err)
+            return nil, fmt.Errorf("failed to scan card: %w", err)
+        }
 
-		if accountID != nil {
-			card.AccountID = *accountID
-		}
+        // Преобразуем time.Time в строку нужного формата
+        card.ExpiryDate = expiryDate.Format("2006-01-02")
 
-		cards = append(cards, card)
-	}
+        if accountID != nil {
+            card.AccountID = *accountID
+        }
 
-	return cards, nil
+        cards = append(cards, card)
+    }
+
+    return cards, nil
 }
 
 // GetByAccountID retrieves all cards for an account

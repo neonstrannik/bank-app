@@ -1,84 +1,106 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/app/(auth)/context/AuthContext";
+import { useRouter } from "next/navigation";
+import styles from "./login.module.css";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [formError, setFormError] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [localError, setLocalError] = useState("");
   const { login, loading, error } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError("");
+    setLocalError("");
+
+    if (!formData.email || !formData.password) {
+      setLocalError("Заполните все поля");
+      return;
+    }
 
     try {
-      await login(email, password);
+      await login(formData.email, formData.password);
+      // После успешного входа редирект на dashboard
+      router.push("/dashboard");
     } catch (err: any) {
-      setFormError(err.message);
+      // Ошибка уже будет в error из контекста
+      console.error("Login error:", err);
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const displayError = localError || error;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
-        <h2 className="text-3xl font-bold text-center">Вход в систему</h2>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Добро пожаловать в V-банк</h1>
+          <p className={styles.subtitle}>
+            Войдите в свой аккаунт для доступа ко всем возможностям
+          </p>
+        </div>
 
-        {(formError || error) && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {formError || error}
-          </div>
-        )}
+        <form className={styles.form} onSubmit={handleSubmit}>
+          {displayError && (
+            <div className={styles.errorMessage}>{displayError}</div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Email</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={styles.input}
+              placeholder="your@email.com"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               disabled={loading}
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Пароль
-            </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Пароль</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={styles.input}
+              placeholder="Введите пароль"
               required
-              minLength={6}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               disabled={loading}
             />
           </div>
 
           <button
             type="submit"
+            className={styles.submitButton}
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
             {loading ? "Вход..." : "Войти"}
           </button>
-        </form>
 
-        <p className="text-center text-sm text-gray-600">
-          Нет аккаунта?{" "}
-          <Link href="/register" className="text-blue-600 hover:text-blue-800">
-            Зарегистрироваться
-          </Link>
-        </p>
+          <div className={styles.registerPrompt}>
+            Нет аккаунта?
+            <Link href="/register" className={styles.registerLink}>
+              Зарегистрироваться
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   );

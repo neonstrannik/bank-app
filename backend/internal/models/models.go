@@ -34,19 +34,19 @@ type Account struct {
 // Card представляет банковскую карту
 // Card представляет банковскую карту
 type Card struct {
-	ID         uuid.UUID `json:"id" db:"id"`
-	UserID     uuid.UUID `json:"user_id" db:"user_id"`
-	AccountID  uuid.UUID `json:"account_id" db:"account_id"`
-	CardName   string    `json:"card_name" db:"card_name"`     // Neo Card, Quantum Card
-	CardType   string    `json:"card_type" db:"card_type"`     // debit, credit, premium
-	CardNumber string    `json:"card_number" db:"card_number"` // последние 4 цифры обычно
-	ExpiryDate string    `json:"expiry_date" db:"expiry_date"` // MM/YY
-	CVV        string    `json:"cvv,omitempty" db:"cvv"`       // CVV код (omitempty скрывает в JSON)
-	Status     string    `json:"status" db:"status"`           // active, blocked
-	Benefits   []string  `json:"benefits" db:"benefits"`       // массив преимуществ
-	ImageURL   string    `json:"image_url" db:"image_url"`
-	CreatedAt  time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at" db:"updated_at"`
+    ID         uuid.UUID `json:"id" db:"id"`
+    UserID     uuid.UUID `json:"user_id" db:"user_id"`
+    AccountID  uuid.UUID `json:"account_id" db:"account_id"`
+    CardName   string    `json:"card_name" db:"card_name"`
+    CardType   string    `json:"card_type" db:"card_type"`
+    CardNumber string    `json:"card_number" db:"card_number"`
+    ExpiryDate string    `json:"expiry_date" db:"expiry_date"` // Должно быть string
+    CVV        string    `json:"cvv,omitempty" db:"cvv"`
+    Status     string    `json:"status" db:"status"`
+    Benefits   []string  `json:"benefits" db:"benefits"`
+    ImageURL   string    `json:"image_url" db:"image_url"`
+    CreatedAt  time.Time `json:"created_at" db:"created_at"`
+    UpdatedAt  time.Time `json:"updated_at" db:"updated_at"`
 }
 
 // Transaction представляет транзакцию
@@ -118,13 +118,14 @@ type CreateAccountRequest struct {
 	AccountType string `json:"account_type" binding:"required,oneof=checking credit"`
 }
 
-// CreateCardRequest запрос на создание карты
+
 type CreateCardRequest struct {
 	AccountID  uuid.UUID `json:"account_id" binding:"required"`
 	CardName   string    `json:"card_name" binding:"required"`
 	CardType   string    `json:"card_type" binding:"required,oneof=debit credit premium"`
 	Benefits   []string  `json:"benefits"`
 	ImageURL   string    `json:"image_url"`
+	ExpiryDate string    `json:"expiry_date" binding:"required"` // <-- Добавьте эту строку
 }
 
 // UpdateUserRequest запрос на обновление профиля
@@ -148,4 +149,8 @@ type CreditCalculation struct {
 	MonthlyPayment float64 `json:"monthly_payment"`
 	TotalPayment   float64 `json:"total_payment"`
 	Overpayment    float64 `json:"overpayment"`
+}
+// DepositRequest запрос на пополнение счета
+type DepositRequest struct {
+	Amount float64 `json:"amount" binding:"required,min=1"`
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"time"
-
+"fmt"
 	"github.com/google/uuid"
 	"github.com/neonstrannik/bank-app/backend/internal/models"
 	"github.com/neonstrannik/bank-app/backend/internal/repository"
@@ -107,8 +107,16 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 		return nil, errors.New("account does not belong to this user")
 	}
 
-	// 3. Создаем карту
+	// 3. Создаем карту, используя данные из запроса
 	now := time.Now()
+	
+	// Проверяем, пришла ли дата с фронтенда
+	expiryDate := req.ExpiryDate
+	if expiryDate == "" {
+		// Если нет - генерируем сами (на всякий случай)
+		expiryDate = "2028-12-31"
+	}
+
 	card := &models.Card{
 		ID:         uuid.New(),
 		UserID:     userID,
@@ -116,7 +124,7 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 		CardName:   req.CardName,
 		CardType:   req.CardType,
 		CardNumber: generateCardNumber(),
-		ExpiryDate: generateExpiryDate(),
+		ExpiryDate: expiryDate, // Используем дату из запроса!
 		CVV:        generateCVV(),
 		Status:     "active",
 		Benefits:   req.Benefits,
@@ -133,10 +141,19 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 	card.CVV = "***"
 	return card, nil
 }
-
 // Вспомогательные функции (упрощенно)
+// Генерация уникального номера карты
 func generateCardNumber() string {
-	return "4111111111111111"
+	// Генерируем номер карты на основе времени и случайного числа
+	// Формат: 4 группы по 4 цифры
+	timestamp := time.Now().UnixNano()
+	
+	// Берем последние 12 цифр timestamp и добавляем префикс 4
+	// Это даст нам 16-значный номер, начинающийся с 4 (Visa)
+	number := fmt.Sprintf("4%015d", timestamp%1000000000000000)
+	
+	// Форматируем для читаемости (но в БД храним без пробелов)
+	return number
 }
 
 func generateExpiryDate() string {

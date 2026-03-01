@@ -120,7 +120,7 @@ export default function Home() {
               </button>
             </Link>
           ) : (
-            <Link href="/register">
+            <Link href="/login">
               <button className="btn-navbar">Вход</button>
             </Link>
           )}

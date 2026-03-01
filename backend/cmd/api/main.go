@@ -382,6 +382,29 @@ router.Use(func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, gin.H{"message": "Card blocked successfully"})
 	})
+	// POST /api/accounts/:id/deposit - пополнить счет
+	router.POST("/api/accounts/:id/deposit", func(c *gin.Context) {
+		idStr := c.Param("id")
+		accountID, err := uuid.Parse(idStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account ID"})
+			return
+		}
+
+		var req models.DepositRequest
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		account, err := accountService.Deposit(c.Request.Context(), accountID, req.Amount)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, account)
+	})
 
 	// ==================== SERVER START ====================
 

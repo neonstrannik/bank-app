@@ -196,6 +196,10 @@ export default function DashboardPage() {
 
         {/* Быстрые действия */}
         <div className={styles.quickActions}>
+          <Link href="/accounts" className={styles.actionButton}>
+            <span className={styles.actionIcon}>🏦</span>
+            <span>Счета</span>
+          </Link>
           <button className={styles.actionButton}>
             <span className={styles.actionIcon}>💸</span>
             <span>Перевод</span>
@@ -204,10 +208,11 @@ export default function DashboardPage() {
             <span className={styles.actionIcon}>📱</span>
             <span>Оплата</span>
           </button>
-          <button className={styles.actionButton}>
+          <Link href="/deposit" className={styles.actionButton}>
             <span className={styles.actionIcon}>➕</span>
             <span>Пополнить</span>
-          </button>
+          </Link>
+
           <Link href="/cards" className={styles.actionButton}>
             <span className={styles.actionIcon}>💳</span>
             <span>Карты</span>
