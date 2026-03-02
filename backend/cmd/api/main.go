@@ -405,7 +405,29 @@ router.Use(func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, account)
 	})
+// POST /api/accounts/:id/withdraw - списать деньги
+router.POST("/api/accounts/:id/withdraw", func(c *gin.Context) {
+	idStr := c.Param("id")
+	accountID, err := uuid.Parse(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account ID"})
+		return
+	}
 
+	var req models.DepositRequest // переиспользуем ту же структуру (amount)
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	account, err := accountService.Withdraw(c.Request.Context(), accountID, req.Amount)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, account)
+})
 	// ==================== SERVER START ====================
 
 	port := os.Getenv("PORT")

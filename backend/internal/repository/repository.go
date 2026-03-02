@@ -25,7 +25,8 @@ type AccountRepository interface {
 	UpdateBalance(ctx context.Context, id uuid.UUID, amount float64) error
 	Update(ctx context.Context, account *models.Account) error
 	Delete(ctx context.Context, id uuid.UUID) error
-		Deposit(ctx context.Context, id uuid.UUID, amount float64) error
+	Deposit(ctx context.Context, id uuid.UUID, amount float64) error
+	Withdraw(ctx context.Context, id uuid.UUID, amount float64) error // Добавь это
 }
 
 // CardRepository defines methods for card data operations

@@ -59,45 +59,76 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/app/(pages)/deposit/deposit.module.css [app-client] (css module)": ((__turbopack_context__) => {
+"[project]/src/app/(pages)/payment/payment.module.css [app-client] (css module)": ((__turbopack_context__) => {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.v({
-  "accountBalance": "deposit-module__6yBZCG__accountBalance",
-  "accountInfo": "deposit-module__6yBZCG__accountInfo",
-  "accountNumber": "deposit-module__6yBZCG__accountNumber",
-  "accountOption": "deposit-module__6yBZCG__accountOption",
-  "accountSelector": "deposit-module__6yBZCG__accountSelector",
-  "accountType": "deposit-module__6yBZCG__accountType",
-  "accountsList": "deposit-module__6yBZCG__accountsList",
-  "amountButton": "deposit-module__6yBZCG__amountButton",
-  "amountGrid": "deposit-module__6yBZCG__amountGrid",
-  "amountSelector": "deposit-module__6yBZCG__amountSelector",
-  "backLink": "deposit-module__6yBZCG__backLink",
-  "container": "deposit-module__6yBZCG__container",
-  "content": "deposit-module__6yBZCG__content",
-  "createAccountLink": "deposit-module__6yBZCG__createAccountLink",
-  "customAmount": "deposit-module__6yBZCG__customAmount",
-  "customAmountHint": "deposit-module__6yBZCG__customAmountHint",
-  "emptyState": "deposit-module__6yBZCG__emptyState",
-  "errorMessage": "deposit-module__6yBZCG__errorMessage",
-  "fadeIn": "deposit-module__6yBZCG__fadeIn",
-  "loading": "deposit-module__6yBZCG__loading",
-  "radioInput": "deposit-module__6yBZCG__radioInput",
-  "sectionTitle": "deposit-module__6yBZCG__sectionTitle",
-  "selected": "deposit-module__6yBZCG__selected",
-  "successMessage": "deposit-module__6yBZCG__successMessage",
-  "title": "deposit-module__6yBZCG__title",
+  "accountBalance": "payment-module__Gdozda__accountBalance",
+  "accountInfo": "payment-module__Gdozda__accountInfo",
+  "accountNumber": "payment-module__Gdozda__accountNumber",
+  "accountOption": "payment-module__Gdozda__accountOption",
+  "accountSelect": "payment-module__Gdozda__accountSelect",
+  "accountSelector": "payment-module__Gdozda__accountSelector",
+  "accountType": "payment-module__Gdozda__accountType",
+  "accountsList": "payment-module__Gdozda__accountsList",
+  "backLink": "payment-module__Gdozda__backLink",
+  "cart": "payment-module__Gdozda__cart",
+  "cartFooter": "payment-module__Gdozda__cartFooter",
+  "cartHeader": "payment-module__Gdozda__cartHeader",
+  "cartItem": "payment-module__Gdozda__cartItem",
+  "cartItemActions": "payment-module__Gdozda__cartItemActions",
+  "cartItemInfo": "payment-module__Gdozda__cartItemInfo",
+  "cartItemName": "payment-module__Gdozda__cartItemName",
+  "cartItemPrice": "payment-module__Gdozda__cartItemPrice",
+  "cartItemTotal": "payment-module__Gdozda__cartItemTotal",
+  "cartItems": "payment-module__Gdozda__cartItems",
+  "cartTitle": "payment-module__Gdozda__cartTitle",
+  "cartTotal": "payment-module__Gdozda__cartTotal",
+  "catalog": "payment-module__Gdozda__catalog",
+  "category": "payment-module__Gdozda__category",
+  "categoryIcon": "payment-module__Gdozda__categoryIcon",
+  "categoryTitle": "payment-module__Gdozda__categoryTitle",
+  "clearCartButton": "payment-module__Gdozda__clearCartButton",
+  "container": "payment-module__Gdozda__container",
+  "content": "payment-module__Gdozda__content",
+  "createAccountLink": "payment-module__Gdozda__createAccountLink",
+  "emptyCart": "payment-module__Gdozda__emptyCart",
+  "emptyCartHint": "payment-module__Gdozda__emptyCartHint",
+  "emptyState": "payment-module__Gdozda__emptyState",
+  "errorMessage": "payment-module__Gdozda__errorMessage",
+  "fadeIn": "payment-module__Gdozda__fadeIn",
+  "grid": "payment-module__Gdozda__grid",
+  "loading": "payment-module__Gdozda__loading",
+  "payAllButton": "payment-module__Gdozda__payAllButton",
+  "payButton": "payment-module__Gdozda__payButton",
+  "paymentAmount": "payment-module__Gdozda__paymentAmount",
+  "paymentInfo": "payment-module__Gdozda__paymentInfo",
+  "paymentSection": "payment-module__Gdozda__paymentSection",
+  "quantity": "payment-module__Gdozda__quantity",
+  "quantityButton": "payment-module__Gdozda__quantityButton",
+  "radioInput": "payment-module__Gdozda__radioInput",
+  "removeButton": "payment-module__Gdozda__removeButton",
+  "sectionTitle": "payment-module__Gdozda__sectionTitle",
+  "selected": "payment-module__Gdozda__selected",
+  "serviceAmount": "payment-module__Gdozda__serviceAmount",
+  "serviceButton": "payment-module__Gdozda__serviceButton",
+  "serviceName": "payment-module__Gdozda__serviceName",
+  "servicesGrid": "payment-module__Gdozda__servicesGrid",
+  "servicesSection": "payment-module__Gdozda__servicesSection",
+  "slideUp": "payment-module__Gdozda__slideUp",
+  "successMessage": "payment-module__Gdozda__successMessage",
+  "title": "payment-module__Gdozda__title",
+  "totalAmount": "payment-module__Gdozda__totalAmount",
 });
 }}),
-"[project]/src/app/(pages)/deposit/page.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/app/(pages)/payment/page.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "default": (()=>DepositPage)
+    "default": (()=>PaymentPage)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
@@ -105,7 +136,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$auth$292f$context$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/(auth)/context/AuthContext.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/api.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/src/app/(pages)/deposit/deposit.module.css [app-client] (css module)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/src/app/(pages)/payment/payment.module.css [app-client] (css module)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -115,25 +146,118 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-function DepositPage() {
+function PaymentPage() {
     _s();
     const { user, isAuthenticated } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$auth$292f$context$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [accounts, setAccounts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [selectedAccount, setSelectedAccount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [cart, setCart] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [processing, setProcessing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [successMessage, setSuccessMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [errorMessage, setErrorMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const predefinedAmounts = [
-        500,
-        1000,
-        5000,
-        10000,
-        50000
+    // Категории услуг
+    const categories = [
+        {
+            id: "utilities",
+            name: "Коммунальные услуги",
+            icon: "🏢",
+            services: [
+                {
+                    id: "electricity",
+                    name: "Электроэнергия",
+                    amount: 2500,
+                    categoryId: "utilities"
+                },
+                {
+                    id: "water",
+                    name: "Водоснабжение",
+                    amount: 1200,
+                    categoryId: "utilities"
+                },
+                {
+                    id: "gas",
+                    name: "Газ",
+                    amount: 800,
+                    categoryId: "utilities"
+                },
+                {
+                    id: "heating",
+                    name: "Отопление",
+                    amount: 3500,
+                    categoryId: "utilities"
+                }
+            ]
+        },
+        {
+            id: "internet",
+            name: "Интернет и связь",
+            icon: "🌐",
+            services: [
+                {
+                    id: "internet",
+                    name: "Домашний интернет",
+                    amount: 600,
+                    categoryId: "internet"
+                },
+                {
+                    id: "mobile",
+                    name: "Мобильная связь",
+                    amount: 500,
+                    categoryId: "internet"
+                },
+                {
+                    id: "tv",
+                    name: "Телевидение",
+                    amount: 400,
+                    categoryId: "internet"
+                }
+            ]
+        },
+        {
+            id: "fines",
+            name: "Штрафы и налоги",
+            icon: "📋",
+            services: [
+                {
+                    id: "traffic",
+                    name: "Штрафы ГИБДД",
+                    amount: 1500,
+                    categoryId: "fines"
+                },
+                {
+                    id: "tax",
+                    name: "Налоги",
+                    amount: 3000,
+                    categoryId: "fines"
+                }
+            ]
+        },
+        {
+            id: "education",
+            name: "Образование",
+            icon: "📚",
+            services: [
+                {
+                    id: "university",
+                    name: "Оплата учебы",
+                    amount: 15000,
+                    categoryId: "education"
+                },
+                {
+                    id: "courses",
+                    name: "Курсы",
+                    amount: 5000,
+                    categoryId: "education"
+                }
+            ]
+        }
     ];
+    // Преобразуем все услуги в плоский список для удобства
+    const allServices = categories.flatMap((cat)=>cat.services);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "DepositPage.useEffect": ()=>{
+        "PaymentPage.useEffect": ()=>{
             if (!isAuthenticated) {
                 router.push("/login");
                 return;
@@ -142,7 +266,7 @@ function DepositPage() {
                 loadAccounts();
             }
         }
-    }["DepositPage.useEffect"], [
+    }["PaymentPage.useEffect"], [
         user,
         isAuthenticated,
         router
@@ -162,28 +286,82 @@ function DepositPage() {
             setLoading(false);
         }
     };
-    const handleDeposit = async (amount)=>{
+    // Добавить услугу в корзину
+    const addToCart = (service)=>{
+        setCart((prevCart)=>{
+            const existingItem = prevCart.find((item)=>item.id === service.id);
+            if (existingItem) {
+                // Если уже есть, увеличиваем количество
+                return prevCart.map((item)=>item.id === service.id ? {
+                        ...item,
+                        quantity: item.quantity + 1
+                    } : item);
+            } else {
+                // Если нет, добавляем новую
+                return [
+                    ...prevCart,
+                    {
+                        ...service,
+                        quantity: 1
+                    }
+                ];
+            }
+        });
+    };
+    // Удалить услугу из корзины
+    const removeFromCart = (serviceId)=>{
+        setCart((prevCart)=>prevCart.filter((item)=>item.id !== serviceId));
+    };
+    // Изменить количество
+    const updateQuantity = (serviceId, newQuantity)=>{
+        if (newQuantity <= 0) {
+            removeFromCart(serviceId);
+            return;
+        }
+        setCart((prevCart)=>prevCart.map((item)=>item.id === serviceId ? {
+                    ...item,
+                    quantity: newQuantity
+                } : item));
+    };
+    // Очистить корзину
+    const clearCart = ()=>{
+        setCart([]);
+    };
+    // Подсчет общей суммы
+    const totalAmount = cart.reduce((sum, item)=>sum + item.amount * item.quantity, 0);
+    // Оплатить всё сразу
+    const handlePayAll = async ()=>{
         if (!selectedAccount) {
-            setErrorMessage("Выберите счет для пополнения");
+            setErrorMessage("Выберите счет для оплаты");
+            return;
+        }
+        if (cart.length === 0) {
+            setErrorMessage("Корзина пуста");
             return;
         }
         try {
             setProcessing(true);
             setErrorMessage("");
             setSuccessMessage("");
-            console.log(`🟡 Пополнение счета ${selectedAccount} на ${amount} ₽`);
-            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["accountsAPI"].deposit(selectedAccount, amount);
+            console.log(`🟡 Оплата ${cart.length} услуг на сумму ${totalAmount} ₽`);
+            // Списываем общую сумму одной транзакцией
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["accountsAPI"].withdraw(selectedAccount, totalAmount);
             console.log("🟢 Ответ от бэкенда:", response.data);
-            setSuccessMessage(`✅ Счет успешно пополнен на ${amount} ₽`);
+            // Формируем список оплаченных услуг
+            const paidServices = cart.map((item)=>`${item.name} x${item.quantity} = ${item.amount * item.quantity} ₽`).join('\n');
+            setSuccessMessage(`✅ Оплачено:\n${paidServices}\n\nОбщая сумма: ${totalAmount} ₽`);
+            // Обновляем баланс счета
             setAccounts((prev)=>prev.map((acc)=>acc.id === selectedAccount ? {
                         ...acc,
                         balance: response.data.balance
                     } : acc));
-            setTimeout(()=>setSuccessMessage(""), 3000);
+            // Очищаем корзину
+            setCart([]);
+            setTimeout(()=>setSuccessMessage(""), 5000);
         } catch (error) {
-            console.error("❌ Ошибка пополнения:", error);
+            console.error("❌ Ошибка оплаты:", error);
             console.error("❌ Детали:", error.response?.data);
-            const errorMsg = error.response?.data?.error || "Не удалось пополнить счет";
+            const errorMsg = error.response?.data?.error || "Не удалось выполнить оплату";
             setErrorMessage(errorMsg);
         } finally{
             setProcessing(false);
@@ -201,216 +379,445 @@ function DepositPage() {
         return null;
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].container,
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].container,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 href: "/dashboard",
-                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].backLink,
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].backLink,
                 children: "← Назад"
             }, void 0, false, {
-                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                lineNumber: 115,
+                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                lineNumber: 240,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].content,
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].content,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].title,
-                        children: "Пополнение счета"
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].title,
+                        children: "Оплата услуг"
                     }, void 0, false, {
-                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                        lineNumber: 120,
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 245,
                         columnNumber: 9
                     }, this),
                     successMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].successMessage,
-                        children: successMessage
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].successMessage,
+                        children: successMessage.split('\n').map((line, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: line
+                            }, i, false, {
+                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                lineNumber: 250,
+                                columnNumber: 15
+                            }, this))
                     }, void 0, false, {
-                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                        lineNumber: 123,
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 248,
                         columnNumber: 11
                     }, this),
                     errorMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].errorMessage,
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].errorMessage,
                         children: errorMessage
                     }, void 0, false, {
-                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                        lineNumber: 127,
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 256,
                         columnNumber: 11
                     }, this),
                     loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].loading,
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].loading,
                         children: "Загрузка счетов..."
                     }, void 0, false, {
-                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                        lineNumber: 131,
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 260,
                         columnNumber: 11
                     }, this) : accounts.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].emptyState,
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].emptyState,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                children: "У вас нет счетов для пополнения"
+                                children: "У вас нет счетов для оплаты"
                             }, void 0, false, {
-                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                lineNumber: 134,
+                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                lineNumber: 263,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/accounts",
-                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].createAccountLink,
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].createAccountLink,
                                 children: "Создать счет"
                             }, void 0, false, {
-                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                lineNumber: 135,
+                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                lineNumber: 264,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
-                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                        lineNumber: 133,
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 262,
                         columnNumber: 11
-                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].grid,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountSelector,
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].catalog,
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].sectionTitle,
-                                        children: "Выберите счет"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                        lineNumber: 142,
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountSelector,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].sectionTitle,
+                                                children: "Счет списания"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 273,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                value: selectedAccount,
+                                                onChange: (e)=>setSelectedAccount(e.target.value),
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountSelect,
+                                                disabled: processing,
+                                                children: accounts.map((account)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                        value: account.id,
+                                                        children: [
+                                                            account.account_type === "checking" ? "💳" : "🏦",
+                                                            account.account_number,
+                                                            " — Баланс: ",
+                                                            formatCurrency(account.balance)
+                                                        ]
+                                                    }, account.id, true, {
+                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                        lineNumber: 281,
+                                                        columnNumber: 21
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 274,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                        lineNumber: 272,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountsList,
-                                        children: accounts.map((account)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountOption} ${selectedAccount === account.id ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].selected : ""}`,
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                        type: "radio",
-                                                        name: "account",
-                                                        value: account.id,
-                                                        checked: selectedAccount === account.id,
-                                                        onChange: (e)=>setSelectedAccount(e.target.value),
-                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].radioInput
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                        lineNumber: 151,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountInfo,
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].servicesSection,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].sectionTitle,
+                                                children: "Каталог услуг"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 290,
+                                                columnNumber: 17
+                                            }, this),
+                                            categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].category,
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].categoryTitle,
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].categoryIcon,
+                                                                    children: category.icon
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                    lineNumber: 295,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                category.name
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                            lineNumber: 294,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].servicesGrid,
+                                                            children: category.services.map((service)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].serviceButton,
+                                                                    onClick: ()=>addToCart(service),
+                                                                    disabled: processing,
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].serviceName,
+                                                                            children: service.name
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                            lineNumber: 306,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].serviceAmount,
+                                                                            children: formatCurrency(service.amount)
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                            lineNumber: 307,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, service.id, true, {
+                                                                    fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                    lineNumber: 300,
+                                                                    columnNumber: 25
+                                                                }, this))
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                            lineNumber: 298,
+                                                            columnNumber: 21
+                                                        }, this)
+                                                    ]
+                                                }, category.id, true, {
+                                                    fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                    lineNumber: 293,
+                                                    columnNumber: 19
+                                                }, this))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                        lineNumber: 289,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                lineNumber: 271,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cart,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartHeader,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartTitle,
+                                                children: "Корзина"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 321,
+                                                columnNumber: 17
+                                            }, this),
+                                            cart.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].clearCartButton,
+                                                onClick: clearCart,
+                                                disabled: processing,
+                                                children: "🗑️ Очистить"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 323,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                        lineNumber: 320,
+                                        columnNumber: 15
+                                    }, this),
+                                    cart.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].emptyCart,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Корзина пуста"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 335,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].emptyCartHint,
+                                                children: "Нажмите на услугу, чтобы добавить"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 336,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                        lineNumber: 334,
+                                        columnNumber: 17
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItems,
+                                                children: cart.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItem,
                                                         children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountType,
-                                                                children: account.account_type === "checking" ? "💳 Дебетовый" : "🏦 Кредитный"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                                lineNumber: 160,
-                                                                columnNumber: 23
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountNumber,
-                                                                children: account.account_number
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                                lineNumber: 165,
-                                                                columnNumber: 23
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].accountBalance,
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItemInfo,
                                                                 children: [
-                                                                    "Баланс: ",
-                                                                    formatCurrency(account.balance)
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItemName,
+                                                                        children: item.name
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 346,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItemPrice,
+                                                                        children: [
+                                                                            formatCurrency(item.amount),
+                                                                            " × ",
+                                                                            item.quantity
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 347,
+                                                                        columnNumber: 27
+                                                                    }, this)
                                                                 ]
                                                             }, void 0, true, {
-                                                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                                lineNumber: 168,
+                                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                lineNumber: 345,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItemActions,
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].quantityButton,
+                                                                        onClick: ()=>updateQuantity(item.id, item.quantity - 1),
+                                                                        disabled: processing,
+                                                                        children: "−"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 353,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].quantity,
+                                                                        children: item.quantity
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 360,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].quantityButton,
+                                                                        onClick: ()=>updateQuantity(item.id, item.quantity + 1),
+                                                                        disabled: processing,
+                                                                        children: "+"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 361,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].removeButton,
+                                                                        onClick: ()=>removeFromCart(item.id),
+                                                                        disabled: processing,
+                                                                        children: "×"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                        lineNumber: 368,
+                                                                        columnNumber: 27
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                lineNumber: 352,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartItemTotal,
+                                                                children: formatCurrency(item.amount * item.quantity)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                lineNumber: 377,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, item.id, true, {
+                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                        lineNumber: 344,
+                                                        columnNumber: 23
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 342,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartFooter,
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].cartTotal,
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                children: "Итого:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                lineNumber: 386,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].totalAmount,
+                                                                children: formatCurrency(totalAmount)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                                lineNumber: 387,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
-                                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                        lineNumber: 159,
+                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                        lineNumber: 385,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$payment$2f$payment$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].payAllButton,
+                                                        onClick: handlePayAll,
+                                                        disabled: processing || cart.length === 0,
+                                                        children: processing ? "Обработка..." : "Оплатить всё"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                        lineNumber: 392,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
-                                            }, account.id, true, {
-                                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                lineNumber: 145,
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                                lineNumber: 384,
                                                 columnNumber: 19
-                                            }, this))
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                        lineNumber: 143,
-                                        columnNumber: 15
-                                    }, this)
+                                            }, this)
+                                        ]
+                                    }, void 0, true)
                                 ]
                             }, void 0, true, {
-                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                lineNumber: 141,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].amountSelector,
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].sectionTitle,
-                                        children: "Выберите сумму"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                        lineNumber: 178,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].amountGrid,
-                                        children: predefinedAmounts.map((amount)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$pages$292f$deposit$2f$deposit$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].amountButton,
-                                                onClick: ()=>handleDeposit(amount),
-                                                disabled: processing || !selectedAccount,
-                                                children: formatCurrency(amount)
-                                            }, amount, false, {
-                                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                                lineNumber: 181,
-                                                columnNumber: 19
-                                            }, this))
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                        lineNumber: 179,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                                lineNumber: 177,
+                                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                                lineNumber: 319,
                                 columnNumber: 13
                             }, this)
                         ]
-                    }, void 0, true)
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                        lineNumber: 269,
+                        columnNumber: 11
+                    }, this)
                 ]
             }, void 0, true, {
-                fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-                lineNumber: 119,
+                fileName: "[project]/src/app/(pages)/payment/page.tsx",
+                lineNumber: 244,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/app/(pages)/deposit/page.tsx",
-        lineNumber: 114,
+        fileName: "[project]/src/app/(pages)/payment/page.tsx",
+        lineNumber: 239,
         columnNumber: 5
     }, this);
 }
-_s(DepositPage, "CTd0rsmBqQtFK4Fs1/itGV98GE8=", false, function() {
+_s(PaymentPage, "fS+0xGnWOf0MEjkpp2X/V/fZ888=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f28$auth$292f$context$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
 });
-_c = DepositPage;
+_c = PaymentPage;
 var _c;
-__turbopack_context__.k.register(_c, "DepositPage");
+__turbopack_context__.k.register(_c, "PaymentPage");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -1355,4 +1762,4 @@ if ((typeof exports.default === 'function' || typeof exports.default === 'object
 }}),
 }]);
 
-//# sourceMappingURL=_d238318e._.js.map
+//# sourceMappingURL=_635b26ef._.js.map

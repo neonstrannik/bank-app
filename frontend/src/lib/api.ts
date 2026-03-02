@@ -63,6 +63,8 @@ export const accountsAPI = {
     api.post(`/users/${userId}/accounts`, { account_type: type }),
   deposit: (accountId: string, amount: number) =>
     api.post(`/accounts/${accountId}/deposit`, { amount }),
+  withdraw: (accountId: string, amount: number) =>
+    api.post(`/accounts/${accountId}/withdraw`, { amount }),
 };
 
 export const cardsAPI = {

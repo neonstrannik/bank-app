@@ -39,6 +39,12 @@ const accountsAPI = {
     getUserAccounts: (userId)=>api.get(`/users/${userId}/accounts`),
     createAccount: (userId, type)=>api.post(`/users/${userId}/accounts`, {
             account_type: type
+        }),
+    deposit: (accountId, amount)=>api.post(`/accounts/${accountId}/deposit`, {
+            amount
+        }),
+    withdraw: (accountId, amount)=>api.post(`/accounts/${accountId}/withdraw`, {
+            amount
         })
 };
 const cardsAPI = {

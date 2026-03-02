@@ -150,3 +150,32 @@ func (s *accountService) Deposit(ctx context.Context, accountID uuid.UUID, amoun
 	// 4. Получаем обновленный счет
 	return s.accountRepo.GetByID(ctx, accountID)
 }
+// Withdraw списывает деньги со счета
+func (s *accountService) Withdraw(ctx context.Context, accountID uuid.UUID, amount float64) (*models.Account, error) {
+	// Проверяем, что счет существует
+	account, err := s.accountRepo.GetByID(ctx, accountID)
+	if err != nil {
+		return nil, err
+	}
+	if account == nil {
+		return nil, errors.New("account not found")
+	}
+
+	// Проверяем, что счет активен
+	if account.Status != "active" {
+		return nil, errors.New("account is not active")
+	}
+
+	// Проверяем, что достаточно средств
+	if account.Balance < amount {
+		return nil, errors.New("insufficient funds")
+	}
+
+	// Списываем деньги
+	if err := s.accountRepo.Withdraw(ctx, accountID, amount); err != nil {
+		return nil, err
+	}
+
+	// Получаем обновленный счет
+	return s.accountRepo.GetByID(ctx, accountID)
+}

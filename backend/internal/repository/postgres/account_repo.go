@@ -196,3 +196,22 @@ func (r *accountRepository) Deposit(ctx context.Context, id uuid.UUID, amount fl
 
 	return nil
 }
+// Withdraw списывает деньги со счета
+func (r *accountRepository) Withdraw(ctx context.Context, id uuid.UUID, amount float64) error {
+	query := `
+		UPDATE accounts
+		SET balance = balance - $2, updated_at = NOW()
+		WHERE id = $1 AND status = 'active' AND balance >= $2
+	`
+
+	cmd, err := r.db.Exec(ctx, query, id, amount)
+	if err != nil {
+		return fmt.Errorf("failed to withdraw: %w", err)
+	}
+
+	if cmd.RowsAffected() == 0 {
+		return errors.New("insufficient funds or account not active")
+	}
+
+	return nil
+}

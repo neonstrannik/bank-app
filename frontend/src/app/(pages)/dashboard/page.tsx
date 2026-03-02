@@ -204,10 +204,10 @@ export default function DashboardPage() {
             <span className={styles.actionIcon}>💸</span>
             <span>Перевод</span>
           </button>
-          <button className={styles.actionButton}>
+          <Link href="/payment" className={styles.actionButton}>
             <span className={styles.actionIcon}>📱</span>
             <span>Оплата</span>
-          </button>
+          </Link>
           <Link href="/deposit" className={styles.actionButton}>
             <span className={styles.actionIcon}>➕</span>
             <span>Пополнить</span>
