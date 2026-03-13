@@ -1,0 +1,399 @@
+/* [project]/src/app/(pages)/transfer/transfer.module.css [app-client] (css) */
+.transfer-module__gozuLa__container {
+  background: radial-gradient(circle at 20% 20%, #0a1a2f 0%, #07111f 30%, #050a14 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.transfer-module__gozuLa__container:before {
+  content: "";
+  filter: blur(80px);
+  z-index: 0;
+  background: radial-gradient(circle at 30% 20%, #008cff1f, #0000 60%), radial-gradient(circle at 80% 80%, #00dcff14, #0000 60%);
+  position: absolute;
+  inset: 0;
+}
+
+.transfer-module__gozuLa__backLink {
+  cursor: pointer;
+  z-index: 10;
+  color: #0fc;
+  border-radius: 15px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.transfer-module__gozuLa__backLink:hover {
+  text-shadow: 0 0 10px #0fc;
+  transform: translateY(-10%)translateX(-5px);
+}
+
+.transfer-module__gozuLa__content {
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.transfer-module__gozuLa__title {
+  text-align: center;
+  background: linear-gradient(135deg, #0cf, #00ffb7);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+.transfer-module__gozuLa__transferCard {
+  backdrop-filter: blur(10px);
+  background: #141e2db3;
+  border: 1px solid #0fc3;
+  border-radius: 30px;
+  padding: 40px;
+  box-shadow: 0 20px 40px #0000004d;
+}
+
+.transfer-module__gozuLa__formStep, .transfer-module__gozuLa__confirmStep {
+  animation: .3s transfer-module__gozuLa__fadeIn;
+}
+
+.transfer-module__gozuLa__formGroup {
+  margin-bottom: 25px;
+}
+
+.transfer-module__gozuLa__label {
+  color: #0fc;
+  margin-bottom: 10px;
+  font-size: .95rem;
+  font-weight: 600;
+  display: block;
+}
+
+.transfer-module__gozuLa__select, .transfer-module__gozuLa__input {
+  color: #e6faff;
+  background: #0a141ecc;
+  border: 2px solid #0fc3;
+  border-radius: 15px;
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1rem;
+  transition: all .3s;
+}
+
+.transfer-module__gozuLa__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ffcc'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-position: right 20px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+
+.transfer-module__gozuLa__select:hover, .transfer-module__gozuLa__input:hover {
+  background-color: #0f1923e6;
+  border-color: #0fc;
+}
+
+.transfer-module__gozuLa__select:focus, .transfer-module__gozuLa__input:focus {
+  border-color: #0fc;
+  outline: none;
+  box-shadow: 0 0 0 3px #0fc3;
+}
+
+.transfer-module__gozuLa__phoneSearch {
+  gap: 10px;
+  display: flex;
+}
+
+.transfer-module__gozuLa__phoneSearch .transfer-module__gozuLa__input {
+  flex: 1;
+}
+
+.transfer-module__gozuLa__searchButton {
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #0cf, #09c);
+  border: none;
+  border-radius: 15px;
+  padding: 0 25px;
+  font-weight: 600;
+  transition: all .3s;
+}
+
+.transfer-module__gozuLa__searchButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px #00ccff4d;
+}
+
+.transfer-module__gozuLa__searchButton:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.transfer-module__gozuLa__recipientCard {
+  background: #00ffcc1a;
+  border: 2px solid #0fc;
+  border-radius: 20px;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  padding: 20px;
+  animation: .3s transfer-module__gozuLa__slideUp;
+  display: flex;
+}
+
+.transfer-module__gozuLa__recipientAvatar {
+  color: #0b1020;
+  background: linear-gradient(135deg, #0cf, #0f9);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+}
+
+.transfer-module__gozuLa__recipientInfo {
+  flex: 1;
+}
+
+.transfer-module__gozuLa__recipientName {
+  color: #e6faff;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.transfer-module__gozuLa__recipientPhone {
+  color: #8b9bb5;
+  font-size: .9rem;
+}
+
+.transfer-module__gozuLa__nextButton {
+  color: #0b1020;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0cf, #0f9);
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 18px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: all .3s;
+}
+
+.transfer-module__gozuLa__nextButton:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px #0fc6;
+}
+
+.transfer-module__gozuLa__nextButton:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.transfer-module__gozuLa__confirmTitle {
+  text-align: center;
+  color: #0fc;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+
+.transfer-module__gozuLa__confirmDetails {
+  background: #0a141e80;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  padding: 25px;
+}
+
+.transfer-module__gozuLa__confirmRow {
+  border-bottom: 1px solid #00ffcc1a;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 15px 0;
+  display: flex;
+}
+
+.transfer-module__gozuLa__confirmRow:last-child {
+  border-bottom: none;
+}
+
+.transfer-module__gozuLa__confirmLabel {
+  color: #8b9bb5;
+  font-size: .95rem;
+}
+
+.transfer-module__gozuLa__confirmValue {
+  color: #e6faff;
+  text-align: right;
+  font-weight: 500;
+}
+
+.transfer-module__gozuLa__confirmAmount {
+  color: #0fc;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.transfer-module__gozuLa__confirmActions {
+  gap: 15px;
+  display: flex;
+}
+
+.transfer-module__gozuLa__backButton {
+  color: #e6faff;
+  cursor: pointer;
+  background: #ffffff1a;
+  border: 2px solid #00ffcc4d;
+  border-radius: 15px;
+  flex: 1;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all .3s;
+}
+
+.transfer-module__gozuLa__backButton:hover:not(:disabled) {
+  background: #ffffff26;
+  border-color: #0fc;
+}
+
+.transfer-module__gozuLa__confirmButton {
+  color: #0b1020;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0cf, #0f9);
+  border: none;
+  border-radius: 15px;
+  flex: 2;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all .3s;
+}
+
+.transfer-module__gozuLa__confirmButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px #0fc6;
+}
+
+.transfer-module__gozuLa__confirmButton:disabled, .transfer-module__gozuLa__backButton:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.transfer-module__gozuLa__successMessage {
+  color: #0f9;
+  text-align: center;
+  background: #00ff9626;
+  border: 1px solid #0f9;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 15px 25px;
+  animation: .5s transfer-module__gozuLa__fadeIn;
+}
+
+.transfer-module__gozuLa__errorMessage {
+  color: #f99;
+  text-align: center;
+  background: #ff505026;
+  border: 1px solid #f55;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 15px 25px;
+  animation: .5s transfer-module__gozuLa__fadeIn;
+}
+
+.transfer-module__gozuLa__loading {
+  text-align: center;
+  color: #0fc;
+  padding: 60px;
+  font-size: 1.2rem;
+}
+
+.transfer-module__gozuLa__emptyState {
+  text-align: center;
+  backdrop-filter: blur(10px);
+  background: #141e2db3;
+  border: 1px solid #0fc3;
+  border-radius: 30px;
+  padding: 60px 20px;
+}
+
+.transfer-module__gozuLa__emptyState p {
+  color: #b0c0d0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.transfer-module__gozuLa__createAccountLink {
+  color: #0b1020;
+  background: linear-gradient(135deg, #0cf, #0f9);
+  border-radius: 15px;
+  padding: 14px 30px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+  display: inline-block;
+}
+
+.transfer-module__gozuLa__createAccountLink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px #00ffcc4d;
+}
+
+@keyframes transfer-module__gozuLa__fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes transfer-module__gozuLa__slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width <= 600px) {
+  .transfer-module__gozuLa__title {
+    font-size: 2rem;
+  }
+
+  .transfer-module__gozuLa__transferCard {
+    padding: 25px;
+  }
+
+  .transfer-module__gozuLa__phoneSearch, .transfer-module__gozuLa__confirmActions {
+    flex-direction: column;
+  }
+
+  .transfer-module__gozuLa__recipientCard {
+    text-align: center;
+    flex-direction: column;
+  }
+}
+
+
+/*# sourceMappingURL=src_app_%28pages%29_transfer_transfer_module_e0e87ab7.css.map*/

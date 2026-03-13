@@ -1,0 +1,413 @@
+.container {
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at 20% 20%,
+    #0a1a2f 0%,
+    #07111f 30%,
+    #050a14 100%
+  );
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(0, 140, 255, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(circle at 80% 80%, rgba(0, 220, 255, 0.08), transparent 60%);
+  filter: blur(80px);
+  z-index: 0;
+}
+
+.backLink {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 10;
+  color: #00ffcc;
+  transition: all 0.3s ease;
+}
+
+.backLink:hover {
+  text-shadow: 0 0 10px #00ffcc;
+  transform: translateY(-10%) translateX(-5px);
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #00ccff, #00ffb7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.transferCard {
+  background: rgba(20, 30, 45, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 40px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.formStep,
+.confirmStep {
+  animation: fadeIn 0.3s ease;
+}
+
+.formGroup {
+  margin-bottom: 25px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+  color: #00ffcc;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(10, 20, 30, 0.8);
+  border: 2px solid rgba(0, 255, 204, 0.2);
+  border-radius: 15px;
+  color: #e6faff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ffcc'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 20px;
+}
+
+.select:hover,
+.input:hover {
+  border-color: #00ffcc;
+  background-color: rgba(15, 25, 35, 0.9);
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: #00ffcc;
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.2);
+}
+
+.phoneSearch {
+  display: flex;
+  gap: 10px;
+}
+
+.phoneSearch .input {
+  flex: 1;
+}
+
+.searchButton {
+  padding: 0 25px;
+  background: linear-gradient(135deg, #00ccff, #0099cc);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.searchButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 204, 255, 0.3);
+}
+
+.searchButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.recipientCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(0, 255, 204, 0.1);
+  border: 2px solid #00ffcc;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  animation: slideUp 0.3s ease;
+}
+
+.recipientAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0b1020;
+}
+
+.recipientInfo {
+  flex: 1;
+}
+
+.recipientName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e6faff;
+  margin-bottom: 5px;
+}
+
+.recipientPhone {
+  color: #8b9bb5;
+  font-size: 0.9rem;
+}
+
+.nextButton {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  color: #0b1020;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.nextButton:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 255, 204, 0.4);
+}
+
+.nextButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.confirmTitle {
+  text-align: center;
+  color: #00ffcc;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+
+.confirmDetails {
+  background: rgba(10, 20, 30, 0.5);
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.confirmRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 255, 204, 0.1);
+}
+
+.confirmRow:last-child {
+  border-bottom: none;
+}
+
+.confirmLabel {
+  color: #8b9bb5;
+  font-size: 0.95rem;
+}
+
+.confirmValue {
+  color: #e6faff;
+  font-weight: 500;
+  text-align: right;
+}
+
+.confirmAmount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00ffcc;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 15px;
+}
+
+.backButton {
+  flex: 1;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e6faff;
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00ffcc;
+}
+
+.confirmButton {
+  flex: 2;
+  padding: 15px;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  color: #0b1020;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirmButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+}
+
+.confirmButton:disabled,
+.backButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.successMessage {
+  background: rgba(0, 255, 150, 0.15);
+  border: 1px solid #00ff99;
+  color: #00ff99;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.errorMessage {
+  background: rgba(255, 80, 80, 0.15);
+  border: 1px solid #ff5555;
+  color: #ff9999;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.loading {
+  text-align: center;
+  color: #00ffcc;
+  font-size: 1.2rem;
+  padding: 60px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(20, 30, 45, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.emptyState p {
+  color: #b0c0d0;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.createAccountLink {
+  display: inline-block;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  color: #0b1020;
+  text-decoration: none;
+  border-radius: 15px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.createAccountLink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 255, 204, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .transferCard {
+    padding: 25px;
+  }
+
+  .phoneSearch {
+    flex-direction: column;
+  }
+
+  .confirmActions {
+    flex-direction: column;
+  }
+
+  .recipientCard {
+    flex-direction: column;
+    text-align: center;
+  }
+}

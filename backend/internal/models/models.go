@@ -51,15 +51,16 @@ type Card struct {
 
 // Transaction представляет транзакцию
 type Transaction struct {
-	ID              uuid.UUID `json:"id" db:"id"`
-	AccountID       uuid.UUID `json:"account_id" db:"account_id"`
-	Type            string    `json:"type" db:"type"` // deposit, withdrawal, transfer
-	Amount          float64   `json:"amount" db:"amount"`
-	Description     string    `json:"description" db:"description"`
-	Status          string    `json:"status" db:"status"` // pending, completed, failed
-	RecipientAccount *string   `json:"recipient_account,omitempty" db:"recipient_account"`
-	RecipientName   *string   `json:"recipient_name,omitempty" db:"recipient_name"`
-	CreatedAt       time.Time `json:"created_at" db:"created_at"`
+    ID               uuid.UUID  `json:"id" db:"id"`
+    AccountID        uuid.UUID  `json:"account_id" db:"account_id"`
+    Type             string     `json:"type" db:"type"`
+    Amount           float64    `json:"amount" db:"amount"`
+    Description      string     `json:"description" db:"description"`
+    Status           string     `json:"status" db:"status"`
+    RecipientAccount *string    `json:"recipient_account,omitempty" db:"recipient_account"`
+    RecipientName    *string    `json:"recipient_name,omitempty" db:"recipient_name"`
+    SenderAccount    *string    `json:"sender_account,omitempty" db:"sender_account"` // <-- Добавь это
+    CreatedAt        time.Time  `json:"created_at" db:"created_at"`
 }
 
 // CreditHistory представляет кредитную историю

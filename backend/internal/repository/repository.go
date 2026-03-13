@@ -14,6 +14,7 @@ type UserRepository interface {
 	Update(ctx context.Context, user *models.User) error
 	Delete(ctx context.Context, id uuid.UUID) error
 	List(ctx context.Context, limit, offset int) ([]models.User, error)
+	GetByPhone(ctx context.Context, phone string) (*models.User, error)
 }
 
 // AccountRepository defines methods for account data operations
@@ -39,14 +40,7 @@ type CardRepository interface {
 	Delete(ctx context.Context, id uuid.UUID) error
 }
 
-// TransactionRepository defines methods for transaction data operations
-type TransactionRepository interface {
-	Create(ctx context.Context, transaction *models.Transaction) error
-	GetByID(ctx context.Context, id uuid.UUID) (*models.Transaction, error)
-	GetByAccountID(ctx context.Context, accountID uuid.UUID, limit, offset int) ([]models.Transaction, error)
-	GetByUserID(ctx context.Context, userID uuid.UUID, limit, offset int) ([]models.Transaction, error)
-	UpdateStatus(ctx context.Context, id uuid.UUID, status string) error
-}
+
 
 // TransferRepository defines methods for transfer data operations
 type TransferRepository interface {
@@ -62,4 +56,12 @@ type CreditHistoryRepository interface {
 	GetByID(ctx context.Context, id uuid.UUID) (*models.CreditHistory, error)
 	GetByUserID(ctx context.Context, userID uuid.UUID) ([]models.CreditHistory, error)
 	Update(ctx context.Context, credit *models.CreditHistory) error
+}
+// TransactionRepository defines methods for transaction data operations
+type TransactionRepository interface {
+	Create(ctx context.Context, transaction *models.Transaction) error
+	GetByID(ctx context.Context, id uuid.UUID) (*models.Transaction, error)
+	GetByAccountID(ctx context.Context, accountID uuid.UUID, limit, offset int) ([]models.Transaction, error)
+	GetByUserID(ctx context.Context, userID uuid.UUID, limit, offset int) ([]models.Transaction, error)
+	UpdateStatus(ctx context.Context, id uuid.UUID, status string) error
 }

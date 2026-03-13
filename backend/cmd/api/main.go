@@ -35,7 +35,7 @@ func main() {
 	userRepo := postgres.NewUserRepository(dbPool)
 	accountRepo := postgres.NewAccountRepository(dbPool)
 	cardRepo := postgres.NewCardRepository(dbPool)
-	// transactionRepo := postgres.NewTransactionRepository(dbPool)
+	transactionRepo := postgres.NewTransactionRepository(dbPool)
 
 	// Создаем сервисы
 	jwtSecret := os.Getenv("JWT_SECRET")
@@ -49,25 +49,24 @@ func main() {
 	cardService := service.NewCardService(cardRepo, accountRepo, userRepo)
 
 	// Создаем роутер
-	// Создаем роутер
-router := gin.Default()
+	router := gin.Default()
 
-// Добавляем CORS middleware
-router.Use(func(c *gin.Context) {
-    // Разрешаем запросы с любого источника (для разработки)
-    c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-    c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
-    c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-    
-    // Обрабатываем preflight запросы
-    if c.Request.Method == "OPTIONS" {
-        c.AbortWithStatus(204)
-        return
-    }
-    
-    c.Next()
-})
+	// Добавляем CORS middleware
+	router.Use(func(c *gin.Context) {
+		// Разрешаем запросы с любого источника (для разработки)
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Обрабатываем preflight запросы
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	})
 
 	// Health check
 	router.GET("/health", func(c *gin.Context) {
@@ -382,6 +381,7 @@ router.Use(func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, gin.H{"message": "Card blocked successfully"})
 	})
+
 	// POST /api/accounts/:id/deposit - пополнить счет
 	router.POST("/api/accounts/:id/deposit", func(c *gin.Context) {
 		idStr := c.Param("id")
@@ -405,29 +405,84 @@ router.Use(func(c *gin.Context) {
 
 		c.JSON(http.StatusOK, account)
 	})
-// POST /api/accounts/:id/withdraw - списать деньги
-router.POST("/api/accounts/:id/withdraw", func(c *gin.Context) {
-	idStr := c.Param("id")
-	accountID, err := uuid.Parse(idStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account ID"})
-		return
-	}
 
-	var req models.DepositRequest // переиспользуем ту же структуру (amount)
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// POST /api/accounts/:id/withdraw - списать деньги
+	router.POST("/api/accounts/:id/withdraw", func(c *gin.Context) {
+		idStr := c.Param("id")
+		accountID, err := uuid.Parse(idStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account ID"})
+			return
+		}
 
-	account, err := accountService.Withdraw(c.Request.Context(), accountID, req.Amount)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+		var req models.DepositRequest // переиспользуем ту же структуру (amount)
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 
-	c.JSON(http.StatusOK, account)
-})
+		account, err := accountService.Withdraw(c.Request.Context(), accountID, req.Amount)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, account)
+	})
+
+	// ==================== TRANSFER ENDPOINTS ====================
+
+	// GET /api/users/by-phone/:phone - поиск пользователя по телефону
+	router.GET("/api/users/by-phone/:phone", func(c *gin.Context) {
+		phone := c.Param("phone")
+
+		user, err := userRepo.GetByPhone(c.Request.Context(), phone)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		if user == nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			return
+		}
+
+		// Не отправляем пароль
+		user.Password = ""
+		c.JSON(http.StatusOK, user)
+	})
+
+	// POST /api/accounts/:id/transfer - перевод по номеру телефона
+	router.POST("/api/accounts/:id/transfer", func(c *gin.Context) {
+		idStr := c.Param("id")
+		fromAccountID, err := uuid.Parse(idStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account ID"})
+			return
+		}
+
+		var req struct {
+			ToPhone     string  `json:"to_phone" binding:"required"`
+			Amount      float64 `json:"amount" binding:"required,min=1"`
+			Description string  `json:"description"`
+		}
+
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Создаем сервис переводов
+		transferService := service.NewTransferService(accountRepo, userRepo, transactionRepo)
+
+		tx, err := transferService.TransferByPhone(c.Request.Context(), fromAccountID, req.ToPhone, req.Amount, req.Description)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, tx)
+	})
+
 	// ==================== SERVER START ====================
 
 	port := os.Getenv("PORT")

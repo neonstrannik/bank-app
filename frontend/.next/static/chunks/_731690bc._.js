@@ -43,6 +43,9 @@ const accountsAPI = {
         }),
     deposit: (accountId, amount)=>api.post(`/accounts/${accountId}/deposit`, {
             amount
+        }),
+    withdraw: (accountId, amount)=>api.post(`/accounts/${accountId}/withdraw`, {
+            amount
         })
 };
 const cardsAPI = {
