@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"regexp"
 	"time"
 
 	"github.com/google/uuid"
@@ -26,7 +27,13 @@ func NewUserService(userRepo repository.UserRepository, jwtSecret string) *userS
 
 // Register creates a new user
 func (s *userService) Register(ctx context.Context, req *models.CreateUserRequest) (*models.User, error) {
-	// 1. Проверяем, не занят ли email
+	// 1. Проверяем формат телефона
+	phoneRegex := regexp.MustCompile(`^\+?[0-9]{10,15}$`)
+	if !phoneRegex.MatchString(req.Phone) {
+		return nil, errors.New("invalid phone number format")
+	}
+
+	// 2. Проверяем, не занят ли email
 	existingUser, err := s.userRepo.GetByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, err
@@ -35,13 +42,22 @@ func (s *userService) Register(ctx context.Context, req *models.CreateUserReques
 		return nil, errors.New("user with this email already exists")
 	}
 
-	// 2. Хешируем пароль
+	// 3. Проверяем, не занят ли телефон
+	existingUserByPhone, err := s.userRepo.GetByPhone(ctx, req.Phone)
+	if err != nil {
+		return nil, err
+	}
+	if existingUserByPhone != nil {
+		return nil, errors.New("user with this phone already exists")
+	}
+
+	// 4. Хешируем пароль
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}
 
-	// 3. Создаем пользователя
+	// 5. Создаем пользователя
 	now := time.Now()
 	user := &models.User{
 		ID:        uuid.New(),

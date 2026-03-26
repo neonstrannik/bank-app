@@ -18,7 +18,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 80% 10%,
       rgba(0, 153, 255, 0.25),
       transparent 70%
@@ -105,7 +106,9 @@
   padding: 40px;
   border: 1px solid rgba(0, 204, 255, 0.15);
   box-shadow: 0 10px 30px rgba(0, 204, 255, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .formSection:hover {
@@ -258,7 +261,9 @@
   background: rgba(20, 30, 45, 0.5);
   border-radius: 10px;
   border: 1px solid rgba(0, 204, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .resultItem:hover {
@@ -443,4 +448,48 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+.accountSelect {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(20, 30, 45, 0.8);
+  border: 1px solid rgba(0, 204, 255, 0.3);
+  border-radius: 12px;
+  color: #e6faff;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accountSelect:hover {
+  border-color: #00ffcc;
+  background: rgba(30, 40, 55, 0.9);
+}
+
+.errorMessage {
+  background: rgba(255, 80, 80, 0.15);
+  border: 1px solid #ff5555;
+  color: #ff9999;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.notAuthMessage {
+  text-align: center;
+  padding: 40px;
+  color: #a8c7e2;
+  font-size: 1.1rem;
+}
+
+.authLink {
+  color: #00ffcc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.authLink:hover {
+  text-decoration: underline;
 }

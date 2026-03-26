@@ -7,16 +7,6 @@ import { useRouter } from "next/navigation";
 import { accountsAPI, cardsAPI } from "@/lib/api";
 import styles from "./dashboard.module.css";
 
-interface Transaction {
-  id: string;
-  type: "income" | "expense";
-  category: string;
-  description: string;
-  amount: number;
-  date: string;
-  time: string;
-}
-
 interface Account {
   id: string;
   account_number: string;
@@ -40,11 +30,9 @@ export default function DashboardPage() {
 
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Безопасные вычисления с защитой от null/undefined
   const totalBalance =
     accounts?.reduce((sum, acc) => sum + (acc?.balance || 0), 0) || 0;
   const totalCards = cards?.length || 0;
@@ -67,23 +55,13 @@ export default function DashboardPage() {
       setLoading(true);
       setError(null);
 
-      console.log("📊 Загрузка данных для пользователя:", user?.id);
-
-      // Загружаем счета и карты параллельно
       const [accountsRes, cardsRes] = await Promise.all([
         accountsAPI.getUserAccounts(user!.id),
         cardsAPI.getUserCards(user!.id),
       ]);
 
-      console.log("✅ Счета получены:", accountsRes.data);
-      console.log("✅ Карты получены:", cardsRes.data);
-
       setAccounts(accountsRes.data || []);
       setCards(cardsRes.data || []);
-
-      // TODO: Загрузить транзакции когда будет готов API
-      // const transactionsRes = await transactionsAPI.getUserTransactions(user!.id);
-      // setTransactions(transactionsRes.data || []);
     } catch (err: any) {
       console.error("❌ Ошибка загрузки данных:", err);
       setError(
@@ -112,12 +90,11 @@ export default function DashboardPage() {
 
   const formatCardNumber = (cardNumber: string) => {
     if (!cardNumber) return "•••• •••• •••• ••••";
-    // Показываем только последние 4 цифры
     return `•••• ${cardNumber.slice(-4)}`;
   };
 
   if (!isAuthenticated) {
-    return null; // Перенаправление происходит в useEffect
+    return null;
   }
 
   if (loading) {
@@ -137,6 +114,14 @@ export default function DashboardPage() {
       </div>
     );
   }
+
+  // Разделяем счета на дебетовые и кредитные
+  const checkingAccounts = accounts.filter(
+    (acc) => acc.account_type === "checking",
+  );
+  const creditAccounts = accounts.filter(
+    (acc) => acc.account_type === "credit",
+  );
 
   return (
     <div className={styles.container}>
@@ -182,6 +167,10 @@ export default function DashboardPage() {
                   <span className={styles.statLabel}>Активных</span>
                   <span className={styles.statValue}>{activeAccounts}</span>
                 </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statLabel}>Карт</span>
+                  <span className={styles.statValue}>{cards.length}</span>
+                </div>
               </div>
             </div>
             <div className={styles.cashbackBadge}>
@@ -212,7 +201,6 @@ export default function DashboardPage() {
             <span className={styles.actionIcon}>➕</span>
             <span>Пополнить</span>
           </Link>
-
           <Link href="/cards" className={styles.actionButton}>
             <span className={styles.actionIcon}>💳</span>
             <span>Карты</span>
@@ -227,111 +215,133 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        <div className={styles.grid}>
-          {/* Активные карты */}
-          <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <h3 className={styles.sectionTitle}>Ваши карты</h3>
-              <Link href="/cards" className={styles.sectionLink}>
-                Все карты →
-              </Link>
-            </div>
-            <div className={styles.cardsList}>
-              {cards && cards.length > 0 ? (
-                cards.slice(0, 3).map((card) => (
-                  <div key={card.id} className={styles.cardItem}>
-                    <div className={styles.cardItemHeader}>
-                      <span className={styles.cardType}>
-                        {card.card_name || "Карта"}
-                      </span>
-                      <span className={styles.cardNumber}>
-                        {formatCardNumber(card.card_number)}
-                      </span>
-                    </div>
-                    <div className={styles.cardStatus}>
-                      Статус:{" "}
-                      {card.status === "active"
-                        ? "✅ Активна"
-                        : "🔒 Заблокирована"}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className={styles.noData}>У вас пока нет карт</p>
-              )}
-            </div>
-          </div>
-
-          {/* Статистика */}
-          <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>Сводка</h3>
-            <div className={styles.statsGrid}>
-              <div className={styles.statCard}>
-                <div className={styles.statCardIcon}>🏦</div>
-                <div>
-                  <p className={styles.statCardLabel}>Счетов</p>
-                  <p className={styles.statCardValue}>{accounts.length}</p>
-                </div>
-              </div>
-              <div className={styles.statCard}>
-                <div className={styles.statCardIcon}>💳</div>
-                <div>
-                  <p className={styles.statCardLabel}>Карт</p>
-                  <p className={styles.statCardValue}>{cards.length}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Счета */}
-        <div className={styles.section}>
+        <div className={styles.accountsSection}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Ваши счета</h3>
+            <h3 className={styles.sectionTitle}>Мои счета</h3>
+            <Link href="/accounts" className={styles.sectionLink}>
+              Управление счетами →
+            </Link>
           </div>
-          <div className={styles.accountsList}>
-            {accounts && accounts.length > 0 ? (
-              accounts.map((account) => (
-                <div key={account.id} className={styles.accountItem}>
-                  <div className={styles.accountInfo}>
-                    <span className={styles.accountType}>
-                      {account.account_type === "checking"
-                        ? "💰 Дебетовый"
-                        : "💳 Кредитный"}{" "}
-                      счет
-                    </span>
-                    <span className={styles.accountNumber}>
-                      {account.account_number || "Номер не указан"}
-                    </span>
+
+          <div className={styles.accountsGrid}>
+            {/* Дебетовые счета */}
+            {checkingAccounts.length > 0 && (
+              <div className={styles.accountGroup}>
+                <h4 className={styles.groupTitle}>
+                  <span className={styles.groupIcon}>💰</span> Дебетовые счета
+                </h4>
+                {checkingAccounts.map((account) => (
+                  <div key={account.id} className={styles.accountCard}>
+                    <div className={styles.accountCardHeader}>
+                      <div>
+                        <p className={styles.accountType}>Дебетовый счет</p>
+                        <p className={styles.accountNumber}>
+                          {account.account_number}
+                        </p>
+                      </div>
+                      <div
+                        className={`${styles.accountStatus} ${styles.active}`}
+                      >
+                        {account.status === "active" ? "Активен" : "Заморожен"}
+                      </div>
+                    </div>
+                    <div className={styles.accountCardBody}>
+                      <div className={styles.accountBalanceLarge}>
+                        {formatCurrency(account.balance)}
+                      </div>
+                    </div>
                   </div>
-                  <div className={styles.accountBalance}>
-                    {formatCurrency(account.balance || 0)}
+                ))}
+              </div>
+            )}
+
+            {/* Кредитные счета */}
+            {creditAccounts.length > 0 && (
+              <div className={styles.accountGroup}>
+                <h4 className={styles.groupTitle}>
+                  <span className={styles.groupIcon}>💳</span> Кредитные счета
+                </h4>
+                {creditAccounts.map((account) => (
+                  <div key={account.id} className={styles.accountCard}>
+                    <div className={styles.accountCardHeader}>
+                      <div>
+                        <p className={styles.accountType}>Кредитный счет</p>
+                        <p className={styles.accountNumber}>
+                          {account.account_number}
+                        </p>
+                      </div>
+                      <div
+                        className={`${styles.accountStatus} ${styles.active}`}
+                      >
+                        {account.status === "active" ? "Активен" : "Заморожен"}
+                      </div>
+                    </div>
+                    <div className={styles.accountCardBody}>
+                      <div className={styles.accountBalanceLarge}>
+                        {formatCurrency(account.balance)}
+                      </div>
+                      <div className={styles.creditLimit}>
+                        Кредитный лимит: {formatCurrency(50000)}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className={styles.noData}>У вас пока нет счетов</p>
+                ))}
+              </div>
+            )}
+
+            {accounts.length === 0 && (
+              <div className={styles.emptyAccounts}>
+                <p>У вас пока нет счетов</p>
+                <Link href="/accounts" className={styles.createAccountLink}>
+                  Создать счет
+                </Link>
+              </div>
             )}
           </div>
         </div>
 
-        {/* История транзакций - пока заглушка */}
+        {/* Карты */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Последние операции</h3>
-            <button className={styles.filterButton}>Все</button>
+            <h3 className={styles.sectionTitle}>Мои карты</h3>
+            <Link href="/cards" className={styles.sectionLink}>
+              Все карты →
+            </Link>
           </div>
-          {transactions && transactions.length > 0 ? (
-            <div className={styles.transactionsList}>
-              {transactions.map((transaction) => (
-                <div key={transaction.id} className={styles.transactionItem}>
-                  {/* Здесь будет отображение транзакций */}
+          <div className={styles.cardsGrid}>
+            {cards && cards.length > 0 ? (
+              cards.map((card) => (
+                <div key={card.id} className={styles.card}>
+                  <div className={styles.cardContent}>
+                    <div className={styles.cardChip}>💳</div>
+                    <div className={styles.cardNumber}>
+                      {formatCardNumber(card.card_number)}
+                    </div>
+                    <div className={styles.cardFooter}>
+                      <div>
+                        <p className={styles.cardName}>{card.card_name}</p>
+                        <p className={styles.cardType}>
+                          {card.card_type === "debit"
+                            ? "Дебетовая"
+                            : card.card_type === "credit"
+                              ? "Кредитная"
+                              : "Премиум"}
+                        </p>
+                      </div>
+                      <div className={styles.cardStatusBadge}>
+                        {card.status === "active"
+                          ? "✅ Активна"
+                          : "🔒 Заблокирована"}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className={styles.noData}>История операций скоро появится</p>
-          )}
+              ))
+            ) : (
+              <p className={styles.noData}>У вас пока нет карт</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

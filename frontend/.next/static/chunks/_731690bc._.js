@@ -9,7 +9,8 @@ __turbopack_context__.s({
     "accountsAPI": (()=>accountsAPI),
     "api": (()=>api),
     "authAPI": (()=>authAPI),
-    "cardsAPI": (()=>cardsAPI)
+    "cardsAPI": (()=>cardsAPI),
+    "creditAPI": (()=>creditAPI)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
@@ -54,6 +55,14 @@ const cardsAPI = {
         console.log("API createCard получает:", data);
         return api.post(`/users/${userId}/cards`, data);
     }
+};
+const creditAPI = {
+    applyCredit: (accountId, amount, term, rate)=>api.post("/credit/apply", {
+            account_id: accountId,
+            amount: amount,
+            term: term,
+            rate: rate
+        })
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);

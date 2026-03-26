@@ -1,9 +1,22 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./investments.module.css";
 
 export default function Investments() {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
+
+  const handleClick = (productName: string) => {
+    setSelectedProduct(productName);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedProduct("");
+  };
+
   return (
     <div className={styles.container}>
       <Link href="/" className={styles.backLink}>
@@ -53,7 +66,10 @@ export default function Investments() {
             <div className={styles.conditions}>
               Без минимальной суммы, вывод средств в любое время.
             </div>
-            <button className={styles.activateButton}>
+            <button
+              className={styles.activateButton}
+              onClick={() => handleClick("Акции и ETF")}
+            >
               Открыть инвестиционный счёт
             </button>
           </div>
@@ -75,7 +91,12 @@ export default function Investments() {
             <div className={styles.conditions}>
               Срок — от 6 месяцев, минимальный риск, гибкий вывод.
             </div>
-            <button className={styles.activateButton}>Купить облигации</button>
+            <button
+              className={styles.activateButton}
+              onClick={() => handleClick("Накопительные облигации")}
+            >
+              Купить облигации
+            </button>
           </div>
 
           <div className={styles.categoryCard}>
@@ -95,7 +116,10 @@ export default function Investments() {
             <div className={styles.conditions}>
               Персонализированные стратегии. Контроль и прозрачность 24/7.
             </div>
-            <button className={styles.activateButton}>
+            <button
+              className={styles.activateButton}
+              onClick={() => handleClick("Робо-консультант")}
+            >
               Подобрать стратегию
             </button>
           </div>
@@ -115,7 +139,10 @@ export default function Investments() {
             <div className={styles.conditions}>
               Поддержка зелёных проектов и прозрачная отчётность.
             </div>
-            <button className={styles.activateButton}>
+            <button
+              className={styles.activateButton}
+              onClick={() => handleClick("ESG-инвестиции")}
+            >
               Инвестировать в ESG
             </button>
           </div>
@@ -131,6 +158,45 @@ export default function Investments() {
           </p>
         </div>
       </div>
+
+      {/* Модальное окно */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalClose} onClick={closeModal}>
+              ×
+            </button>
+            <div className={styles.modalIcon}>🏦</div>
+            <h3 className={styles.modalTitle}>
+              {selectedProduct || "Инвестиционный продукт"}
+            </h3>
+            <p className={styles.modalText}>
+              Для оформления данного продукта, пожалуйста, обратитесь в
+              ближайшее отделение V-банка.
+            </p>
+            <p className={styles.modalSubtext}>
+              Наши специалисты помогут вам подобрать оптимальную стратегию
+              инвестирования и ответят на все вопросы.
+            </p>
+            <div className={styles.modalButtons}>
+              <button className={styles.modalButton} onClick={closeModal}>
+                Понятно
+              </button>
+              <button
+                className={styles.modalButtonSecondary}
+                onClick={() => {
+                  window.open(
+                    "https://maps.google.com/?q=банк+отделение",
+                    "_blank",
+                  );
+                }}
+              >
+                Найти отделение
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -22,13 +22,6 @@ export default function RegisterPage() {
     setLocalError("");
 
     try {
-      // Валидация телефона
-      const phoneRegex = /^\+?[0-9]{10,15}$/;
-      if (!phoneRegex.test(formData.phone)) {
-        setLocalError("Введите корректный номер телефона (10-15 цифр)");
-        return;
-      }
-
       console.log("📤 Отправляемые данные:", formData);
 
       // Вызываем register из контекста

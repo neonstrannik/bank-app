@@ -677,3 +677,239 @@
   margin-top: 16px;
   cursor: pointer;
 }
+/* Добавь эти стили в конец файла */
+
+/* Счета */
+.accountsSection {
+  margin-bottom: 40px;
+  animation: fadeInUp 0.6s ease;
+}
+
+.accountsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.accountGroup {
+  background: rgba(15, 24, 40, 0.85);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(0, 204, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.accountGroup:hover {
+  border-color: rgba(0, 204, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 204, 255, 0.15);
+}
+
+.groupTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00ffcc;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.groupIcon {
+  font-size: 1.3rem;
+}
+
+.accountCard {
+  background: rgba(20, 30, 45, 0.5);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  border-left: 3px solid #00ccff;
+}
+
+.accountCard:last-child {
+  margin-bottom: 0;
+}
+
+.accountCard:hover {
+  transform: translateX(4px);
+  background: rgba(20, 30, 45, 0.7);
+  border-left-color: #00ffcc;
+}
+
+.accountCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.accountType {
+  color: #00ffcc;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 4px 0;
+}
+
+.accountNumber {
+  color: #a8c7e2;
+  font-size: 0.8rem;
+  font-family: monospace;
+  margin: 0;
+}
+
+.accountStatus {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.accountStatus.active {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.accountStatus.frozen {
+  background: rgba(255, 200, 0, 0.15);
+  color: #ffcc00;
+}
+
+.accountStatus.closed {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff6b7d;
+}
+
+.accountCardBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.accountBalanceLarge {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.creditLimit {
+  color: #a8c7e2;
+  font-size: 0.85rem;
+}
+
+/* Карты сетка */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 204, 255, 0.2);
+}
+
+.cardGradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(0, 204, 255, 0.2), transparent);
+  pointer-events: none;
+}
+
+.cardContent {
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.cardChip {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.cardNumber {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: #e0f7ff;
+  margin-bottom: 20px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.cardName {
+  font-weight: 600;
+  color: #00ffcc;
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+}
+
+.cardType {
+  color: #a8c7e2;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.cardStatusBadge {
+  font-size: 0.8rem;
+  color: #a8c7e2;
+}
+
+.emptyAccounts {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(15, 24, 40, 0.85);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 204, 255, 0.15);
+}
+
+.createAccountLink {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00ccff, #00ff99);
+  color: #0b1020;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.createAccountLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 255, 204, 0.3);
+}
+
+@media (max-width: 640px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .accountCardBody {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accountBalanceLarge {
+    font-size: 1.2rem;
+  }
+}

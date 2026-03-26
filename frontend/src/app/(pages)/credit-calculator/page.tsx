@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/(auth)/context/AuthContext";
+import { accountsAPI, creditAPI } from "@/lib/api";
 import styles from "./credit-calculator.module.css";
 
 interface CreditCalculation {
@@ -18,19 +20,51 @@ interface CreditCalculation {
   }>;
 }
 
+interface Account {
+  id: string;
+  account_number: string;
+  account_type: string;
+  balance: number;
+  currency: string;
+  status: string;
+}
+
 export default function CreditCalculator() {
   const router = useRouter();
+  const { user, isAuthenticated } = useAuth();
+  
   const [formData, setFormData] = useState({
     amount: 1000000,
     term: 12,
     rate: 9.9,
   });
 
-  const [calculation, setCalculation] = useState<CreditCalculation | null>(
-    null
-  );
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [selectedAccount, setSelectedAccount] = useState<string>("");
+  const [calculation, setCalculation] = useState<CreditCalculation | null>(null);
   const [loading, setLoading] = useState(false);
+  const [applying, setApplying] = useState(false);
   const [creditApplied, setCreditApplied] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Загружаем счета пользователя
+  useEffect(() => {
+    if (user) {
+      loadAccounts();
+    }
+  }, [user]);
+
+  const loadAccounts = async () => {
+    try {
+      const response = await accountsAPI.getUserAccounts(user!.id);
+      setAccounts(response.data || []);
+      if (response.data && response.data.length > 0) {
+        setSelectedAccount(response.data[0].id);
+      }
+    } catch (error) {
+      console.error("Ошибка загрузки счетов:", error);
+    }
+  };
 
   const calculateCredit = () => {
     setLoading(true);
@@ -88,6 +122,51 @@ export default function CreditCalculator() {
     calculateCredit();
   };
 
+  const handleApplyCredit = async () => {
+    if (!selectedAccount) {
+      setErrorMessage("Выберите счет для зачисления кредита");
+      return;
+    }
+
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+
+    setApplying(true);
+    setErrorMessage("");
+
+    try {
+      const response = await creditAPI.applyCredit(
+        selectedAccount,
+        formData.amount,
+        formData.term,
+        formData.rate
+      );
+
+      console.log("✅ Кредит оформлен:", response.data);
+      setCreditApplied(true);
+      
+      // Обновляем баланс счета в локальном состоянии
+      setAccounts(prev => prev.map(acc => 
+        acc.id === selectedAccount 
+          ? { ...acc, balance: response.data.account.balance }
+          : acc
+      ));
+      
+    } catch (err: any) {
+      console.error("❌ Ошибка оформления кредита:", err);
+      setErrorMessage(err.response?.data?.error || "Не удалось оформить кредит");
+    } finally {
+      setApplying(false);
+    }
+  };
+
+  const handleGoBack = () => {
+    setCreditApplied(false);
+    router.push("/dashboard");
+  };
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("ru-RU", {
       style: "currency",
@@ -96,16 +175,32 @@ export default function CreditCalculator() {
     }).format(amount);
   };
 
-  const handleApplyCredit = () => {
-    if (calculation) {
-      setCreditApplied(true);
-    }
-  };
-
-  const handleGoBack = () => {
-    setCreditApplied(false);
-    router.push("/");
-  };
+  // Если пользователь не авторизован — показываем сообщение
+  if (!isAuthenticated) {
+    return (
+      <div className={styles.container}>
+        <Link href="/" className={styles.backLink}>
+          ← Назад
+        </Link>
+        <div className={styles.content}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Кредитный калькулятор</h1>
+            <p className={styles.subtitle}>
+              Войдите в систему, чтобы оформить кредит
+            </p>
+          </div>
+          <div className={styles.formSection}>
+            <p className={styles.notAuthMessage}>
+              Для оформления кредита необходимо{" "}
+              <Link href="/login" className={styles.authLink}>
+                войти
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -123,6 +218,28 @@ export default function CreditCalculator() {
         <div className={styles.calculatorGrid}>
           {/* Форма ввода */}
           <div className={styles.formSection}>
+            {/* Выбор счета */}
+            {accounts.length > 0 && (
+              <div className={styles.formGroup}>
+                <label className={styles.label}>
+                  Счёт для зачисления
+                  <span className={styles.currency}>💳</span>
+                </label>
+                <select
+                  value={selectedAccount}
+                  onChange={(e) => setSelectedAccount(e.target.value)}
+                  className={styles.accountSelect}
+                >
+                  {accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {account.account_type === "checking" ? "💰 Дебетовый" : "🏦 Кредитный"} 
+                      {" "} - Баланс: {formatCurrency(account.balance)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>
@@ -232,6 +349,10 @@ export default function CreditCalculator() {
 
           {/* Результаты расчета */}
           <div className={styles.resultsSection}>
+            {errorMessage && (
+              <div className={styles.errorMessage}>{errorMessage}</div>
+            )}
+            
             {calculation && (
               <>
                 <div className={styles.resultsCard}>
@@ -308,8 +429,9 @@ export default function CreditCalculator() {
                 <button
                   className={styles.applyButton}
                   onClick={handleApplyCredit}
+                  disabled={applying}
                 >
-                  Оформить кредит онлайн
+                  {applying ? "Оформление..." : "Оформить кредит"}
                 </button>
               </>
             )}
@@ -322,14 +444,14 @@ export default function CreditCalculator() {
               <span className={styles.successIcon}>✅</span>
               <h3>Кредит успешно оформлен!</h3>
               <p>
-                Заявка на кредит в размере {formatCurrency(formData.amount)} на
-                срок {formData.term} месяцев успешно подана.
+                На ваш счёт зачислено {formatCurrency(formData.amount)} ₽.
                 <br />
-                Наш менеджер свяжется с вами в ближайшее время для уточнения
-                деталей.
+                Ежемесячный платёж: {formatCurrency(calculation?.monthlyPayment || 0)} ₽.
+                <br />
+                Срок кредита: {formData.term} месяцев.
               </p>
               <button className={styles.successButton} onClick={handleGoBack}>
-                Назад
+                На главную
               </button>
             </div>
           </div>

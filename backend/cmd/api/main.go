@@ -16,6 +16,7 @@ import (
 	"github.com/neonstrannik/bank-app/backend/internal/models"
 	"github.com/neonstrannik/bank-app/backend/internal/repository/postgres"
 	"github.com/neonstrannik/bank-app/backend/internal/service"
+	"github.com/go-playground/validator/v10"
 )
 
 func main() {
@@ -79,25 +80,34 @@ func main() {
 
 	// ==================== AUTH ENDPOINTS ====================
 
-	// POST /api/register - регистрация нового пользователя
-	router.POST("/api/register", func(c *gin.Context) {
-		var req models.CreateUserRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+// POST /api/register - регистрация нового пользователя
+router.POST("/api/register", func(c *gin.Context) {
+    var req models.CreateUserRequest
+    if err := c.ShouldBindJSON(&req); err != nil {
+        // Форматируем ошибки валидации
+        validationErrors := formatValidationError(err)
+        if len(validationErrors) > 0 {
+            c.JSON(http.StatusBadRequest, gin.H{
+                "error":   "Ошибка валидации",
+                "details": validationErrors,
+            })
+        } else {
+            c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        }
+        return
+    }
 
-		user, err := userService.Register(c.Request.Context(), &req)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+    user, err := userService.Register(c.Request.Context(), &req)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-		c.JSON(http.StatusCreated, gin.H{
-			"message": "User registered successfully",
-			"user":    user,
-		})
-	})
+    c.JSON(http.StatusCreated, gin.H{
+        "message": "User registered successfully",
+        "user":    user,
+    })
+})
 
 	// POST /api/login - вход пользователя
 	router.POST("/api/login", func(c *gin.Context) {
@@ -482,6 +492,34 @@ func main() {
 
 		c.JSON(http.StatusOK, tx)
 	})
+	// ==================== CREDIT ENDPOINTS ====================
+
+	// POST /api/credit/apply - оформить кредит
+	router.POST("/api/credit/apply", func(c *gin.Context) {
+		var req struct {
+			AccountID uuid.UUID `json:"account_id" binding:"required"`
+			Amount    float64   `json:"amount" binding:"required,min=1000"`
+			Term      int       `json:"term" binding:"required,min=1,max=60"`
+			Rate      float64   `json:"rate" binding:"required,min=1,max=30"`
+		}
+
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Пополняем счёт на сумму кредита (Deposit возвращает 2 значения)
+		updatedAccount, err := accountService.Deposit(c.Request.Context(), req.AccountID, req.Amount)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Кредит успешно оформлен",
+			"account": updatedAccount,
+		})
+	})
 
 	// ==================== SERVER START ====================
 
@@ -515,4 +553,46 @@ func main() {
 	}
 
 	log.Println("✅ Сервер остановлен")
+}
+// formatValidationError преобразует ошибки валидации в понятные сообщения
+func formatValidationError(err error) map[string]string {
+    errors := make(map[string]string)
+    
+    if ve, ok := err.(validator.ValidationErrors); ok {
+        for _, e := range ve {
+            field := e.Field()
+            tag := e.Tag()
+            
+            switch field {
+            case "Email":
+                errors["email"] = "Некорректный email адрес"
+            case "Password":
+                if tag == "min" {
+                    errors["password"] = "Пароль должен быть не менее 6 символов"
+                } else if tag == "max" {
+                    errors["password"] = "Пароль не должен превышать 72 символов"
+                } else {
+                    errors["password"] = "Неверный формат пароля"
+                }
+            case "FirstName":
+                if tag == "min" {
+                    errors["first_name"] = "Имя должно содержать минимум 2 символа"
+                } else if tag == "max" {
+                    errors["first_name"] = "Имя слишком длинное (максимум 50 символов)"
+                }
+            case "LastName":
+                if tag == "min" {
+                    errors["last_name"] = "Фамилия должна содержать минимум 2 символа"
+                } else if tag == "max" {
+                    errors["last_name"] = "Фамилия слишком длинная (максимум 50 символов)"
+                }
+            case "Phone":
+                errors["phone"] = "Некорректный номер телефона (10-15 цифр)"
+            default:
+                errors[field] = "Неверное значение поля " + field
+            }
+        }
+    }
+    
+    return errors
 }

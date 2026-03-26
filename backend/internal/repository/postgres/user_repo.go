@@ -164,15 +164,15 @@ func (r *userRepository) List(ctx context.Context, limit, offset int) ([]models.
 // GetByPhone retrieves a user by phone number
 func (r *userRepository) GetByPhone(ctx context.Context, phone string) (*models.User, error) {
     query := `
-        SELECT id, email, first_name, last_name, phone, created_at, updated_at
+        SELECT id, email, password_hash, first_name, last_name, phone, created_at, updated_at
         FROM users
         WHERE phone = $1
     `
 
     var user models.User
     err := r.db.QueryRow(ctx, query, phone).Scan(
-        &user.ID, &user.Email, &user.FirstName, &user.LastName,
-        &user.Phone, &user.CreatedAt, &user.UpdatedAt,
+        &user.ID, &user.Email, &user.Password, &user.FirstName,
+        &user.LastName, &user.Phone, &user.CreatedAt, &user.UpdatedAt,
     )
 
     if err != nil {

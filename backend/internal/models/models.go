@@ -96,13 +96,12 @@ type Transfer struct {
 
 // CreateUserRequest запрос на создание пользователя
 type CreateUserRequest struct {
-	Email     string `json:"email" binding:"required,email"`
-	Password  string `json:"password" binding:"required,min=6"`
-	FirstName string `json:"first_name" binding:"required"`
-	LastName  string `json:"last_name" binding:"required"`
-	Phone     string `json:"phone" binding:"required"`
+    Email     string `json:"email" binding:"required,email"`
+    Password  string `json:"password" binding:"required,min=6,max=72"`
+    FirstName string `json:"first_name" binding:"required,min=2,max=50"`
+    LastName  string `json:"last_name" binding:"required,min=2,max=50"`
+    Phone     string `json:"phone" binding:"required"`
 }
-
 // LoginRequest запрос на вход
 type LoginRequest struct {
 	Email    string `json:"email" binding:"required,email"`

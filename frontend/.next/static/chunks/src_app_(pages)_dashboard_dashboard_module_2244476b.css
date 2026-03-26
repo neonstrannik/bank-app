@@ -661,5 +661,238 @@
   padding: 10px 20px;
 }
 
+.dashboard-module__dxARTG__accountsSection {
+  margin-bottom: 40px;
+  animation: .6s dashboard-module__dxARTG__fadeInUp;
+}
+
+.dashboard-module__dxARTG__accountsGrid {
+  flex-direction: column;
+  gap: 24px;
+  display: flex;
+}
+
+.dashboard-module__dxARTG__accountGroup {
+  backdrop-filter: blur(20px);
+  background: #0f1828d9;
+  border: 1px solid #00ccff26;
+  border-radius: 20px;
+  padding: 24px;
+  transition: all .3s;
+}
+
+.dashboard-module__dxARTG__accountGroup:hover {
+  border-color: #00ccff4d;
+  box-shadow: 0 10px 30px #00ccff26;
+}
+
+.dashboard-module__dxARTG__groupTitle {
+  color: #0fc;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.dashboard-module__dxARTG__groupIcon {
+  font-size: 1.3rem;
+}
+
+.dashboard-module__dxARTG__accountCard {
+  background: #141e2d80;
+  border-left: 3px solid #0cf;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  padding: 20px;
+  transition: all .3s;
+}
+
+.dashboard-module__dxARTG__accountCard:last-child {
+  margin-bottom: 0;
+}
+
+.dashboard-module__dxARTG__accountCard:hover {
+  background: #141e2db3;
+  border-left-color: #0fc;
+  transform: translateX(4px);
+}
+
+.dashboard-module__dxARTG__accountCardHeader {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.dashboard-module__dxARTG__accountType {
+  color: #0fc;
+  margin: 0 0 4px;
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.dashboard-module__dxARTG__accountNumber {
+  color: #a8c7e2;
+  margin: 0;
+  font-family: monospace;
+  font-size: .8rem;
+}
+
+.dashboard-module__dxARTG__accountStatus {
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: .7rem;
+  font-weight: 600;
+}
+
+.dashboard-module__dxARTG__accountStatus.dashboard-module__dxARTG__active {
+  color: #0f8;
+  background: #00ff8826;
+}
+
+.dashboard-module__dxARTG__accountStatus.dashboard-module__dxARTG__frozen {
+  color: #fc0;
+  background: #ffc80026;
+}
+
+.dashboard-module__dxARTG__accountStatus.dashboard-module__dxARTG__closed {
+  color: #ff6b7d;
+  background: #ff505026;
+}
+
+.dashboard-module__dxARTG__accountCardBody {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  display: flex;
+}
+
+.dashboard-module__dxARTG__accountBalanceLarge {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-module__dxARTG__creditLimit {
+  color: #a8c7e2;
+  font-size: .85rem;
+}
+
+.dashboard-module__dxARTG__cardsGrid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  display: grid;
+}
+
+.dashboard-module__dxARTG__card {
+  cursor: pointer;
+  background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+  border-radius: 20px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-module__dxARTG__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px #0cf3;
+}
+
+.dashboard-module__dxARTG__cardGradient {
+  pointer-events: none;
+  background: radial-gradient(circle, #0cf3, #0000);
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.dashboard-module__dxARTG__cardContent {
+  z-index: 1;
+  padding: 24px;
+  position: relative;
+}
+
+.dashboard-module__dxARTG__cardChip {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.dashboard-module__dxARTG__cardNumber {
+  letter-spacing: 2px;
+  color: #e0f7ff;
+  margin-bottom: 20px;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+.dashboard-module__dxARTG__cardFooter {
+  justify-content: space-between;
+  align-items: flex-end;
+  display: flex;
+}
+
+.dashboard-module__dxARTG__cardName {
+  color: #0fc;
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.dashboard-module__dxARTG__cardType {
+  color: #a8c7e2;
+  margin: 0;
+  font-size: .8rem;
+}
+
+.dashboard-module__dxARTG__cardStatusBadge {
+  color: #a8c7e2;
+  font-size: .8rem;
+}
+
+.dashboard-module__dxARTG__emptyAccounts {
+  text-align: center;
+  background: #0f1828d9;
+  border: 1px solid #00ccff26;
+  border-radius: 20px;
+  padding: 60px 20px;
+}
+
+.dashboard-module__dxARTG__createAccountLink {
+  color: #0b1020;
+  background: linear-gradient(135deg, #0cf, #0f9);
+  border-radius: 12px;
+  margin-top: 16px;
+  padding: 12px 24px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+  display: inline-block;
+}
+
+.dashboard-module__dxARTG__createAccountLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px #00ffcc4d;
+}
+
+@media (width <= 640px) {
+  .dashboard-module__dxARTG__cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-module__dxARTG__accountCardBody {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-module__dxARTG__accountBalanceLarge {
+    font-size: 1.2rem;
+  }
+}
+
 
 /*# sourceMappingURL=src_app_%28pages%29_dashboard_dashboard_module_2244476b.css.map*/

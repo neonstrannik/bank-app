@@ -9,8 +9,8 @@ import Cookies from "js-cookie";
 interface User {
   id: string;
   email: string;
-  first_name: string; // Обратите внимание: first_name, не firstName
-  last_name: string; // last_name, не lastName
+  first_name: string;
+  last_name: string;
   phone: string;
 }
 
@@ -86,8 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const { token, user } = response.data;
 
-      // Сохраняем в cookies
-      Cookies.set("token", token, { expires: 7 }); // 7 дней
+      Cookies.set("token", token, { expires: 7 });
       Cookies.set("user", JSON.stringify(user), { expires: 7 });
 
       setUser(user);
@@ -118,27 +117,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // После успешной регистрации - логинимся
       await login(userData.email, userData.password);
     } catch (err: any) {
-  console.error("❌ Ошибка в AuthContext - полная информация:");
-  
-  if (err.response) {
-    // Ошибка от сервера с ответом
-    console.error("Статус:", err.response.status);
-    console.error("Данные:", err.response.data);
-    console.error("Заголовки:", err.response.headers);
-  } else if (err.request) {
-    // Запрос был отправлен, но нет ответа
-    console.error("Нет ответа от сервера. Request:", err.request);
-  } else {
-    // Ошибка при настройке запроса
-    console.error("Ошибка настройки запроса:", err.message);
-  }
-  
-  console.error("Полная ошибка:", err);
-  
-  const errorMessage = err.response?.data?.error || "Registration failed";
-  setError(errorMessage);
-  throw new Error(errorMessage);
-}
+      console.error("❌ Ошибка в AuthContext - полная информация:");
+
+      let errorMessage = "Registration failed";
+
+      if (err.response) {
+        console.error("Статус:", err.response.status);
+        console.error("Данные:", err.response.data);
+
+        if (err.response.data) {
+          if (err.response.data.details) {
+            const details = err.response.data.details;
+            const errorList = Object.values(details).join(", ");
+            errorMessage = `${err.response.data.error || "Ошибка валидации"}: ${errorList}`;
+          } else if (err.response.data.error) {
+            errorMessage = err.response.data.error;
+          } else if (err.response.data.message) {
+            errorMessage = err.response.data.message;
+          }
+        }
+
+        console.error("Заголовки:", err.response.headers);
+      } else if (err.request) {
+        console.error("Нет ответа от сервера. Request:", err.request);
+        errorMessage = "Сервер недоступен. Проверьте подключение.";
+      } else {
+        console.error("Ошибка настройки запроса:", err.message);
+        errorMessage = err.message;
+      }
+
+      console.error("Полная ошибка:", err);
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Выход

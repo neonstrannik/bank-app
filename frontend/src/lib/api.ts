@@ -75,3 +75,18 @@ export const cardsAPI = {
     return api.post(`/users/${userId}/cards`, data);
   },
 };
+
+export const creditAPI = {
+  applyCredit: (
+    accountId: string,
+    amount: number,
+    term: number,
+    rate: number,
+  ) =>
+    api.post("/credit/apply", {
+      account_id: accountId,
+      amount: amount,
+      term: term,
+      rate: rate,
+    }),
+};

@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d
     networks:
       - app-network
     healthcheck:
@@ -27,7 +28,14 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/bankapp_dev?sslmode=disable
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=bankapp_dev
+      - DB_SSLMODE=disable
+      - PORT=8080
+      - JWT_SECRET=super-secret-key-change-in-production
     depends_on:
       db:
         condition: service_healthy
@@ -37,7 +45,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile  # Используем Dockerfile для продакшена
+      dockerfile: Dockerfile # Используем Dockerfile для продакшена
       # Для разработки можно использовать:
       # dockerfile: Dockerfile.dev
     container_name: nextjs-app

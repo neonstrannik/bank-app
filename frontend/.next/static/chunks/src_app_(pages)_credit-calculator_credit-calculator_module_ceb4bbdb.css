@@ -435,5 +435,50 @@
   }
 }
 
+.credit-calculator-module__NvF5_q__accountSelect {
+  color: #e6faff;
+  cursor: pointer;
+  background: #141e2dcc;
+  border: 1px solid #00ccff4d;
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  transition: all .3s;
+}
+
+.credit-calculator-module__NvF5_q__accountSelect:hover {
+  background: #1e2837e6;
+  border-color: #0fc;
+}
+
+.credit-calculator-module__NvF5_q__errorMessage {
+  color: #f99;
+  text-align: center;
+  background: #ff505026;
+  border: 1px solid #f55;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.credit-calculator-module__NvF5_q__notAuthMessage {
+  text-align: center;
+  color: #a8c7e2;
+  padding: 40px;
+  font-size: 1.1rem;
+}
+
+.credit-calculator-module__NvF5_q__authLink {
+  color: #0fc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.credit-calculator-module__NvF5_q__authLink:hover {
+  text-decoration: underline;
+}
+
 
 /*# sourceMappingURL=src_app_%28pages%29_credit-calculator_credit-calculator_module_ceb4bbdb.css.map*/

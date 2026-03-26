@@ -8,15 +8,14 @@ import (
 
 // UserRepository defines methods for user data operations
 type UserRepository interface {
-	Create(ctx context.Context, user *models.User) error
-	GetByID(ctx context.Context, id uuid.UUID) (*models.User, error)
-	GetByEmail(ctx context.Context, email string) (*models.User, error)
-	Update(ctx context.Context, user *models.User) error
-	Delete(ctx context.Context, id uuid.UUID) error
-	List(ctx context.Context, limit, offset int) ([]models.User, error)
-	GetByPhone(ctx context.Context, phone string) (*models.User, error)
+    Create(ctx context.Context, user *models.User) error
+    GetByID(ctx context.Context, id uuid.UUID) (*models.User, error)
+    GetByEmail(ctx context.Context, email string) (*models.User, error)
+    GetByPhone(ctx context.Context, phone string) (*models.User, error) // Добавь это
+    Update(ctx context.Context, user *models.User) error
+    Delete(ctx context.Context, id uuid.UUID) error
+    List(ctx context.Context, limit, offset int) ([]models.User, error)
 }
-
 // AccountRepository defines methods for account data operations
 type AccountRepository interface {
 	Create(ctx context.Context, account *models.Account) error

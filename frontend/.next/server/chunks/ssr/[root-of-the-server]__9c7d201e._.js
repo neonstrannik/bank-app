@@ -197,10 +197,9 @@ function AuthProvider({ children }) {
                 password
             });
             const { token, user } = response.data;
-            // Сохраняем в cookies
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].set("token", token, {
                 expires: 7
-            }); // 7 дней
+            });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].set("user", JSON.stringify(user), {
                 expires: 7
             });
@@ -228,22 +227,34 @@ function AuthProvider({ children }) {
             await login(userData.email, userData.password);
         } catch (err) {
             console.error("❌ Ошибка в AuthContext - полная информация:");
+            let errorMessage = "Registration failed";
             if (err.response) {
-                // Ошибка от сервера с ответом
                 console.error("Статус:", err.response.status);
                 console.error("Данные:", err.response.data);
+                if (err.response.data) {
+                    if (err.response.data.details) {
+                        const details = err.response.data.details;
+                        const errorList = Object.values(details).join(", ");
+                        errorMessage = `${err.response.data.error || "Ошибка валидации"}: ${errorList}`;
+                    } else if (err.response.data.error) {
+                        errorMessage = err.response.data.error;
+                    } else if (err.response.data.message) {
+                        errorMessage = err.response.data.message;
+                    }
+                }
                 console.error("Заголовки:", err.response.headers);
             } else if (err.request) {
-                // Запрос был отправлен, но нет ответа
                 console.error("Нет ответа от сервера. Request:", err.request);
+                errorMessage = "Сервер недоступен. Проверьте подключение.";
             } else {
-                // Ошибка при настройке запроса
                 console.error("Ошибка настройки запроса:", err.message);
+                errorMessage = err.message;
             }
             console.error("Полная ошибка:", err);
-            const errorMessage = err.response?.data?.error || "Registration failed";
             setError(errorMessage);
             throw new Error(errorMessage);
+        } finally{
+            setLoading(false);
         }
     };
     // Выход
@@ -266,7 +277,7 @@ function AuthProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/src/app/(auth)/context/AuthContext.tsx",
-        lineNumber: 153,
+        lineNumber: 167,
         columnNumber: 5
     }, this);
 }

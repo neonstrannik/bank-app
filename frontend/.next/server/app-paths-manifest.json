@@ -3,9 +3,12 @@
   "/(auth)/register/page": "app/(auth)/register/page.js",
   "/(pages)/accounts/page": "app/(pages)/accounts/page.js",
   "/(pages)/cards/page": "app/(pages)/cards/page.js",
+  "/(pages)/credit-calculator/page": "app/(pages)/credit-calculator/page.js",
   "/(pages)/dashboard/page": "app/(pages)/dashboard/page.js",
   "/(pages)/deposit/page": "app/(pages)/deposit/page.js",
+  "/(pages)/investments/page": "app/(pages)/investments/page.js",
   "/(pages)/payment/page": "app/(pages)/payment/page.js",
   "/(pages)/transfer/page": "app/(pages)/transfer/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js"
 }
