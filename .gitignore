@@ -1,1 +1,10 @@
-node_modules
+# Next.js build output
+.next/
+out/
+build/
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+EOF
