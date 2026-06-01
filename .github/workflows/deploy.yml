@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.23'
-          cache: false  # ← отключаем кэш полностью
+        # не указываем cache-dependency-path
       
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: false  # ← отключаем кэш полностью
+        # не указываем cache-dependency-path
       
       - name: Build Backend
         working-directory: ./backend
