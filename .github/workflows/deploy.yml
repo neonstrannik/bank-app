@@ -39,7 +39,3 @@ jobs:
         run: |
           docker build -t bank-backend:test ./backend
           docker build -t bank-frontend:test ./frontend
-      
-      - name: Verify Docker builds
-        run: |
-          docker images | grep bank-
