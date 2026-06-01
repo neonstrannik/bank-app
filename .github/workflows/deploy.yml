@@ -17,13 +17,11 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.23'
-        # не указываем cache-dependency-path
       
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-        # не указываем cache-dependency-path
+          node-version: '20'
       
       - name: Build Backend
         working-directory: ./backend
@@ -34,7 +32,8 @@ jobs:
       - name: Build Frontend
         working-directory: ./frontend
         run: |
-          npm ci
+          rm -rf node_modules package-lock.json
+          npm install
           npm run build
       
       - name: Build Docker images
