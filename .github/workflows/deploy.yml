@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Build Backend
+        run: |
+          cd backend
+          go mod download
+          go build -v ./...
+      
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+      
+      - name: Build Docker images
+        run: |
+          docker build -t bank-backend:test ./backend
+          docker build -t bank-frontend:test ./frontend
+      
+      - name: Verify Docker builds
+        run: |
+          docker images | grep bank-
