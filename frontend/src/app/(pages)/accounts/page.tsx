@@ -63,10 +63,10 @@ export default function AccountsPage() {
         `✅ ${newAccountType === "checking" ? "Дебетовый" : "Кредитный"} счет успешно создан!`,
       );
 
-      // Добавляем новый счет в список
+      // Добавляем новый счет в локальный список
       setAccounts((prev) => [response.data, ...prev]);
 
-      // Скрываем форму через 3 секунды
+      // Закрываем форму через 3 секунды
       setTimeout(() => {
         setSuccess("");
         setShowCreateForm(false);
@@ -147,7 +147,7 @@ export default function AccountsPage() {
         </button>
       </div>
 
-      {/* Общий баланс */}
+      {/* Сводный баланс по всем счетам */}
       <div className={styles.totalBalanceCard}>
         <p className={styles.totalBalanceLabel}>Общий баланс</p>
         <p className={styles.totalBalanceValue}>
@@ -155,7 +155,7 @@ export default function AccountsPage() {
         </p>
       </div>
 
-      {/* Форма создания нового счета */}
+      {/* Форма открытия нового счета */}
       {showCreateForm && (
         <form onSubmit={handleCreateAccount} className={styles.createForm}>
           <h2>Создание нового счета</h2>
@@ -196,7 +196,7 @@ export default function AccountsPage() {
         </form>
       )}
 
-      {/* Список счетов */}
+      {/* Список счетов пользователя */}
       {loading ? (
         <div className={styles.loading}>Загрузка счетов...</div>
       ) : accounts.length > 0 ? (

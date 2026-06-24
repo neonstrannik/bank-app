@@ -17,7 +17,7 @@ type userService struct {
 	jwtSecret string
 }
 
-// NewUserService creates a new user service
+// NewUserService создает сервис пользователей
 func NewUserService(userRepo repository.UserRepository, jwtSecret string) *userService {
 	return &userService{
 		userRepo:  userRepo,
@@ -25,15 +25,15 @@ func NewUserService(userRepo repository.UserRepository, jwtSecret string) *userS
 	}
 }
 
-// Register creates a new user
+// Register регистрирует нового пользователя
 func (s *userService) Register(ctx context.Context, req *models.CreateUserRequest) (*models.User, error) {
-	// 1. Проверяем формат телефона
+	// 1) Проверяем формат телефона
 	phoneRegex := regexp.MustCompile(`^\+?[0-9]{10,15}$`)
 	if !phoneRegex.MatchString(req.Phone) {
 		return nil, errors.New("invalid phone number format")
 	}
 
-	// 2. Проверяем, не занят ли email
+	// 2) Проверяем уникальность email
 	existingUser, err := s.userRepo.GetByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (s *userService) Register(ctx context.Context, req *models.CreateUserReques
 		return nil, errors.New("user with this email already exists")
 	}
 
-	// 3. Проверяем, не занят ли телефон
+	// 3) Проверяем уникальность телефона
 	existingUserByPhone, err := s.userRepo.GetByPhone(ctx, req.Phone)
 	if err != nil {
 		return nil, err
@@ -51,13 +51,13 @@ func (s *userService) Register(ctx context.Context, req *models.CreateUserReques
 		return nil, errors.New("user with this phone already exists")
 	}
 
-	// 4. Хешируем пароль
+	// 4) Хешируем пароль
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}
 
-	// 5. Создаем пользователя
+	// 5) Создаем пользователя
 	now := time.Now()
 	user := &models.User{
 		ID:        uuid.New(),
@@ -74,14 +74,14 @@ func (s *userService) Register(ctx context.Context, req *models.CreateUserReques
 		return nil, err
 	}
 
-	// Не отправляем пароль
+	// Не возвращаем пароль в ответе
 	user.Password = ""
 	return user, nil
 }
 
-// Login authenticates a user
+// Login выполняет аутентификацию пользователя
 func (s *userService) Login(ctx context.Context, email, password string) (string, *models.User, error) {
-	// 1. Ищем пользователя по email
+	// 1) Ищем пользователя по email
 	user, err := s.userRepo.GetByEmail(ctx, email)
 	if err != nil {
 		return "", nil, err
@@ -90,20 +90,20 @@ func (s *userService) Login(ctx context.Context, email, password string) (string
 		return "", nil, errors.New("invalid credentials")
 	}
 
-	// 2. Проверяем пароль
+	// 2) Проверяем пароль
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return "", nil, errors.New("invalid credentials")
 	}
 
-	// 3. Генерируем JWT токен (пока простой)
+	// 3) Генерируем токен сессии
 	token := generateSimpleToken(user.ID.String())
 
-	// Не отправляем пароль
+	// Не возвращаем пароль в ответе
 	user.Password = ""
 	return token, user, nil
 }
 
-// GetProfile returns user profile by ID
+// GetProfile возвращает профиль пользователя по ID
 func (s *userService) GetProfile(ctx context.Context, userID uuid.UUID) (*models.User, error) {
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
@@ -117,9 +117,9 @@ func (s *userService) GetProfile(ctx context.Context, userID uuid.UUID) (*models
 	return user, nil
 }
 
-// UpdateProfile updates user profile
+// UpdateProfile обновляет профиль пользователя
 func (s *userService) UpdateProfile(ctx context.Context, userID uuid.UUID, req *models.UpdateUserRequest) (*models.User, error) {
-	// 1. Получаем существующего пользователя
+	// 1) Загружаем текущий профиль
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
 		return nil, err
@@ -128,7 +128,7 @@ func (s *userService) UpdateProfile(ctx context.Context, userID uuid.UUID, req *
 		return nil, errors.New("user not found")
 	}
 
-	// 2. Обновляем поля
+	// 2) Обновляем переданные поля
 	if req.FirstName != "" {
 		user.FirstName = req.FirstName
 	}
@@ -140,7 +140,7 @@ func (s *userService) UpdateProfile(ctx context.Context, userID uuid.UUID, req *
 	}
 	user.UpdatedAt = time.Now()
 
-	// 3. Сохраняем
+	// 3) Сохраняем изменения
 	if err := s.userRepo.Update(ctx, user); err != nil {
 		return nil, err
 	}
@@ -149,8 +149,8 @@ func (s *userService) UpdateProfile(ctx context.Context, userID uuid.UUID, req *
 	return user, nil
 }
 
-// Временная функция для генерации токена (потом заменим на JWT)
+// generateSimpleToken: упрощенный токен для демо-версии
 func generateSimpleToken(userID string) string {
-	// В реальном проекте здесь будет JWT с подписью
+	// В прод-версии используется полноценный JWT
 	return "simple-token-for-" + userID
 }

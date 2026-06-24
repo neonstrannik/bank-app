@@ -15,12 +15,12 @@ type accountRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewAccountRepository creates a new account repository
+// NewAccountRepository создает репозиторий счетов
 func NewAccountRepository(db *pgxpool.Pool) *accountRepository {
 	return &accountRepository{db: db}
 }
 
-// Create inserts a new account into the database
+// Create добавляет новый счет в базу данных
 func (r *accountRepository) Create(ctx context.Context, account *models.Account) error {
 	query := `
 		INSERT INTO accounts (id, user_id, account_number, account_type, balance, currency, status, created_at, updated_at)
@@ -39,7 +39,7 @@ func (r *accountRepository) Create(ctx context.Context, account *models.Account)
 	return nil
 }
 
-// GetByID retrieves an account by ID
+// GetByID получает счет по ID
 func (r *accountRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Account, error) {
 	query := `
 		SELECT id, user_id, account_number, account_type, balance, currency, status, created_at, updated_at
@@ -63,7 +63,7 @@ func (r *accountRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.
 	return &account, nil
 }
 
-// GetByUserID retrieves all accounts for a user
+// GetByUserID получает все счета пользователя
 func (r *accountRepository) GetByUserID(ctx context.Context, userID uuid.UUID) ([]models.Account, error) {
 	query := `
 		SELECT id, user_id, account_number, account_type, balance, currency, status, created_at, updated_at
@@ -94,7 +94,7 @@ func (r *accountRepository) GetByUserID(ctx context.Context, userID uuid.UUID) (
 	return accounts, nil
 }
 
-// GetByNumber retrieves an account by account number
+// GetByNumber получает счет по номеру счета
 func (r *accountRepository) GetByNumber(ctx context.Context, accountNumber string) (*models.Account, error) {
 	query := `
 		SELECT id, user_id, account_number, account_type, balance, currency, status, created_at, updated_at
@@ -118,7 +118,7 @@ func (r *accountRepository) GetByNumber(ctx context.Context, accountNumber strin
 	return &account, nil
 }
 
-// UpdateBalance updates the balance of an account
+// UpdateBalance обновляет баланс счета
 func (r *accountRepository) UpdateBalance(ctx context.Context, id uuid.UUID, amount float64) error {
 	query := `
 		UPDATE accounts
@@ -138,7 +138,7 @@ func (r *accountRepository) UpdateBalance(ctx context.Context, id uuid.UUID, amo
 	return nil
 }
 
-// Update updates an existing account
+// Update обновляет существующий счет
 func (r *accountRepository) Update(ctx context.Context, account *models.Account) error {
 	query := `
 		UPDATE accounts
@@ -162,7 +162,7 @@ func (r *accountRepository) Update(ctx context.Context, account *models.Account)
 	return nil
 }
 
-// Delete removes an account by ID
+// Delete удаляет счет по ID
 func (r *accountRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	query := `DELETE FROM accounts WHERE id = $1`
 

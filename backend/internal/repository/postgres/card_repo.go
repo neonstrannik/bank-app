@@ -16,12 +16,12 @@ type cardRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewCardRepository creates a new card repository
+// NewCardRepository создает репозиторий карт
 func NewCardRepository(db *pgxpool.Pool) *cardRepository {
 	return &cardRepository{db: db}
 }
 
-// Create inserts a new card into the database
+// Create добавляет новую карту в базу данных
 func (r *cardRepository) Create(ctx context.Context, card *models.Card) error {
 	query := `
 		INSERT INTO cards (id, user_id, account_id, card_name, card_type, card_number, 
@@ -42,7 +42,7 @@ func (r *cardRepository) Create(ctx context.Context, card *models.Card) error {
 	return nil
 }
 
-// GetByID retrieves a card by ID
+// GetByID получает карту по ID
 func (r *cardRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Card, error) {
 	query := `
 		SELECT id, user_id, account_id, card_name, card_type, card_number, 
@@ -119,7 +119,7 @@ func (r *cardRepository) GetByUserID(ctx context.Context, userID uuid.UUID) ([]m
     return cards, nil
 }
 
-// GetByAccountID retrieves all cards for an account
+// GetByAccountID получает все карты счета
 func (r *cardRepository) GetByAccountID(ctx context.Context, accountID uuid.UUID) ([]models.Card, error) {
 	query := `
 		SELECT id, user_id, account_id, card_name, card_type, card_number, 
@@ -159,7 +159,7 @@ func (r *cardRepository) GetByAccountID(ctx context.Context, accountID uuid.UUID
 	return cards, nil
 }
 
-// Update updates an existing card
+// Update обновляет существующую карту
 func (r *cardRepository) Update(ctx context.Context, card *models.Card) error {
 	query := `
 		UPDATE cards
@@ -183,7 +183,7 @@ func (r *cardRepository) Update(ctx context.Context, card *models.Card) error {
 	return nil
 }
 
-// Delete removes a card by ID
+// Delete удаляет карту по ID
 func (r *cardRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	query := `DELETE FROM cards WHERE id = $1`
 

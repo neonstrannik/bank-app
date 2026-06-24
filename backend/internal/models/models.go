@@ -10,7 +10,7 @@ import (
 type User struct {
 	ID        uuid.UUID `json:"id" db:"id"`
 	Email     string    `json:"email" db:"email"`
-	Password  string    `json:"-" db:"password_hash"` // "-" скрывает поле в JSON
+	Password  string    `json:"-" db:"password_hash"` // Не отдаем пароль в API
 	FirstName string    `json:"first_name" db:"first_name"`
 	LastName  string    `json:"last_name" db:"last_name"`
 	Phone     string    `json:"phone" db:"phone"`
@@ -23,15 +23,14 @@ type Account struct {
 	ID            uuid.UUID `json:"id" db:"id"`
 	UserID        uuid.UUID `json:"user_id" db:"user_id"`
 	AccountNumber string    `json:"account_number" db:"account_number"`
-	AccountType   string    `json:"account_type" db:"account_type"` // checking, credit
+	AccountType   string    `json:"account_type" db:"account_type"` // Тип счета: расчетный или кредитный
 	Balance       float64   `json:"balance" db:"balance"`
 	Currency      string    `json:"currency" db:"currency"`
-	Status        string    `json:"status" db:"status"` // active, frozen, closed
+	Status        string    `json:"status" db:"status"` // Статус счета: активен, заморожен или закрыт
 	CreatedAt     time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at" db:"updated_at"`
 }
 
-// Card представляет банковскую карту
 // Card представляет банковскую карту
 type Card struct {
     ID         uuid.UUID `json:"id" db:"id"`
@@ -40,7 +39,7 @@ type Card struct {
     CardName   string    `json:"card_name" db:"card_name"`
     CardType   string    `json:"card_type" db:"card_type"`
     CardNumber string    `json:"card_number" db:"card_number"`
-    ExpiryDate string    `json:"expiry_date" db:"expiry_date"` // Должно быть string
+    ExpiryDate string    `json:"expiry_date" db:"expiry_date"` // Формат: YYYY-MM-DD
     CVV        string    `json:"cvv,omitempty" db:"cvv"`
     Status     string    `json:"status" db:"status"`
     Benefits   []string  `json:"benefits" db:"benefits"`
@@ -59,7 +58,7 @@ type Transaction struct {
     Status           string     `json:"status" db:"status"`
     RecipientAccount *string    `json:"recipient_account,omitempty" db:"recipient_account"`
     RecipientName    *string    `json:"recipient_name,omitempty" db:"recipient_name"`
-    SenderAccount    *string    `json:"sender_account,omitempty" db:"sender_account"` // <-- Добавь это
+    SenderAccount    *string    `json:"sender_account,omitempty" db:"sender_account"` // Счет отправителя
     CreatedAt        time.Time  `json:"created_at" db:"created_at"`
 }
 
@@ -73,7 +72,7 @@ type CreditHistory struct {
 	TermMonths      int       `json:"term_months" db:"term_months"`
 	MonthlyPayment  float64   `json:"monthly_payment" db:"monthly_payment"`
 	RemainingAmount float64   `json:"remaining_amount" db:"remaining_amount"`
-	Status          string    `json:"status" db:"status"` // active, paid, overdue
+	Status          string    `json:"status" db:"status"` // Статус кредита: активен, погашен или просрочен
 	ApprovedAt      *time.Time `json:"approved_at,omitempty" db:"approved_at"`
 	DueDate         *time.Time `json:"due_date,omitempty" db:"due_date"`
 	CreatedAt       time.Time `json:"created_at" db:"created_at"`
@@ -88,11 +87,11 @@ type Transfer struct {
 	Amount             float64   `json:"amount" db:"amount"`
 	Description        string    `json:"description" db:"description"`
 	Commission         float64   `json:"commission" db:"commission"`
-	Status             string    `json:"status" db:"status"` // pending, completed, failed
+	Status             string    `json:"status" db:"status"` // Статус перевода: в ожидании, выполнен или ошибка
 	CreatedAt          time.Time `json:"created_at" db:"created_at"`
 }
 
-// Для запросов API
+// DTO для HTTP-запросов и ответов
 
 // CreateUserRequest запрос на создание пользователя
 type CreateUserRequest struct {
@@ -125,7 +124,7 @@ type CreateCardRequest struct {
 	CardType   string    `json:"card_type" binding:"required,oneof=debit credit premium"`
 	Benefits   []string  `json:"benefits"`
 	ImageURL   string    `json:"image_url"`
-	ExpiryDate string    `json:"expiry_date" binding:"required"` // <-- Добавьте эту строку
+	ExpiryDate string    `json:"expiry_date" binding:"required"` // Срок действия карты
 }
 
 // UpdateUserRequest запрос на обновление профиля

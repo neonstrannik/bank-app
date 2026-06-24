@@ -140,7 +140,7 @@
   flex-wrap: wrap;
   gap: 40px;
   justify-content: center;
-  align-items: stretch; /* все карточки одинаковой высоты */
+  align-items: stretch; /* Карточки одной высоты */
   z-index: 2;
 }
 
@@ -316,7 +316,7 @@
     font-size: 2.3rem;
   }
 }
-/* Модальное окно */
+/* Модальное окно продукта */
 .modalOverlay {
   position: fixed;
   top: 0;

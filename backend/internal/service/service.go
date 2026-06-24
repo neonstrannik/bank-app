@@ -10,7 +10,7 @@ import (
 	"github.com/neonstrannik/bank-app/backend/internal/repository"
 )
 
-// UserService defines business logic for users
+// UserService описывает логику работы с пользователями
 type UserService interface {
 	Register(ctx context.Context, req *models.CreateUserRequest) (*models.User, error)
 	Login(ctx context.Context, email, password string) (string, *models.User, error)
@@ -18,7 +18,7 @@ type UserService interface {
 	UpdateProfile(ctx context.Context, userID uuid.UUID, req *models.UpdateUserRequest) (*models.User, error)
 }
 
-// AccountService defines business logic for accounts
+// AccountService описывает логику работы со счетами
 type AccountService interface {
 	CreateAccount(ctx context.Context, userID uuid.UUID, req *models.CreateAccountRequest) (*models.Account, error)
 	GetAccounts(ctx context.Context, userID uuid.UUID) ([]models.Account, error)
@@ -27,7 +27,7 @@ type AccountService interface {
 	CloseAccount(ctx context.Context, accountID uuid.UUID) error
 }
 
-// CardService defines business logic for cards
+// CardService описывает логику работы с картами
 type CardService interface {
 	GetUserCards(ctx context.Context, userID uuid.UUID) ([]models.Card, error)
 	GetCard(ctx context.Context, cardID uuid.UUID) (*models.Card, error)
@@ -35,7 +35,7 @@ type CardService interface {
 	BlockCard(ctx context.Context, cardID uuid.UUID) error
 }
 
-// TransactionService defines business logic for transactions
+// TransactionService описывает логику работы с транзакциями
 type TransactionService interface {
 	Deposit(ctx context.Context, accountID uuid.UUID, amount float64, description string) (*models.Transaction, error)
 	Withdraw(ctx context.Context, accountID uuid.UUID, amount float64, description string) (*models.Transaction, error)
@@ -43,7 +43,7 @@ type TransactionService interface {
 	GetAccountTransactions(ctx context.Context, accountID uuid.UUID, limit, offset int) ([]models.Transaction, error)
 }
 
-// CreditService defines business logic for credits
+// CreditService описывает логику кредитов
 type CreditService interface {
 	CalculateCredit(amount float64, rate float64, months int) (*models.CreditCalculation, error)
 	ApplyForCredit(ctx context.Context, userID uuid.UUID, req *models.CreditRequest) (*models.CreditHistory, error)
@@ -51,20 +51,20 @@ type CreditService interface {
 	MakePayment(ctx context.Context, creditID uuid.UUID, amount float64) error
 }
 
-// TransferService defines business logic for transfers
+// TransferService описывает логику переводов
 type TransferService interface {
 	TransferByPhone(ctx context.Context, fromAccountID uuid.UUID, toPhone string, amount float64, description string) (*models.Transaction, error)
 	GetUserByPhone(ctx context.Context, phone string) (*models.User, error)
 }
 
-// transferService implements TransferService
+// transferService — реализация сервиса переводов
 type transferService struct {
 	accountRepo repository.AccountRepository
 	userRepo    repository.UserRepository
 	txRepo      repository.TransactionRepository
 }
 
-// NewTransferService creates a new transfer service
+// NewTransferService создает сервис переводов
 func NewTransferService(
 	accountRepo repository.AccountRepository,
 	userRepo repository.UserRepository,
@@ -77,14 +77,14 @@ func NewTransferService(
 	}
 }
 
-// GetUserByPhone finds a user by phone number
+// GetUserByPhone ищет пользователя по телефону
 func (s *transferService) GetUserByPhone(ctx context.Context, phone string) (*models.User, error) {
 	return s.userRepo.GetByPhone(ctx, phone)
 }
 
-// TransferByPhone transfers money by recipient's phone number
+// TransferByPhone выполняет перевод по номеру телефона
 func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uuid.UUID, toPhone string, amount float64, description string) (*models.Transaction, error) {
-	// 1. Check sender's account
+	// 1) Проверяем счет отправителя
 	fromAccount, err := s.accountRepo.GetByID(ctx, fromAccountID)
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 		return nil, errors.New("insufficient funds")
 	}
 
-	// 2. Find recipient by phone
+	// 2) Ищем получателя по телефону
 	toUser, err := s.userRepo.GetByPhone(ctx, toPhone)
 	if err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 		return nil, errors.New("user with this phone not found")
 	}
 
-	// 3. Get recipient's account (first active)
+	// 3) Находим первый активный счет получателя
 	toAccounts, err := s.accountRepo.GetByUserID(ctx, toUser.ID)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,7 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 		return nil, errors.New("recipient has no active accounts")
 	}
 
-	// Take the first active account
+	// Берем первый активный счет
 	var toAccount *models.Account
 	for _, acc := range toAccounts {
 		if acc.Status == "active" {
@@ -129,7 +129,7 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 		return nil, errors.New("recipient has no active accounts")
 	}
 
-	// 4. Create transaction record
+	// 4) Формируем запись о переводе
 	now := time.Now()
 	transaction := &models.Transaction{
 		ID:               uuid.New(),
@@ -143,8 +143,7 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 		CreatedAt:        now,
 	}
 
-	// 5. Execute transfer
-	// In production, this should be done in a database transaction
+	// 5) Выполняем перевод
 	err = s.accountRepo.Withdraw(ctx, fromAccountID, amount)
 	if err != nil {
 		return nil, err
@@ -152,11 +151,11 @@ func (s *transferService) TransferByPhone(ctx context.Context, fromAccountID uui
 
 	err = s.accountRepo.Deposit(ctx, toAccount.ID, amount)
 	if err != nil {
-		// In production, you'd need to rollback the withdrawal here
+		// При ошибке депозитной части нужен откат списания
 		return nil, err
 	}
 
-	// 6. Save transaction
+	// 6) Сохраняем транзакцию
 	err = s.txRepo.Create(ctx, transaction)
 	if err != nil {
 		return nil, err

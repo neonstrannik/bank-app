@@ -31,7 +31,7 @@ export default function Investments() {
           </p>
         </header>
 
-        {/* Статистика */}
+        {/* Ключевые показатели */}
         <div className={styles.statsBanner}>
           <div className={styles.stat}>
             <div className={styles.statNumber}>+48%</div>
@@ -47,7 +47,7 @@ export default function Investments() {
           </div>
         </div>
 
-        {/* Категории инвестиций */}
+        {/* Витрина инвестиционных продуктов */}
         <div className={styles.categoriesGrid}>
           <div className={styles.categoryCard}>
             <div className={styles.categoryHeader}>
@@ -148,7 +148,7 @@ export default function Investments() {
           </div>
         </div>
 
-        {/* Примечание */}
+        {/* Дисклеймер по рискам */}
         <div className={styles.disclaimer}>
           <h3>⚠️ Важно</h3>
           <p>
@@ -159,7 +159,7 @@ export default function Investments() {
         </div>
       </div>
 
-      {/* Модальное окно */}
+      {/* Модальное окно оформления */}
       {showModal && (
         <div className={styles.modalOverlay} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>

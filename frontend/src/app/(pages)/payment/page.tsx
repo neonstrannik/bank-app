@@ -46,7 +46,7 @@ export default function PaymentPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Категории услуг
+  // Каталог услуг по категориям
   const categories: ServiceCategory[] = [
     {
       id: "utilities",
@@ -89,7 +89,7 @@ export default function PaymentPage() {
     },
   ];
 
-  // Преобразуем все услуги в плоский список для удобства
+  // Плоский список услуг для быстрых операций
   const allServices = categories.flatMap(cat => cat.services);
 
   useEffect(() => {
@@ -120,31 +120,31 @@ export default function PaymentPage() {
     }
   };
 
-  // Добавить услугу в корзину
+  // Добавляем услугу в корзину
   const addToCart = (service: Service) => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === service.id);
       
       if (existingItem) {
-        // Если уже есть, увеличиваем количество
+        // Увеличиваем количество существующей позиции
         return prevCart.map(item =>
           item.id === service.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // Если нет, добавляем новую
+        // Добавляем новую позицию в корзину
         return [...prevCart, { ...service, quantity: 1 }];
       }
     });
   };
 
-  // Удалить услугу из корзины
+  // Удаляем услугу из корзины
   const removeFromCart = (serviceId: string) => {
     setCart(prevCart => prevCart.filter(item => item.id !== serviceId));
   };
 
-  // Изменить количество
+  // Меняем количество услуги
   const updateQuantity = (serviceId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
       removeFromCart(serviceId);
@@ -160,15 +160,15 @@ export default function PaymentPage() {
     );
   };
 
-  // Очистить корзину
+  // Полностью очищаем корзину
   const clearCart = () => {
     setCart([]);
   };
 
-  // Подсчет общей суммы
+  // Считаем итоговую сумму
   const totalAmount = cart.reduce((sum, item) => sum + (item.amount * item.quantity), 0);
 
-  // Оплатить всё сразу
+  // Оплачиваем корзину одной операцией
   const handlePayAll = async () => {
     if (!selectedAccount) {
       setErrorMessage("Выберите счет для оплаты");
@@ -187,26 +187,26 @@ export default function PaymentPage() {
 
       console.log(`🟡 Оплата ${cart.length} услуг на сумму ${totalAmount} ₽`);
       
-      // Списываем общую сумму одной транзакцией
+      // Списываем общую сумму со счета
       const response = await accountsAPI.withdraw(selectedAccount, totalAmount);
       
       console.log("🟢 Ответ от бэкенда:", response.data);
       
-      // Формируем список оплаченных услуг
+      // Формируем список оплаченных услуг для уведомления
       const paidServices = cart.map(item => 
         `${item.name} x${item.quantity} = ${item.amount * item.quantity} ₽`
       ).join('\n');
       
       setSuccessMessage(`✅ Оплачено:\n${paidServices}\n\nОбщая сумма: ${totalAmount} ₽`);
       
-      // Обновляем баланс счета
+      // Обновляем баланс выбранного счета
       setAccounts(prev => prev.map(acc => 
         acc.id === selectedAccount 
           ? { ...acc, balance: response.data.balance }
           : acc
       ));
 
-      // Очищаем корзину
+      // Очищаем корзину после оплаты
       setCart([]);
 
       setTimeout(() => setSuccessMessage(""), 5000);
@@ -267,7 +267,7 @@ export default function PaymentPage() {
           </div>
         ) : (
           <div className={styles.grid}>
-            {/* Левая колонка - каталог услуг */}
+            {/* Левая колонка: каталог услуг */}
             <div className={styles.catalog}>
               <div className={styles.accountSelector}>
                 <h2 className={styles.sectionTitle}>Счет списания</h2>
@@ -315,7 +315,7 @@ export default function PaymentPage() {
               </div>
             </div>
 
-            {/* Правая колонка - корзина */}
+            {/* Правая колонка: корзина */}
             <div className={styles.cart}>
               <div className={styles.cartHeader}>
                 <h2 className={styles.cartTitle}>Корзина</h2>

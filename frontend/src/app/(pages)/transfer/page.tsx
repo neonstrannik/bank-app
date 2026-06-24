@@ -75,7 +75,7 @@ export default function TransferPage() {
       return;
     }
 
-    // Простая валидация телефона
+    // Базовая проверка формата телефона
     const phoneRegex = /^\+?[0-9]{10,15}$/;
     if (!phoneRegex.test(phone)) {
       setErrorMessage("Неверный формат телефона");
@@ -144,7 +144,7 @@ export default function TransferPage() {
 
       setSuccessMessage(`✅ Перевод на сумму ${amount} ₽ успешно выполнен!`);
 
-      // Обновляем баланс счета
+      // Обновляем баланс счета в интерфейсе
       setAccounts((prev) =>
         prev.map((acc) =>
           acc.id === selectedAccount
@@ -153,7 +153,7 @@ export default function TransferPage() {
         ),
       );
 
-      // Сбрасываем форму
+      // Возвращаем форму в исходное состояние
       setTimeout(() => {
         setStep("form");
         setPhone("");
@@ -221,7 +221,7 @@ export default function TransferPage() {
         ) : (
           <div className={styles.transferCard}>
             {step === "form" ? (
-              /* Шаг 1: Форма перевода */
+              /* Шаг 1: данные перевода */
               <div className={styles.formStep}>
                 <div className={styles.formGroup}>
                   <label className={styles.label}>Счет списания</label>
@@ -318,7 +318,7 @@ export default function TransferPage() {
                 </button>
               </div>
             ) : (
-              /* Шаг 2: Подтверждение */
+              /* Шаг 2: подтверждение */
               <div className={styles.confirmStep}>
                 <h2 className={styles.confirmTitle}>Проверьте данные</h2>
 

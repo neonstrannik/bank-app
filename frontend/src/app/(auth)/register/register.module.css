@@ -258,7 +258,7 @@
   }
 }
 
-/* Добавим стили для disabled состояния */
+/* Состояния disabled для полей и кнопки */
 .input:disabled {
   opacity: 0.6;
   cursor: not-allowed;

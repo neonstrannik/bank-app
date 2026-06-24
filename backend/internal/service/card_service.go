@@ -16,7 +16,7 @@ type cardService struct {
 	userRepo    repository.UserRepository
 }
 
-// NewCardService creates a new card service
+// NewCardService создает сервис карт
 func NewCardService(
 	cardRepo repository.CardRepository,
 	accountRepo repository.AccountRepository,
@@ -29,9 +29,9 @@ func NewCardService(
 	}
 }
 
-// GetUserCards returns all cards for a user
+// GetUserCards возвращает все карты пользователя
 func (s *cardService) GetUserCards(ctx context.Context, userID uuid.UUID) ([]models.Card, error) {
-	// Проверяем, существует ли пользователь
+	// Проверяем, что пользователь существует
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func (s *cardService) GetUserCards(ctx context.Context, userID uuid.UUID) ([]mod
 	return s.cardRepo.GetByUserID(ctx, userID)
 }
 
-// GetCard returns a specific card
+// GetCard возвращает карту по ее ID
 func (s *cardService) GetCard(ctx context.Context, cardID uuid.UUID) (*models.Card, error) {
 	card, err := s.cardRepo.GetByID(ctx, cardID)
 	if err != nil {
@@ -53,13 +53,13 @@ func (s *cardService) GetCard(ctx context.Context, cardID uuid.UUID) (*models.Ca
 		return nil, errors.New("card not found")
 	}
 
-	// Скрываем CVV для безопасности
+	// Не возвращаем CVV в ответе
 	card.CVV = "***"
 
 	return card, nil
 }
 
-// ActivateCard activates a card
+// ActivateCard активирует карту
 func (s *cardService) ActivateCard(ctx context.Context, cardID uuid.UUID) error {
 	card, err := s.cardRepo.GetByID(ctx, cardID)
 	if err != nil {
@@ -75,7 +75,7 @@ func (s *cardService) ActivateCard(ctx context.Context, cardID uuid.UUID) error 
 	return s.cardRepo.Update(ctx, card)
 }
 
-// BlockCard blocks a card
+// BlockCard блокирует карту
 func (s *cardService) BlockCard(ctx context.Context, cardID uuid.UUID) error {
 	card, err := s.cardRepo.GetByID(ctx, cardID)
 	if err != nil {
@@ -91,9 +91,9 @@ func (s *cardService) BlockCard(ctx context.Context, cardID uuid.UUID) error {
 	return s.cardRepo.Update(ctx, card)
 }
 
-// CreateCard creates a new card for an account
+// CreateCard создает новую карту для счета
 func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *models.CreateCardRequest) (*models.Card, error) {
-	// 1. Проверяем, существует ли счет
+	// 1) Проверяем существование счета
 	account, err := s.accountRepo.GetByID(ctx, req.AccountID)
 	if err != nil {
 		return nil, err
@@ -102,18 +102,18 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 		return nil, errors.New("account not found")
 	}
 
-	// 2. Проверяем, что счет принадлежит пользователю
+	// 2) Проверяем владельца счета
 	if account.UserID != userID {
 		return nil, errors.New("account does not belong to this user")
 	}
 
-	// 3. Создаем карту, используя данные из запроса
+	// 3) Формируем карту из данных запроса
 	now := time.Now()
 	
-	// Проверяем, пришла ли дата с фронтенда
+	// Берем срок действия из запроса
 	expiryDate := req.ExpiryDate
 	if expiryDate == "" {
-		// Если нет - генерируем сами (на всякий случай)
+		// Фолбэк для тестового сценария
 		expiryDate = "2028-12-31"
 	}
 
@@ -124,7 +124,7 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 		CardName:   req.CardName,
 		CardType:   req.CardType,
 		CardNumber: generateCardNumber(),
-		ExpiryDate: expiryDate, // Используем дату из запроса!
+		ExpiryDate: expiryDate, // Срок действия карты
 		CVV:        generateCVV(),
 		Status:     "active",
 		Benefits:   req.Benefits,
@@ -137,22 +137,19 @@ func (s *cardService) CreateCard(ctx context.Context, userID uuid.UUID, req *mod
 		return nil, err
 	}
 
-	// Скрываем CVV в ответе
+	// Не возвращаем CVV в ответе
 	card.CVV = "***"
 	return card, nil
 }
-// Вспомогательные функции (упрощенно)
-// Генерация уникального номера карты
+// Вспомогательные функции для генерации реквизитов
 func generateCardNumber() string {
-	// Генерируем номер карты на основе времени и случайного числа
-	// Формат: 4 группы по 4 цифры
+	// Генерируем 16-значный номер на базе времени
 	timestamp := time.Now().UnixNano()
 	
-	// Берем последние 12 цифр timestamp и добавляем префикс 4
-	// Это даст нам 16-значный номер, начинающийся с 4 (Visa)
+	// Префикс 4 + оставшаяся часть номера
 	number := fmt.Sprintf("4%015d", timestamp%1000000000000000)
 	
-	// Форматируем для читаемости (но в БД храним без пробелов)
+	// Возвращаем номер без пробелов
 	return number
 }
 

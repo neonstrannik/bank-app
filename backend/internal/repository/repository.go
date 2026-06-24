@@ -6,17 +6,17 @@ import (
 	"github.com/neonstrannik/bank-app/backend/internal/models"
 )
 
-// UserRepository defines methods for user data operations
+// UserRepository описывает операции с пользователями
 type UserRepository interface {
     Create(ctx context.Context, user *models.User) error
     GetByID(ctx context.Context, id uuid.UUID) (*models.User, error)
     GetByEmail(ctx context.Context, email string) (*models.User, error)
-    GetByPhone(ctx context.Context, phone string) (*models.User, error) // Добавь это
+    GetByPhone(ctx context.Context, phone string) (*models.User, error) // Поиск по номеру телефона
     Update(ctx context.Context, user *models.User) error
     Delete(ctx context.Context, id uuid.UUID) error
     List(ctx context.Context, limit, offset int) ([]models.User, error)
 }
-// AccountRepository defines methods for account data operations
+// AccountRepository описывает операции со счетами
 type AccountRepository interface {
 	Create(ctx context.Context, account *models.Account) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.Account, error)
@@ -26,10 +26,10 @@ type AccountRepository interface {
 	Update(ctx context.Context, account *models.Account) error
 	Delete(ctx context.Context, id uuid.UUID) error
 	Deposit(ctx context.Context, id uuid.UUID, amount float64) error
-	Withdraw(ctx context.Context, id uuid.UUID, amount float64) error // Добавь это
+	Withdraw(ctx context.Context, id uuid.UUID, amount float64) error // Списание средств
 }
 
-// CardRepository defines methods for card data operations
+// CardRepository описывает операции с картами
 type CardRepository interface {
 	Create(ctx context.Context, card *models.Card) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.Card, error)
@@ -41,7 +41,7 @@ type CardRepository interface {
 
 
 
-// TransferRepository defines methods for transfer data operations
+// TransferRepository описывает операции с переводами
 type TransferRepository interface {
 	Create(ctx context.Context, transfer *models.Transfer) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.Transfer, error)
@@ -49,14 +49,14 @@ type TransferRepository interface {
 	GetByRecipientID(ctx context.Context, accountID uuid.UUID, limit, offset int) ([]models.Transfer, error)
 }
 
-// CreditHistoryRepository defines methods for credit history operations
+// CreditHistoryRepository описывает операции с кредитной историей
 type CreditHistoryRepository interface {
 	Create(ctx context.Context, credit *models.CreditHistory) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.CreditHistory, error)
 	GetByUserID(ctx context.Context, userID uuid.UUID) ([]models.CreditHistory, error)
 	Update(ctx context.Context, credit *models.CreditHistory) error
 }
-// TransactionRepository defines methods for transaction data operations
+// TransactionRepository описывает операции с транзакциями
 type TransactionRepository interface {
 	Create(ctx context.Context, transaction *models.Transaction) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.Transaction, error)

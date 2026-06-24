@@ -47,7 +47,7 @@ export default function CreditCalculator() {
   const [creditApplied, setCreditApplied] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Загружаем счета пользователя
+  // Загружаем счета для зачисления кредита
   useEffect(() => {
     if (user) {
       loadAccounts();
@@ -147,7 +147,7 @@ export default function CreditCalculator() {
       console.log("✅ Кредит оформлен:", response.data);
       setCreditApplied(true);
       
-      // Обновляем баланс счета в локальном состоянии
+      // Обновляем баланс счета в интерфейсе
       setAccounts(prev => prev.map(acc => 
         acc.id === selectedAccount 
           ? { ...acc, balance: response.data.account.balance }
@@ -175,7 +175,7 @@ export default function CreditCalculator() {
     }).format(amount);
   };
 
-  // Если пользователь не авторизован — показываем сообщение
+  // Для гостя показываем экран с предложением войти
   if (!isAuthenticated) {
     return (
       <div className={styles.container}>
@@ -216,9 +216,9 @@ export default function CreditCalculator() {
         </div>
 
         <div className={styles.calculatorGrid}>
-          {/* Форма ввода */}
+          {/* Форма параметров кредита */}
           <div className={styles.formSection}>
-            {/* Выбор счета */}
+            {/* Выбор счета зачисления */}
             {accounts.length > 0 && (
               <div className={styles.formGroup}>
                 <label className={styles.label}>

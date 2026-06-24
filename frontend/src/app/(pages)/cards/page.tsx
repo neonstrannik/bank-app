@@ -20,7 +20,7 @@ interface Card {
   expiry_date: string;
 }
 
-// Компонент, который использует useSearchParams
+// Контент страницы карт с параметрами URL
 function CardsContent() {
   const searchParams = useSearchParams();
   const { user, isAuthenticated } = useAuth();
@@ -32,7 +32,7 @@ function CardsContent() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Предопределенные карты (как в вашем дизайне)
+  // Базовый каталог карт банка
   const bankCards = [
     {
       id: "neo",
@@ -92,7 +92,7 @@ function CardsContent() {
       console.log("📥 Загруженные карты пользователя:", response.data);
       setUserCards(response.data || []);
 
-      // Определяем, какие карты еще не добавлены
+      // Фильтруем карты, которых еще нет у пользователя
       const userCardNames = (response.data || []).map((c: Card) => c.card_name);
       const available = bankCards.filter(
         (c) => !userCardNames.includes(c.name),
@@ -133,7 +133,7 @@ function CardsContent() {
         return;
       }
 
-      // Берем первый активный счет
+      // Выбираем первый активный счет
       const targetAccount =
         accounts.find((a: any) => a.status === "active") || accounts[0];
       console.log("🟢 Выбран счет:", {
@@ -143,12 +143,11 @@ function CardsContent() {
         status: targetAccount.status,
       });
 
-      // Рассчитываем дату окончания карты (3 года от текущей даты)
-      // Рассчитываем дату окончания карты (3 года от текущей даты)
+      // Рассчитываем срок действия карты (+3 года)
       const expiryDate = new Date();
       expiryDate.setFullYear(expiryDate.getFullYear() + 3);
 
-      // Форматируем в YYYY-MM-DD
+      // Форматируем дату в YYYY-MM-DD
       const year = expiryDate.getFullYear();
       const month = String(expiryDate.getMonth() + 1).padStart(2, "0");
       const day = String(expiryDate.getDate()).padStart(2, "0");
@@ -156,19 +155,19 @@ function CardsContent() {
 
       console.log("🟡 Сгенерированная дата:", formattedExpiryDate);
 
-      // Формируем данные для создания карты - БЕЗ ЛИШНИХ ПОЛЕЙ
+      // Формируем payload для создания карты
       const cardPayload = {
         account_id: targetAccount.id,
         card_name: cardData.name,
         card_type: cardData.type,
-        // Важно: отправляем ТОЛЬКО те поля, которые ожидает бэкенд
+        // Отправляем только поля API
         expiry_date: formattedExpiryDate,
-        // Добавляем только если они обязательны
+        // Дополнительные поля добавляем при наличии
         ...(cardData.benefits && { benefits: cardData.benefits }),
         ...(cardData.image && { image_url: cardData.image }),
       };
 
-      // Убеждаемся, что нет поля expiryDate (старое)
+      // Удаляем устаревшее поле expiryDate
       delete (cardPayload as any).expiryDate;
 
       console.log("🟡 Отправка данных на бэкенд (финальная):", cardPayload);
@@ -179,10 +178,10 @@ function CardsContent() {
 
       setSuccessMessage(`✅ Карта ${cardData.name} успешно добавлена!`);
 
-      // Перезагружаем список карт
+      // Обновляем список карт
       await loadUserCards();
 
-      // Очищаем сообщение через 3 секунды
+      // Скрываем сообщение через 3 секунды
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error: any) {
       console.error("❌ Ошибка добавления карты:");
@@ -191,7 +190,7 @@ function CardsContent() {
       console.error("❌ Заголовки:", error.response?.headers);
       console.error("❌ Полная ошибка:", error);
 
-      // Пробуем получить сообщение об ошибке в разных форматах
+      // Унифицируем сообщение об ошибке
       const errorMsg =
         (typeof error.response?.data === "object" &&
           error.response?.data?.error) ||
@@ -239,7 +238,7 @@ function CardsContent() {
         <div className={styles.errorMessage}>{errorMessage}</div>
       )}
 
-      {/* Мои карты */}
+      {/* Карты пользователя */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Мои карты</h2>
         {loading ? (
@@ -279,7 +278,7 @@ function CardsContent() {
         )}
       </section>
 
-      {/* Доступные карты для оформления */}
+      {/* Доступные карты для выпуска */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Доступные карты</h2>
         {availableCards.length === 0 ? (
@@ -300,7 +299,7 @@ function CardsContent() {
                   width={320}
                   height={200}
                   className={styles.cardImage}
-                  priority={i === 0} // Добавляем priority для первого изображения
+                  priority={i === 0} // Приоритет для первой карточки
                 />
                 <div className={styles.cardInfo}>
                   <h3>{card.name}</h3>
@@ -330,7 +329,7 @@ function CardsContent() {
   );
 }
 
-// Основной экспорт с Suspense
+// Экспорт страницы с Suspense-оберткой
 export default function CardsPage() {
   return (
     <div className={styles.container}>

@@ -15,12 +15,12 @@ type userRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewUserRepository creates a new user repository
+// NewUserRepository создает репозиторий пользователей
 func NewUserRepository(db *pgxpool.Pool) *userRepository {
 	return &userRepository{db: db}
 }
 
-// Create inserts a new user into the database
+// Create добавляет нового пользователя в базу данных
 func (r *userRepository) Create(ctx context.Context, user *models.User) error {
 	query := `
 		INSERT INTO users (id, email, password_hash, first_name, last_name, phone, created_at, updated_at)
@@ -39,7 +39,7 @@ func (r *userRepository) Create(ctx context.Context, user *models.User) error {
 	return nil
 }
 
-// GetByID retrieves a user by ID
+// GetByID получает пользователя по ID
 func (r *userRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.User, error) {
 	query := `
 		SELECT id, email, password_hash, first_name, last_name, phone, created_at, updated_at
@@ -55,7 +55,7 @@ func (r *userRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Use
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, nil // user not found
+			return nil, nil // пользователь не найден
 		}
 		return nil, fmt.Errorf("failed to get user by ID: %w", err)
 	}
@@ -63,7 +63,7 @@ func (r *userRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Use
 	return &user, nil
 }
 
-// GetByEmail retrieves a user by email
+// GetByEmail получает пользователя по email
 func (r *userRepository) GetByEmail(ctx context.Context, email string) (*models.User, error) {
 	query := `
 		SELECT id, email, password_hash, first_name, last_name, phone, created_at, updated_at
@@ -79,7 +79,7 @@ func (r *userRepository) GetByEmail(ctx context.Context, email string) (*models.
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, nil // user not found
+			return nil, nil // пользователь не найден
 		}
 		return nil, fmt.Errorf("failed to get user by email: %w", err)
 	}
@@ -87,7 +87,7 @@ func (r *userRepository) GetByEmail(ctx context.Context, email string) (*models.
 	return &user, nil
 }
 
-// Update updates an existing user
+// Update обновляет существующего пользователя
 func (r *userRepository) Update(ctx context.Context, user *models.User) error {
 	query := `
 		UPDATE users
@@ -111,7 +111,7 @@ func (r *userRepository) Update(ctx context.Context, user *models.User) error {
 	return nil
 }
 
-// Delete removes a user by ID
+// Delete удаляет пользователя по ID
 func (r *userRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	query := `DELETE FROM users WHERE id = $1`
 
@@ -127,7 +127,7 @@ func (r *userRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	return nil
 }
 
-// List returns a list of users with pagination
+// List возвращает список пользователей с пагинацией
 func (r *userRepository) List(ctx context.Context, limit, offset int) ([]models.User, error) {
 	query := `
 		SELECT id, email, first_name, last_name, phone, created_at, updated_at
@@ -161,7 +161,7 @@ func (r *userRepository) List(ctx context.Context, limit, offset int) ([]models.
 
 	return users, nil
 }
-// GetByPhone retrieves a user by phone number
+// GetByPhone получает пользователя по номеру телефона
 func (r *userRepository) GetByPhone(ctx context.Context, phone string) (*models.User, error) {
     query := `
         SELECT id, email, password_hash, first_name, last_name, phone, created_at, updated_at

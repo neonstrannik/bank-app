@@ -115,7 +115,7 @@ export default function DashboardPage() {
     );
   }
 
-  // Разделяем счета на дебетовые и кредитные
+  // Разделяем счета по типам
   const checkingAccounts = accounts.filter(
     (acc) => acc.account_type === "checking",
   );
@@ -125,7 +125,7 @@ export default function DashboardPage() {
 
   return (
     <div className={styles.container}>
-      {/* Верхняя панель */}
+      {/* Верхняя панель профиля */}
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.userInfo}>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* Счета */}
+        {/* Блок счетов */}
         <div className={styles.accountsSection}>
           <div className={styles.sectionHeader}>
             <h3 className={styles.sectionTitle}>Мои счета</h3>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Карты */}
+        {/* Блок карт */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h3 className={styles.sectionTitle}>Мои карты</h3>

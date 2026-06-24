@@ -16,7 +16,7 @@ type accountService struct {
 	userRepo    repository.UserRepository
 }
 
-// NewAccountService creates a new account service
+// NewAccountService создает сервис счетов
 func NewAccountService(accountRepo repository.AccountRepository, userRepo repository.UserRepository) *accountService {
 	return &accountService{
 		accountRepo: accountRepo,
@@ -24,9 +24,9 @@ func NewAccountService(accountRepo repository.AccountRepository, userRepo reposi
 	}
 }
 
-// CreateAccount creates a new account for a user
+// CreateAccount создает новый счет для пользователя
 func (s *accountService) CreateAccount(ctx context.Context, userID uuid.UUID, req *models.CreateAccountRequest) (*models.Account, error) {
-	// 1. Проверяем, существует ли пользователь
+	// 1) Проверяем пользователя
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
 		return nil, err
@@ -35,15 +35,15 @@ func (s *accountService) CreateAccount(ctx context.Context, userID uuid.UUID, re
 		return nil, errors.New("user not found")
 	}
 
-	// 2. Валидируем тип счета
+	// 2) Проверяем тип счета
 	if req.AccountType != "checking" && req.AccountType != "credit" {
 		return nil, errors.New("invalid account type. Must be 'checking' or 'credit'")
 	}
 
-	// 3. Генерируем номер счета (в реальности сложнее)
+	// 3) Генерируем номер счета
 	accountNumber := fmt.Sprintf("40817810%014d", time.Now().UnixNano()%10000000000000)
 
-	// 4. Создаем счет
+	// 4) Создаем счет
 	now := time.Now()
 	account := &models.Account{
 		ID:            uuid.New(),
@@ -64,9 +64,9 @@ func (s *accountService) CreateAccount(ctx context.Context, userID uuid.UUID, re
 	return account, nil
 }
 
-// GetAccounts returns all accounts for a user
+// GetAccounts возвращает все счета пользователя
 func (s *accountService) GetAccounts(ctx context.Context, userID uuid.UUID) ([]models.Account, error) {
-	// Проверяем, существует ли пользователь
+	// Проверяем, что пользователь существует
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (s *accountService) GetAccounts(ctx context.Context, userID uuid.UUID) ([]m
 	return s.accountRepo.GetByUserID(ctx, userID)
 }
 
-// GetAccount returns a specific account
+// GetAccount возвращает счет по его ID
 func (s *accountService) GetAccount(ctx context.Context, accountID uuid.UUID) (*models.Account, error) {
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
@@ -90,7 +90,7 @@ func (s *accountService) GetAccount(ctx context.Context, accountID uuid.UUID) (*
 	return account, nil
 }
 
-// BlockAccount blocks an account
+// BlockAccount блокирует счет
 func (s *accountService) BlockAccount(ctx context.Context, accountID uuid.UUID) error {
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
@@ -106,7 +106,7 @@ func (s *accountService) BlockAccount(ctx context.Context, accountID uuid.UUID) 
 	return s.accountRepo.Update(ctx, account)
 }
 
-// CloseAccount closes an account
+// CloseAccount закрывает счет
 func (s *accountService) CloseAccount(ctx context.Context, accountID uuid.UUID) error {
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
@@ -116,7 +116,7 @@ func (s *accountService) CloseAccount(ctx context.Context, accountID uuid.UUID) 
 		return errors.New("account not found")
 	}
 
-	// Нельзя закрыть счет с положительным балансом
+	// Закрытие доступно только при нулевом балансе
 	if account.Balance > 0 {
 		return errors.New("cannot close account with positive balance")
 	}
@@ -128,7 +128,7 @@ func (s *accountService) CloseAccount(ctx context.Context, accountID uuid.UUID) 
 }
 // Deposit пополняет счет
 func (s *accountService) Deposit(ctx context.Context, accountID uuid.UUID, amount float64) (*models.Account, error) {
-	// 1. Проверяем, что счет существует
+	// 1) Проверяем существование счета
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
 		return nil, err
@@ -137,22 +137,22 @@ func (s *accountService) Deposit(ctx context.Context, accountID uuid.UUID, amoun
 		return nil, errors.New("account not found")
 	}
 
-	// 2. Проверяем, что счет активен
+	// 2) Проверяем статус счета
 	if account.Status != "active" {
 		return nil, errors.New("account is not active")
 	}
 
-	// 3. Пополняем счет
+	// 3) Выполняем пополнение
 	if err := s.accountRepo.Deposit(ctx, accountID, amount); err != nil {
 		return nil, err
 	}
 
-	// 4. Получаем обновленный счет
+	// 4) Возвращаем обновленный счет
 	return s.accountRepo.GetByID(ctx, accountID)
 }
 // Withdraw списывает деньги со счета
 func (s *accountService) Withdraw(ctx context.Context, accountID uuid.UUID, amount float64) (*models.Account, error) {
-	// Проверяем, что счет существует
+	// Проверяем существование счета
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
 		return nil, err
@@ -161,21 +161,21 @@ func (s *accountService) Withdraw(ctx context.Context, accountID uuid.UUID, amou
 		return nil, errors.New("account not found")
 	}
 
-	// Проверяем, что счет активен
+	// Проверяем статус счета
 	if account.Status != "active" {
 		return nil, errors.New("account is not active")
 	}
 
-	// Проверяем, что достаточно средств
+	// Проверяем баланс
 	if account.Balance < amount {
 		return nil, errors.New("insufficient funds")
 	}
 
-	// Списываем деньги
+	// Выполняем списание
 	if err := s.accountRepo.Withdraw(ctx, accountID, amount); err != nil {
 		return nil, err
 	}
 
-	// Получаем обновленный счет
+	// Возвращаем обновленный счет
 	return s.accountRepo.GetByID(ctx, accountID)
 }

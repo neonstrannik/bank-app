@@ -26,10 +26,10 @@ export default function LoginPage() {
 
     try {
       await login(formData.email, formData.password);
-      // После успешного входа редирект на dashboard
+      // После входа переходим в личный кабинет
       router.push("/dashboard");
     } catch (err: any) {
-      // Ошибка уже будет в error из контекста
+      // Сообщение об ошибке уже хранится в AuthContext
       console.error("Login error:", err);
     }
   };

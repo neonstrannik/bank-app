@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// Интерфейс пользователя из вашего бэкенда
+// Данные пользователя из backend API
 interface User {
   id: string;
   email: string;
@@ -14,19 +14,19 @@ interface User {
   phone: string;
 }
 
-// Интерфейс для ответа от API
+// Ответ авторизации
 interface AuthResponse {
   token: string;
   user: User;
 }
 
-// Интерфейс для запроса логина
+// Данные для входа
 interface LoginRequest {
   email: string;
   password: string;
 }
 
-// Интерфейс для запроса регистрации
+// Данные для регистрации
 interface RegisterRequest {
   email: string;
   password: string;
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Проверяем сохраненную сессию при загрузке
+  // Восстанавливаем сессию из cookies при старте
   useEffect(() => {
     const token = Cookies.get("token");
     const savedUser = Cookies.get("user");
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }, []);
 
-  // Логин с реальным API
+  // Вход пользователя
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
@@ -100,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Регистрация с реальным API
+  // Регистрация пользователя
   const register = async (userData: RegisterRequest) => {
     setLoading(true);
     setError(null);
@@ -114,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log("📥 Ответ от сервера:", response.data);
       console.log("📥 Статус:", response.status);
 
-      // После успешной регистрации - логинимся
+      // После регистрации автоматически выполняем вход
       await login(userData.email, userData.password);
     } catch (err: any) {
       console.error("❌ Ошибка в AuthContext - полная информация:");
@@ -155,7 +155,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Выход
+  // Выход из сессии
   const logout = () => {
     setUser(null);
     Cookies.remove("token");

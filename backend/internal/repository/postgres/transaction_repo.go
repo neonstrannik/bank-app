@@ -15,12 +15,12 @@ type transactionRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewTransactionRepository creates a new transaction repository
+// NewTransactionRepository создает репозиторий транзакций
 func NewTransactionRepository(db *pgxpool.Pool) *transactionRepository {
 	return &transactionRepository{db: db}
 }
 
-// Create inserts a new transaction into the database
+// Create добавляет новую транзакцию в базу данных
 func (r *transactionRepository) Create(ctx context.Context, transaction *models.Transaction) error {
 	query := `
 		INSERT INTO transactions (
@@ -43,7 +43,7 @@ func (r *transactionRepository) Create(ctx context.Context, transaction *models.
 	return nil
 }
 
-// GetByID retrieves a transaction by ID
+// GetByID получает транзакцию по ID
 func (r *transactionRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Transaction, error) {
 	query := `
 		SELECT id, account_id, type, amount, description, 
@@ -81,7 +81,7 @@ func (r *transactionRepository) GetByID(ctx context.Context, id uuid.UUID) (*mod
 	return &transaction, nil
 }
 
-// GetByAccountID retrieves transactions for an account
+// GetByAccountID получает транзакции по счету
 func (r *transactionRepository) GetByAccountID(ctx context.Context, accountID uuid.UUID, limit, offset int) ([]models.Transaction, error) {
 	query := `
 		SELECT id, account_id, type, amount, description, 
@@ -128,7 +128,7 @@ func (r *transactionRepository) GetByAccountID(ctx context.Context, accountID uu
 	return transactions, nil
 }
 
-// GetByUserID retrieves transactions for a user
+// GetByUserID получает транзакции пользователя
 func (r *transactionRepository) GetByUserID(ctx context.Context, userID uuid.UUID, limit, offset int) ([]models.Transaction, error) {
 	query := `
 		SELECT t.id, t.account_id, t.type, t.amount, t.description, 
@@ -176,7 +176,7 @@ func (r *transactionRepository) GetByUserID(ctx context.Context, userID uuid.UUI
 	return transactions, nil
 }
 
-// UpdateStatus updates transaction status
+// UpdateStatus обновляет статус транзакции
 func (r *transactionRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status string) error {
 	query := `UPDATE transactions SET status = $2 WHERE id = $1`
 

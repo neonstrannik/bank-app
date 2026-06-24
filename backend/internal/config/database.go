@@ -11,7 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// DBConfig хранит конфигурацию базы данных
+// DBConfig хранит параметры подключения к БД
 type DBConfig struct {
 	Host     string
 	Port     string
@@ -21,9 +21,9 @@ type DBConfig struct {
 	SSLMode  string
 }
 
-// LoadDBConfig загружает конфигурацию из .env или использует значения по умолчанию
+// LoadDBConfig читает конфигурацию из окружения
 func LoadDBConfig() *DBConfig {
-	// Загружаем .env файл (если есть)
+	// Поддержка локального .env
 	godotenv.Load()
 
 	return &DBConfig{
@@ -36,7 +36,7 @@ func LoadDBConfig() *DBConfig {
 	}
 }
 
-// GetConnString возвращает строку подключения к БД
+// GetConnString собирает DSN для PostgreSQL
 func (c *DBConfig) GetConnString() string {
 	return fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
@@ -44,24 +44,24 @@ func (c *DBConfig) GetConnString() string {
 	)
 }
 
-// ConnectDB создает подключение к базе данных
+// ConnectDB создает пул подключений к БД
 func ConnectDB() (*pgxpool.Pool, error) {
 	config := LoadDBConfig()
 	connString := config.GetConnString()
 
-	// Настраиваем пул соединений
+	// Параметры пула
 	poolConfig, err := pgxpool.ParseConfig(connString)
 	if err != nil {
 		return nil, fmt.Errorf("ошибка парсинга конфигурации: %w", err)
 	}
 
-	// Настройки пула
+	// Ограничения пула
 	poolConfig.MaxConns = 10
 	poolConfig.MinConns = 2
 	poolConfig.MaxConnLifetime = 1 * time.Hour
 	poolConfig.MaxConnIdleTime = 30 * time.Minute
 
-	// Создаем пул соединений
+	// Создаем пул
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -70,7 +70,7 @@ func ConnectDB() (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("ошибка создания пула: %w", err)
 	}
 
-	// Проверяем подключение
+	// Проверяем соединение
 	if err := pool.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("ошибка подключения к БД: %w", err)
 	}
@@ -79,7 +79,7 @@ func ConnectDB() (*pgxpool.Pool, error) {
 	return pool, nil
 }
 
-// getEnv читает переменную окружения или возвращает значение по умолчанию
+// getEnv возвращает значение env или default
 func getEnv(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {
 		return value

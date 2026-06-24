@@ -10,12 +10,12 @@ export default function RegisterPage() {
     email: "",
     password: "",
     phone: "",
-    first_name: "", // Изменено с firstName на first_name
-    last_name: "", // Изменено с lastName на last_name
+    first_name: "", // Поле API формата snake_case
+    last_name: "", // Поле API формата snake_case
   });
 
   const [localError, setLocalError] = useState("");
-  const { register, loading, error } = useAuth(); // Используем register из контекста
+  const { register, loading, error } = useAuth(); // Регистрация через AuthContext
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function RegisterPage() {
     try {
       console.log("📤 Отправляемые данные:", formData);
 
-      // Вызываем register из контекста
+      // Отправляем данные на регистрацию
       await register(formData);
 
       console.log("✅ Регистрация успешна");
@@ -45,7 +45,7 @@ export default function RegisterPage() {
     });
   };
 
-  // Объединяем локальную ошибку и ошибку из контекста
+  // Показываем локальную или контекстную ошибку
   const displayError = localError || error;
 
   return (
@@ -67,7 +67,7 @@ export default function RegisterPage() {
             <label className={styles.label}>Имя</label>
             <input
               type="text"
-              name="first_name" // Изменено с firstName
+              name="first_name" // Имя в формате API
               value={formData.first_name}
               onChange={handleChange}
               className={styles.input}
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             <label className={styles.label}>Фамилия</label>
             <input
               type="text"
-              name="last_name" // Изменено с lastName
+              name="last_name" // Фамилия в формате API
               value={formData.last_name}
               onChange={handleChange}
               className={styles.input}

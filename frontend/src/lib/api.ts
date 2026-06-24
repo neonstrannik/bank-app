@@ -10,7 +10,7 @@ export const api = axios.create({
   },
 });
 
-// Добавляем токен к каждому запросу
+// Добавляем токен авторизации в запросы
 api.interceptors.request.use((config) => {
   const token = Cookies.get("token");
   if (token) {
@@ -19,7 +19,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Типы для ответов
+// Типы данных API
 export interface User {
   id: string;
   email: string;
@@ -46,7 +46,7 @@ export interface RegisterRequest {
   phone: string;
 }
 
-// API функции
+// Методы API
 export const authAPI = {
   register: (data: RegisterRequest) =>
     api.post<{ message: string; user: User }>("/register", data),

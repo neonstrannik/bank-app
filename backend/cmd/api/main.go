@@ -20,25 +20,25 @@ import (
 )
 
 func main() {
-	// Загружаем .env
+	// Загружаем конфигурацию окружения
 	if err := godotenv.Load(); err != nil {
 		log.Println("⚠️  .env файл не найден, используем переменные окружения")
 	}
 
-	// Подключаемся к базе данных
+	// Инициализируем подключение к PostgreSQL
 	dbPool, err := config.ConnectDB()
 	if err != nil {
 		log.Fatal("❌ Ошибка подключения к БД:", err)
 	}
 	defer dbPool.Close()
 
-	// Создаем репозитории
+	// Репозитории: доступ к данным
 	userRepo := postgres.NewUserRepository(dbPool)
 	accountRepo := postgres.NewAccountRepository(dbPool)
 	cardRepo := postgres.NewCardRepository(dbPool)
 	transactionRepo := postgres.NewTransactionRepository(dbPool)
 
-	// Создаем сервисы
+	// Сервисы: бизнес-логика
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
 		jwtSecret = "default-secret-key-for-development"
@@ -49,18 +49,18 @@ func main() {
 	accountService := service.NewAccountService(accountRepo, userRepo)
 	cardService := service.NewCardService(cardRepo, accountRepo, userRepo)
 
-	// Создаем роутер
+	// HTTP-роутер
 	router := gin.Default()
 
-	// Добавляем CORS middleware
+	// CORS для фронтенда на localhost:3000
 	router.Use(func(c *gin.Context) {
-		// Разрешаем запросы с любого источника (для разработки)
+		// Разрешаем запросы от клиентского приложения
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 
-		// Обрабатываем preflight запросы
+		// Обрабатываем preflight-запросы
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
 			return
@@ -69,7 +69,7 @@ func main() {
 		c.Next()
 	})
 
-	// Health check
+	// Служебный endpoint для проверки API
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "ok",
@@ -80,11 +80,11 @@ func main() {
 
 	// ==================== AUTH ENDPOINTS ====================
 
-// POST /api/register - регистрация нового пользователя
+// POST /api/register - регистрация пользователя
 router.POST("/api/register", func(c *gin.Context) {
     var req models.CreateUserRequest
     if err := c.ShouldBindJSON(&req); err != nil {
-        // Форматируем ошибки валидации
+        // Возвращаем ошибки валидации в удобном формате
         validationErrors := formatValidationError(err)
         if len(validationErrors) > 0 {
             c.JSON(http.StatusBadRequest, gin.H{
@@ -223,7 +223,7 @@ router.POST("/api/register", func(c *gin.Context) {
 		c.JSON(http.StatusOK, account)
 	})
 
-	// GET /api/accounts/number/:number - получить счет по номеру (через репозиторий)
+	// GET /api/accounts/number/:number - найти счет по номеру
 	router.GET("/api/accounts/number/:number", func(c *gin.Context) {
 		accountNumber := c.Param("number")
 
@@ -425,7 +425,7 @@ router.POST("/api/register", func(c *gin.Context) {
 			return
 		}
 
-		var req models.DepositRequest // переиспользуем ту же структуру (amount)
+		var req models.DepositRequest // Используем общую структуру с полем amount
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -456,7 +456,7 @@ router.POST("/api/register", func(c *gin.Context) {
 			return
 		}
 
-		// Не отправляем пароль
+		// Не возвращаем пароль в ответе
 		user.Password = ""
 		c.JSON(http.StatusOK, user)
 	})
@@ -481,7 +481,7 @@ router.POST("/api/register", func(c *gin.Context) {
 			return
 		}
 
-		// Создаем сервис переводов
+		// Сервис переводов
 		transferService := service.NewTransferService(accountRepo, userRepo, transactionRepo)
 
 		tx, err := transferService.TransferByPhone(c.Request.Context(), fromAccountID, req.ToPhone, req.Amount, req.Description)
@@ -508,7 +508,7 @@ router.POST("/api/register", func(c *gin.Context) {
 			return
 		}
 
-		// Пополняем счёт на сумму кредита (Deposit возвращает 2 значения)
+		// Пополняем счет на сумму одобренного кредита
 		updatedAccount, err := accountService.Deposit(c.Request.Context(), req.AccountID, req.Amount)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -520,7 +520,45 @@ router.POST("/api/register", func(c *gin.Context) {
 			"account": updatedAccount,
 		})
 	})
+	// ==================== AI ENDPOINTS ====================
 
+	// Создаём сервис AI
+	aiService := service.NewAIService()
+
+	// POST /api/ai/chat - чат с AI
+	router.POST("/api/ai/chat", func(c *gin.Context) {
+		var req struct {
+			Message string `json:"message" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		response, err := aiService.Chat(req.Message)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"response": response,
+		})
+	})
+
+	// GET /api/ai/advice - финансовый совет
+	router.GET("/api/ai/advice", func(c *gin.Context) {
+		advice, err := aiService.GetFinancialAdvice(100000, 50000, 30000)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"advice": advice,
+		})
+	})
 	// ==================== SERVER START ====================
 
 	port := os.Getenv("PORT")
@@ -540,7 +578,7 @@ router.POST("/api/register", func(c *gin.Context) {
 		}
 	}()
 
-	// Graceful shutdown
+	// Мягкая остановка сервера
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
@@ -554,7 +592,7 @@ router.POST("/api/register", func(c *gin.Context) {
 
 	log.Println("✅ Сервер остановлен")
 }
-// formatValidationError преобразует ошибки валидации в понятные сообщения
+// formatValidationError приводит ошибки валидации к полям формы
 func formatValidationError(err error) map[string]string {
     errors := make(map[string]string)
     
