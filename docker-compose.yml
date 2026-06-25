@@ -42,13 +42,10 @@ services:
       DB_SSLMODE: ${DB_SSLMODE}
       PORT: ${PORT}
       JWT_SECRET: ${JWT_SECRET}
-      OLLAMA_HOST: http://ollama:11434
 
     depends_on:
       db:
         condition: service_healthy
-      ollama:
-        condition: service_started
 
     networks:
       - app-network
@@ -94,18 +91,6 @@ services:
 
     networks:
       - app-network
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    networks:
-      - app-network
-    environment:
-      - OLLAMA_HOST=0.0.0.0
-    # Убираем command, пусть запускается стандартно
 
 networks:
   app-network:
@@ -113,4 +98,3 @@ networks:
 
 volumes:
   pgdata:
-  ollama_data:
